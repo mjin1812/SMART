@@ -1,0 +1,10 @@
+*.RData
+*.Rbuildignore
+*.RDataTmp
+*.Rhistory
+*.Ruserdata 
+hello.Rd
+wb_loop_segmentation2.R
+User_references
+data
+.Rproj.user
