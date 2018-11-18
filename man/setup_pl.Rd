@@ -24,10 +24,10 @@ Descriptions of list elements for a \strong{partial brain}.
 \item Animal ID
 \item User's Initials
 \item Registration channel image folder path (normally an autofluorescence channel)
-\item Segmentation channel image folder path (can be the same as the Registration channel)
+\item Segmentation channel image folder path (can be different than the Registration channel)
 \item Output folder to store data
 \item All AP coordinates ranging from the first to last AP. User manually entered.
-\item All z image numbers matching 7. User manually entered.
+\item All z image numbers matching element 6. User manually entered.
 }
 
 Descriptions of list elements for a \strong{whole brain}.

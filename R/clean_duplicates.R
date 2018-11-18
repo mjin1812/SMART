@@ -16,12 +16,9 @@
 clean_duplicates <- function(setup, segs, xy_thresh = 1, z_thresh = 10, compare_depth  = 200){
 
  # Set up clean up parameters
-  # xy_thresh      <- 1     # Threshold difference of 1 pixel to count as same neuron
-  # compare_depth  <- 200   # compare_depth: the z-depth(um) to compare against because the largest neuronal soma size is 100 um
-  # z_thresh       <- 7.5   # sep_criteria: the minumum z-distance(um) to count 2 cells overlaying each other as separate
   tictoc::tic()
-  sep_z   <- z_thresh/(1000*setup$z_space)
-  n_cols  <- compare_depth/(setup$z_space*1000)
+  sep_z   <- z_thresh/(1000*setup$z_space*setup$seg_step)
+  n_cols  <- compare_depth/(setup$z_space*1000*setup$seg_step)
     for (s in 1:(length(segs$seg_z)-1)){
 
     # For the end of the image stack

@@ -9,10 +9,10 @@
 #' 1)  Animal ID
 #' 2)  User's Initials
 #' 3)  Registration channel image folder path (normally an autofluorescence channel)
-#' 4)  Segmentation channel image folder path (can be the same as the Registration channel)
+#' 4)  Segmentation channel image folder path (can be different than the Registration channel)
 #' 5)  Output folder to store data
 #' 6)  All AP coordinates ranging from the first to last AP. User manually entered.
-#' 7)  All z image numbers matching 7. User manually entered.
+#' 7)  All z image numbers matching element 6. User manually entered.
 #'
 #' Descriptions of list elements for a **whole brain**.
 #' 1)  Animal ID
@@ -43,6 +43,30 @@
 #' @md
 
 setup_pl <- function(setup = NULL) {
+  # Setup user prompts for whole brain
+  user_prompt <- vector(mode = "list", length = 13)
+  user_prompt[[1]]  <- "1) Enter your Animal ID: \n"
+  user_prompt[[2]]  <- "2) Enter your Initials: \n"
+  user_prompt[[3]]  <- paste0("3) Enter the path to the registration channel folder: ",
+                              "\n NOTE: Please change all '\\' to '/' so that R can read your path!\n")
+  user_prompt[[4]]  <- paste0("4) Enter the path to the segmentation channel folder: ",
+                              "\n NOTE: Please change all '\\' to '/' so that R can read your path!\n")
+  user_prompt[[5]]  <- paste0("5) Enter the path to output folder. If it doesn't exist, please create it: ",
+                              "\n NOTE: Please change all '\\' to '/' so that R can read your path!\n")
+  user_prompt[[6]]  <- "6) What is your spacing (mm) between adjacent z images? \n"
+  user_prompt[[7]]  <- "7) What is your spacing between registrations (mm) ?\n"
+  user_prompt[[8]]  <- "8) What is your segmentation step size (integer)?\n"
+  user_prompt[[9]] <- paste0("9) What is your most anterior AP coordinate (mm)? ",
+                             "\nPlease enter at least 2 decimal digits.\n")
+  user_prompt[[10]] <- paste0("10) What is the z image number corresponding to most anterior AP coordinate? ",
+                              "\nPlease enter an integer number.\n")
+  user_prompt[[11]] <- paste0("11) What is your most posterior AP coordinate (mm)? ",
+                              "\nPlease enter at least 2 decimal digits.\n")
+  user_prompt[[12]] <- paste0("12) What is the z image number corresponding to most posterior AP coordinate? ",
+                              "\nPlease enter an integer number.\n")
+  user_prompt[[13]] <- paste0("13) What are your internal reference coordinates? ",
+                              "\nNOTE: The default coordinates are 1.91, 1.10, -0.42, -0.93 , -1.94 , -2.95, -3.96",
+                              "\nThey correspond to PFC, NAc, antHyp, start of Hip, posHyp, VTA, PAG.\n")
 
   # Setup user prompts for partial brain
   user_prompt2 <- vector(mode = "list", length = 7)
@@ -58,31 +82,6 @@ setup_pl <- function(setup = NULL) {
                                 "\nPlease enter at least 2 decimal digits per coordinate and separate values by a ','.\n")
   user_prompt2[[7]]  <- paste0("7) Enter all z image number in order corresponding to entered AP coordinates: ",
                                "\nPlease enter integer numbers and separate values by a ','.\n")
-
-  # Setup user prompts for whole brain
-  user_prompt <- vector(mode = "list", length = 13)
-  user_prompt[[1]]  <- "1) Enter your Animal ID: \n"
-  user_prompt[[2]]  <- "2) Enter your Initials: \n"
-  user_prompt[[3]]  <- paste0("3) Enter the path to the registration channel folder: ",
-                              "\n NOTE: Please change all '\\' to '/' so that R can read your path!\n")
-  user_prompt[[4]]  <- paste0("4) Enter the path to the segmentation channel folder: ",
-                              "\n NOTE: Please change all '\\' to '/' so that R can read your path!\n")
-  user_prompt[[5]]  <- paste0("5) Enter the path to output folder. If it doesn't exist, please create it: ",
-                              "\n NOTE: Please change all '\\' to '/' so that R can read your path!\n")
-  user_prompt[[6]]  <- "6) What is your spacing (mm) between adjacent z images? \n"
-  user_prompt[[7]]  <- "7) What is your spacing between registrations (mm) ?\n"
-  user_prompt[[8]]  <- "8) What is your segmentation step size (integer)?\n"
-  user_prompt[[9]] <- paste0("9) What is your most anterior AP coordinate (mm)? ",
-                              "\nPlease enter at least 2 decimal digits.\n")
-  user_prompt[[10]] <- paste0("10) What is the z image number corresponding to most anterior AP coordinate? ",
-                              "\nPlease enter an integer number.\n")
-  user_prompt[[11]] <- paste0("11) What is your most posterior AP coordinate (mm)? ",
-                              "\nPlease enter at least 2 decimal digits.\n")
-  user_prompt[[12]] <- paste0("12) What is the z image number corresponding to most posterior AP coordinate? ",
-                              "\nPlease enter an integer number.\n")
-  user_prompt[[13]] <- paste0("13) What are your internal reference coordinates? ",
-                              "\nNOTE: The default coordinates are 1.91, 1.10, -0.42, -0.93 , -1.94 , -2.95, -3.96",
-                              "\nThey correspond to PFC, NAc, antHyp, start of Hip, posHyp, VTA, PAG.\n")
 
   # Create setup vector with defaults if it doesn't already exist. Then asks user for setup information.
   if (!exists(deparse(substitute(setup)))) {

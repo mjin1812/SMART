@@ -18,7 +18,7 @@
 #' Options: "l" (linear interpolation), "s" (monotonic spline interpolation)
 #' @export
 
-interpolate_wb <- function(setup, method = "l") {
+ez_interpolate <- function(setup, method = "l") {
 
   # ###### Get necessary functions NOTE: these will be modified to be internal package functions later
   # source('wb_functions.R')
