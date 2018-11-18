@@ -1,4 +1,3 @@
-*.RData
 *.Rbuildignore
 *.RDataTmp
 *.Rhistory
@@ -6,5 +5,4 @@
 hello.Rd
 wb_loop_segmentation2.R
 User_references
-data
 .Rproj.user
