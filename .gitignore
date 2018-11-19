@@ -2,7 +2,8 @@
 *.RDataTmp
 *.Rhistory
 *.Ruserdata 
-hello.Rd
+region_table.R
+region_table.Rd
 wb_loop_segmentation2.R
 User_references
 .Rproj.user

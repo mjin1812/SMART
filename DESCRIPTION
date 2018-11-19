@@ -1,6 +1,6 @@
 Package: ezBrain
 Type: Package
-Title: Package Facilitating Whole Brain Mapping Projects
+Title: Pipeline Facilitating Whole Brain Mapping Projects
 Version: 0.1.0
 Author: Michelle Jin <mjin1812@gmail.com>
 Maintainer: Michelle Jin <mjin1812@gmail.com>
@@ -8,8 +8,8 @@ Description: This package builds a pipeline interfacing with the wholebrain pack
     whole brain imaging datasets. 
 License: GPL-3
 Imports: 
-  wholebrain, 
-  magick,
+  wholebrain (>= 0.1.0), 
+  magick (>= 1.9.0),
   tictoc
 Encoding: UTF-8
 LazyData: true
