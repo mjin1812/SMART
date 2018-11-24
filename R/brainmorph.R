@@ -14,7 +14,7 @@
 brainmorph <- function(setup, savepaths, lineplot = TRUE, saveplot = TRUE,
                           filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf")) {
 
-  setwd(setup$work_dir)
+  # setwd(setup$work_dir)
   # ##### Get necessary functions NOTE: these will be modified to be internal package functions later
   # source('wb_functions.R')
   # #####

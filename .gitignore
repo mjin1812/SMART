@@ -5,5 +5,6 @@
 region_table.R
 region_table.Rd
 wb_loop_segmentation2.R
+JSON_sunburst.R
 User_references
 .Rproj.user
