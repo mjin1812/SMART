@@ -1,44 +1,35 @@
-## wb_forward_warp()
-## Loop through all segmented cells and perform forward warp loop back onto atlas space
-## Options for plotting a schematic plot and saving forward warp images
-## Note: this script is best used after the segmentation list 'segs' has been cleaned of duplicate cell counts
-## 10-20-2018 MJ
-##
-## Arguments:
-## setup (required) - required for the registration AP and z values
-## savepaths (required) - required for saving images
-## segs (required) - segmentation list
-## regis (required) - registration list
-## filetype (optional, default = "tif") - filetype to save the plots as
-## savewarp (optional, default = TRUE) - save forward warp plot
-## saveschematic (optional, default = TRUE) - save schematic plot
-##
-## Creates:
-## dataset - master dataframe containing all the cell counts
-
-
 #' @title Forward warp back to atlas space
-#' @description Loop through all segmented cells and perform forward warp loop back onto atlas space.
-#' Options for plotting a schematic plot and saving forward warp images.
-#' For a whole brain, this function should be used after the segmentation list *segs* has been cleaned of duplicate cell counts
+#' @description Loop through all segmented cells and perform forward warp loop
+#'   back onto atlas space using registration and segmentation data.
+#'   Options for plotting a schematic plot and saving forward warp images. For a
+#'   whole brain, this function should be used after the segmentation list
+#'   *segs* has been cleaned of duplicate cell counts
 #' @param setup (required) Contains setup parameters.
 #' @param savepaths (required) Savepaths for saving images.
 #' @param segs (required) Segmentation data.
 #' @param regis (required) Registration data.
-#' @param filetype (optional, default = "tif") Image type to save as. See the *type* argument in the function [savePlot()].
-#' Options: "tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf"
-#' @param savewarp (optional, default = TRUE) Save forward warp plot image in folder savepaths$out_segmentation_warps.
-#' @param saveschematic (optional, default = TRUE) Save schematic plot images in folder savepaths$out_segmentation_schem.
-#' @param plane (optional, default = "coronal") Atlas plane to register to. options: "coronal", "sagittal"
+#' @param filetype (optional, default = "tif") Image type to save as. See the
+#'   *type* argument in the function [savePlot()]. Options: "tif", "tiff",
+#'   "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf"
+#' @param savewarp (optional, default = TRUE) Save forward warp plot image in
+#'   folder 'savepaths$out_segmentation_warps'.
+#' @param saveschematic (optional, default = TRUE) Save schematic plot images in
+#'   folder savepaths$out_segmentation_schem.
+#' @param plane (optional, default = "coronal") Atlas plane to register to.
+#'   options: "coronal", "sagittal"
 #' @param title (optional, default = FALSE) Title for the schematic plot.
 #' @param mm.grid (optional, default = TRUE) Plot grid in schematic plot.
-#' @param dev.size (optional, default = c(5.4, 4.465)). See same argument from [wholebrain::schematic.plot()].
+#' @param dev.size (optional, default = c(5.4, 4.465)). See same argument from
+#'   [wholebrain::schematic.plot()].
 #' @param pch (optional, default = 21) Graphical parameter for point shape.
 #' @param cex (optional, default = 0.5) Graphical parameter for text size.
 #' @param col (optional, default = "black") Graphical parameter for color.
-#' @param scale.bar (optional, default = TRUE)  Display a measure bar in the schematic plot
-#' @param region.colors (optional, default = TRUE)  Display Allen Brain Atlas colors in schemetic plot.
-#' @return Returns *dataset* a variable storing all mapped segmentation data to registration data.
+#' @param scale.bar (optional, default = TRUE)  Display a measure bar in the
+#'   schematic plot
+#' @param region.colors (optional, default = TRUE)  Display Allen Brain Atlas
+#'   colors in schemetic plot.
+#' @return Returns *dataset* a variable storing all mapped segmentation data to
+#'   registration data.
 #' @seealso See also [wholebrain::schematic.plot()].
 #' @export
 #' @md

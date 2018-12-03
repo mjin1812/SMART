@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean_duplicates.R
 \name{clean_duplicates}
 \alias{clean_duplicates}
-\title{Duplicate cell cleanup}
+\title{Duplicate cell cleanup \strong{(W)}}
 \usage{
 clean_duplicates(setup, segs, xy_thresh = 1, z_thresh = 10,
   compare_depth = 200)
@@ -12,19 +12,20 @@ clean_duplicates(setup, segs, xy_thresh = 1, z_thresh = 10,
 
 \item{segs}{(required) Segmentation data.}
 
-\item{xy_thresh}{(optional, default = 1) Threshold in the xy planes for the minimum distance where
-two center points can be the same cell.}
+\item{xy_thresh}{(optional, default = 1) Threshold in the xy planes for the
+minimum distance where two center points can be the same cell.}
 
-\item{z_thresh}{(optional, default = 10) Threshold (in um) in the z-plane for the
-maximum z distance before a cell is counted as another cell.}
+\item{z_thresh}{(optional, default = 10) Threshold (in um) in the z-plane for
+the maximum z distance before a cell is counted as another cell.}
 
 \item{compare_depth}{(optional, default = 200) Comparision depth in (um).
 Compare a single image with adjacent images up to 200 um posterior.}
 }
 \value{
-Returns the segmentation data in \emph{segs} with clean cell output. All duplicate counts have been assigned NA.
+Returns the segmentation data in \emph{segs} with clean cell output. All
+duplicate counts have been assigned NA.
 }
 \description{
-Duplicate cell clean up of segmentation output from the \code{\link[=wb_segmentation_loop]{wb_segmentation_loop()}} function.
-For use with mapping whole brain only.
+Duplicate cell count clean up of segmentation output from the
+\code{\link[=wb_segmentation_loop]{wb_segmentation_loop()}} function. For use with mapping whole brain only.
 }

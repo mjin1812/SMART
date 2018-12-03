@@ -2,7 +2,7 @@
 % Please edit documentation in R/brainmorph.R
 \name{brainmorph}
 \alias{brainmorph}
-\title{Generate a brain morph plot}
+\title{Generate a brain morph plot \strong{(W)}}
 \usage{
 brainmorph(setup, savepaths, lineplot = TRUE, saveplot = TRUE,
   filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp",

@@ -1,4 +1,4 @@
-#' @title Alignment choice game to align internal reference planes.
+#' @title Alignment choice game to align internal reference planes **(W)**.
 #' @description  User friendly way to play the wholebrain choice game to align internal
 #' reference atlas plates. Automatically saves images of chosen aligned images in the
 #' folder specified by *savepaths$out_reference_aligned*. For use with mapping whole brain only.

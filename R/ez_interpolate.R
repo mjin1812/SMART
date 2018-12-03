@@ -1,22 +1,13 @@
-## interpolate_wb()
-## Interpolate all the AP and z numbers corresponding to atlas plates in between the first and last image. For use with mapping whole brain only (W).
-## 9-24-2018 MJ
-##
-## Arguments:
-## setup (required)
-## method (optional) - interpolation method;  (default = "l")
-##                     Options: "l" (linear interpolation), "s" (monotonic spline interpolation)
-## Returns:
-## setup - returns interpolated AP and z numbers based on the reference AP and z planes (element 16 and 17 of the setup list)
-
-
-#' @title Interpolate all AP and z numbers for atlas plates in a whole brain project.
+#' @title Interpolate all AP and z numbers for atlas plates in a whole brain project **(W)**.
 #' @description This function interpolates all corresponding z and AP values for atlas plates that are not reference plates.
 #' For use with mapping whole brain only.
 #' @param setup (required) Setup list will be used as the return variable.
 #' @param method (optional, default = "l") Interpolation method.
 #' Options: "l" (linear interpolation), "s" (monotonic spline interpolation)
+#' @return The argument assigned to *setup* is returned with
+#' interpolated AP and z numbers based on the reference AP and z planes.
 #' @export
+#' @md
 
 ez_interpolate <- function(setup, method = "l") {
 

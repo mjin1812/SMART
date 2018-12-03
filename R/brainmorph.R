@@ -1,4 +1,4 @@
-#' @title Generate a brain morph plot
+#' @title Generate a brain morph plot **(W)**
 #' @description Generate a brain morph plot (normalized to 1). For use with mapping whole brain only.
 #' Creates a plot that can be easily modified using 'par()' to query or set graphical parameters
 #' @param setup (required) Argument is used to get internal reference AP and z coordinates.

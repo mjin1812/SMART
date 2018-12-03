@@ -1,13 +1,19 @@
 #' A function to sort image paths for large imaging datasets
 #' @description User friendly way to sort images from the registration channel.
-#' Asks for user input to account for flexible naming conventions for images.
-#' @param setup (required) Argument used to access registration and segmentation folders.
-#' @param extension (optional, default = "tif") File extension of the imaging data.
-#' @param separator (optional, default = "_") Separator character to parse filename.
-#' @param position (optional) Position of z number in filename. If this argument is called, the user input is skipped.
-#' @details This function will account for incorrect path sorting in the *list.files* function.
-#' @return *image_paths* is list of sorted paths. The first element is a sorted character vector of registration channel.
-#' The second element is a sorted character vector of segmentation channel paths.
+#'   Asks for user input to account for flexible naming conventions for images.
+#' @param setup (required) Argument used to access registration and segmentation
+#'   folders.
+#' @param extension (optional, default = "tif") File extension of the imaging
+#'   data.
+#' @param separator (optional, default = "_") Separator character to parse
+#'   filename.
+#' @param position (optional) Position of z number in filename. If this argument
+#'   is called, the user input is skipped.
+#' @details Compared to the [list.files()] function, this function will sort 100+
+#' files in their appropriate order by z plane.
+#' @return *image_paths* is list of sorted paths. The first element is a sorted
+#'   character vector of registration channel. The second element is a sorted
+#'   character vector of segmentation channel paths.
 #' @md
 #' @export
 

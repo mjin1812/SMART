@@ -7,22 +7,28 @@
 im_sort(setup, extension = "tif", separator = "_", position = NULL)
 }
 \arguments{
-\item{setup}{(required) Argument used to access registration and segmentation folders.}
+\item{setup}{(required) Argument used to access registration and segmentation
+folders.}
 
-\item{extension}{(optional, default = "tif") File extension of the imaging data.}
+\item{extension}{(optional, default = "tif") File extension of the imaging
+data.}
 
-\item{separator}{(optional, default = "_") Separator character to parse filename.}
+\item{separator}{(optional, default = "_") Separator character to parse
+filename.}
 
-\item{position}{(optional) Position of z number in filename. If this argument is called, the user input is skipped.}
+\item{position}{(optional) Position of z number in filename. If this argument
+is called, the user input is skipped.}
 }
 \value{
-\emph{image_paths} is list of sorted paths. The first element is a sorted character vector of registration channel.
-The second element is a sorted character vector of segmentation channel paths.
+\emph{image_paths} is list of sorted paths. The first element is a sorted
+character vector of registration channel. The second element is a sorted
+character vector of segmentation channel paths.
 }
 \description{
 User friendly way to sort images from the registration channel.
 Asks for user input to account for flexible naming conventions for images.
 }
 \details{
-This function will account for incorrect path sorting in the \emph{list.files} function.
+Compared to the \code{\link[=list.files]{list.files()}} function, this function will sort 100+
+files in their appropriate order by z plane.
 }

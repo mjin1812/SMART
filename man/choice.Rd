@@ -2,7 +2,7 @@
 % Please edit documentation in R/choice.R
 \name{choice}
 \alias{choice}
-\title{Alignment choice game to align internal reference planes.}
+\title{Alignment choice game to align internal reference planes \strong{(W)}.}
 \usage{
 choice(setup, savepaths, image_paths, filetype = c("tif"), xpos = c(0,
   660, 1250), brightness = 70, font_col = "white", font_size = 80,

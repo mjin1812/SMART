@@ -1,5 +1,6 @@
 #' @title Helper background functions
 #' @description  necessary functions and data structures to load
+#' @family aggregate functions
 #' @export
 #
 # # Load whole brain atlas index
@@ -32,5 +33,28 @@ roundAP <- function(AP) {
     vec[n] <- atlasIndex$mm.from.bregma[1:132][ind]
   }
   return(vec)
+}
+
+# Get cell counts of data based on regions of interest given
+get_count <- function(dataset, roi = c('MO', 'TH')){
+  out <- unlist(lapply(roi, function(x)sum(dataset$acronym %in% get.sub.structure(x)) ) )
+  roi.data <- data.frame(acronym = roi, cell.count = out)
+  return(roi.data)
+}
+
+# Recursive function to get all child regions of entered regions of interest
+get_all_children <- function (rois, children = c()) {
+  for (l in 1:length(rois)){
+    # Get child regions
+    new_children <- wholebrain::get.acronym.child(rois[l])
+
+    # If there are more child regions
+    if (!anyNA(new_children)) {
+      children <- c(children, new_children)
+      children <- get_all_children(new_children, children = children)
+
+    }
+  }
+  return(children)
 }
 

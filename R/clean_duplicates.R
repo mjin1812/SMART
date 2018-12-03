@@ -1,15 +1,16 @@
-#'@title Duplicate cell cleanup
-#'@description Duplicate cell clean up of segmentation output from the [wb_segmentation_loop()] function.
-#'For use with mapping whole brain only.
+#'@title Duplicate cell cleanup **(W)**
+#'@description Duplicate cell count clean up of segmentation output from the
+#'  [wb_segmentation_loop()] function. For use with mapping whole brain only.
 #'@param setup (required) Contains setup parameters.
 #'@param segs (required) Segmentation data.
-#'@param xy_thresh (optional, default = 1) Threshold in the xy planes for the minimum distance where
-#'two center points can be the same cell.
-#'@param z_thresh (optional, default = 10) Threshold (in um) in the z-plane for the
-#'maximum z distance before a cell is counted as another cell.
+#'@param xy_thresh (optional, default = 1) Threshold in the xy planes for the
+#'  minimum distance where two center points can be the same cell.
+#'@param z_thresh (optional, default = 10) Threshold (in um) in the z-plane for
+#'  the maximum z distance before a cell is counted as another cell.
 #'@param compare_depth (optional, default = 200) Comparision depth in (um).
-#'Compare a single image with adjacent images up to 200 um posterior.
-#'@return Returns the segmentation data in *segs* with clean cell output. All duplicate counts have been assigned NA.
+#'  Compare a single image with adjacent images up to 200 um posterior.
+#'@return Returns the segmentation data in *segs* with clean cell output. All
+#'  duplicate counts have been assigned NA.
 #'@export
 #'@md
 
@@ -26,7 +27,8 @@ clean_duplicates <- function(setup, segs, xy_thresh = 1, z_thresh = 10, compare_
       n_cols <- length(segs$seg_z)-s
     }
 
-    # Data arranged in matrix where N rows are total number of cells detects in base slice. All other z-images will be compared against these cells.
+    # Data arranged in matrix where N rows are total number of cells detects
+    # in base slice. All other z-images will be compared against these cells.
     # N cols are number of z-slices being compared to these cells.
     n_rows <- length(segs$segmentations[[s]]$soma$x)
 
@@ -35,7 +37,8 @@ clean_duplicates <- function(setup, segs, xy_thresh = 1, z_thresh = 10, compare_
     # exact_overlap  <- 0
     # thresh_overlap <- 0
 
-    # comp_matrix (Comparison matrix) gives corresponding indices of cells that have matched in x,y coordinates on subsequent z-planes.
+    # comp_matrix (Comparison matrix) gives corresponding indices of cells
+    # that have matched in x,y coordinates on subsequent z-planes.
     comp_matrix <- matrix(data = NA, nrow = n_rows, ncol= n_cols+1)
 
     col_1 <- 1:n_rows
@@ -45,7 +48,7 @@ clean_duplicates <- function(setup, segs, xy_thresh = 1, z_thresh = 10, compare_
     # exact_overlap_cnt  <- 0
     # thresh_overlap_cnt <- 0
 
-    # Search and identify cells that have the same x,y coordinat
+    # Search and identify cells that have the same x,y coordinate
     for (r in 1:n_rows){       # r for row
       for (c in 1:n_cols) {    # c for column
         if (!is.na(segs$segmentations[[s]]$soma$x[r])) {

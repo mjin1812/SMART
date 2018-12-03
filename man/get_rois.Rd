@@ -7,14 +7,18 @@
 get_rois(dataset, rois = c("ACB", "CEA"))
 }
 \arguments{
-\item{dataset}{(required) Whole brain region mapped dataset generated from the \code{\link[=forward_warp]{forward_warp()}} function}
+\item{dataset}{(required) Whole brain region mapped dataset generated from
+the \code{\link[=forward_warp]{forward_warp()}} function}
 
-\item{rois}{(optional, default = c("ACB", "CEA")) A character vector containing the regions of interest.}
+\item{rois}{(optional, default = c("ACB", "CEA")) A character vector
+containing the regions of interest.}
 }
 \value{
-Returns a dataset of just the regions of interest from the whole brain dataset.
+Returns a dataset of just the regions of interest from the whole
+brain dataset.
 }
 \description{
-Allows the user to enter a character vector of the regions of interest (ROIs)
-and obtain a subset of the dataframe from the wholebrain dataset of just the ROIs.
+Allows the user to enter a character vector of the regions of
+interest (ROIs) and obtain a subset of the dataframe from the wholebrain
+dataset of just the ROIs.
 }

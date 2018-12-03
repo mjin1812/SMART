@@ -1,9 +1,13 @@
 #' @title  wb_get_rois
-#' @description Allows the user to enter a character vector of the regions of interest (ROIs)
-#' and obtain a subset of the dataframe from the wholebrain dataset of just the ROIs.
-#' @param dataset (required) Whole brain region mapped dataset generated from the [forward_warp()] function
-#' @param rois (optional, default = c("ACB", "CEA")) A character vector containing the regions of interest.
-#' @return Returns a dataset of just the regions of interest from the whole brain dataset.
+#' @description Allows the user to enter a character vector of the regions of
+#'   interest (ROIs) and obtain a subset of the dataframe from the wholebrain
+#'   dataset of just the ROIs.
+#' @param dataset (required) Whole brain region mapped dataset generated from
+#'   the [forward_warp()] function
+#' @param rois (optional, default = c("ACB", "CEA")) A character vector
+#'   containing the regions of interest.
+#' @return Returns a dataset of just the regions of interest from the whole
+#'   brain dataset.
 #' @export
 #' @md
 

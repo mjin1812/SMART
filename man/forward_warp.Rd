@@ -20,20 +20,25 @@ forward_warp(setup, savepaths, segs, regis, filetype = c("tif", "tiff",
 
 \item{regis}{(required) Registration data.}
 
-\item{filetype}{(optional, default = "tif") Image type to save as. See the \emph{type} argument in the function \code{\link[=savePlot]{savePlot()}}.
-Options: "tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf"}
+\item{filetype}{(optional, default = "tif") Image type to save as. See the
+\emph{type} argument in the function \code{\link[=savePlot]{savePlot()}}. Options: "tif", "tiff",
+"wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf"}
 
-\item{savewarp}{(optional, default = TRUE) Save forward warp plot image in folder savepaths$out_segmentation_warps.}
+\item{savewarp}{(optional, default = TRUE) Save forward warp plot image in
+folder 'savepaths$out_segmentation_warps'.}
 
-\item{saveschematic}{(optional, default = TRUE) Save schematic plot images in folder savepaths$out_segmentation_schem.}
+\item{saveschematic}{(optional, default = TRUE) Save schematic plot images in
+folder savepaths$out_segmentation_schem.}
 
-\item{plane}{(optional, default = "coronal") Atlas plane to register to. options: "coronal", "sagittal"}
+\item{plane}{(optional, default = "coronal") Atlas plane to register to.
+options: "coronal", "sagittal"}
 
 \item{title}{(optional, default = FALSE) Title for the schematic plot.}
 
 \item{mm.grid}{(optional, default = TRUE) Plot grid in schematic plot.}
 
-\item{dev.size}{(optional, default = c(5.4, 4.465)). See same argument from \code{\link[wholebrain:schematic.plot]{wholebrain::schematic.plot()}}.}
+\item{dev.size}{(optional, default = c(5.4, 4.465)). See same argument from
+\code{\link[wholebrain:schematic.plot]{wholebrain::schematic.plot()}}.}
 
 \item{pch}{(optional, default = 21) Graphical parameter for point shape.}
 
@@ -41,17 +46,22 @@ Options: "tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "
 
 \item{col}{(optional, default = "black") Graphical parameter for color.}
 
-\item{scale.bar}{(optional, default = TRUE)  Display a measure bar in the schematic plot}
+\item{scale.bar}{(optional, default = TRUE)  Display a measure bar in the
+schematic plot}
 
-\item{region.colors}{(optional, default = TRUE)  Display Allen Brain Atlas colors in schemetic plot.}
+\item{region.colors}{(optional, default = TRUE)  Display Allen Brain Atlas
+colors in schemetic plot.}
 }
 \value{
-Returns \emph{dataset} a variable storing all mapped segmentation data to registration data.
+Returns \emph{dataset} a variable storing all mapped segmentation data to
+registration data.
 }
 \description{
-Loop through all segmented cells and perform forward warp loop back onto atlas space.
-Options for plotting a schematic plot and saving forward warp images.
-For a whole brain, this function should be used after the segmentation list \emph{segs} has been cleaned of duplicate cell counts
+Loop through all segmented cells and perform forward warp loop
+back onto atlas space using registration and segmentation data.
+Options for plotting a schematic plot and saving forward warp images. For a
+whole brain, this function should be used after the segmentation list
+\emph{segs} has been cleaned of duplicate cell counts
 }
 \seealso{
 See also \code{\link[wholebrain:schematic.plot]{wholebrain::schematic.plot()}}.
