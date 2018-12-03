@@ -52,7 +52,8 @@
 #' interest.
 #' 2) [ez_sunburst()] Generate a sunburst plot using a forward warped dataset.
 #' 3) [get_tree()] Create a dataframe of hierarchical region cell count data.
-#'
+#' 4) [ez_glassbrain()] Generate 3D plot of cells with option of plotting or
+#' removing glassbrain in the background.
 #' @md
 #' @docType package
 #' @name ezBrain

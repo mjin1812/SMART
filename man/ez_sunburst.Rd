@@ -16,7 +16,7 @@ standards.}
 
 \item{parent}{(optional, default = TRUE) TRUE allows multiple rois to be
 plotted on the same sunburst, with the base parent layer set to 'grey'. If
-FALSE, the base will be set to the first ROI. Other ROIS will be ignored
+FALSE, the base will be set to the first ROI. Other ROIs will be ignored
 because the sunburst cannot accomodate more than one base layer.}
 }
 \value{
