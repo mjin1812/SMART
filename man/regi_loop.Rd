@@ -37,7 +37,7 @@ registering all registration planes. This argument takes precendence over argume
 
 \item{touchup}{(optional, default = FALSE) Run registration loop on a subset of registration plates.
 Options:
-\enumerate{
+\itemize{
 \item touchup = TRUE runs a user friendly interface allowing user to enter which plates they want to fix.
 \item touchup = numeric vector of plate numbers user wants to fix (plates should be whole integers).
 }}
@@ -57,7 +57,7 @@ This can help with internal structure visualization.}
 
 \item{font_location}{(optional, default  = "+100+100") Move text from center of gravity parameter in pixels.}
 
-\item{gravity}{(optional, "southwest") - location of text annotation. e.g. "southwest" means bottom left of screen.}
+\item{gravity}{(optional, "southwest") Location of text annotation. e.g. "southwest" means bottom left of screen.}
 }
 \description{
 User friendly code to alter atlas to image registration.
@@ -69,5 +69,5 @@ The user has the option to save the environment after every registration.
 }
 \details{
 This functions creates a vector list of registration information for each registration slice.
-Note: This is not a return. The vector regis is automatically created.
+Note: This is not a return. The vector \emph{regis} is automatically created.
 }

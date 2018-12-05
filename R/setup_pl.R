@@ -28,7 +28,8 @@
 #' 4)  Segmentation channel image folder path (can be the same as the
 #' Registration channel)
 #' 5)  Output folder to store data
-#' 6)  Spacing between adjacent z images (mm) 7)  Spacing between registrations
+#' 6)  Spacing between adjacent z images (mm)
+#' 7)  Spacing between registrations
 #' (mm). Default is 0.100, meaning registrations are performed every 100 um.
 #' Recommended input is are multiples of 0.100. Beware! Larger spacing between
 #' registrations means less manual work but less accurate mapping in the rostral

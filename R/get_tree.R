@@ -1,9 +1,9 @@
 #' @title Create a dataframe of hierarchical region cell count data.
 #' @description Generates a dataframe of showing nested relationship of brain
-#'   regions, their cell counts, and their cell count densities. Output can then
-#'   be fed into the sunburst functions to generate easy sunburst plots. It can
-#'   also be used for other  simple nested plots, such as treemaps. As a
-#'   convention, higher level columns will indicate child regions while lower
+#'   regions, their cell counts, and their cell count densities. Output can also
+#'   be used for simple plots showing nested heirarchical relationships, such as
+#'   treemaps. As a convention, higher level columns will indicate child regions
+#'   while lower
 #'   level columns indicate parent regions.
 #' @param dataset (required) Whole brain dataset returned as an output of the
 #'   [forward_warp()] function.

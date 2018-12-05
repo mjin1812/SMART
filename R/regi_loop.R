@@ -24,17 +24,17 @@
 #' Entering argument TRUE on a partial brain project will be ignored.
 #' @param touchup (optional, default = FALSE) Run registration loop on a subset of registration plates.
 #' Options:
-#' 1) touchup = TRUE runs a user friendly interface allowing user to enter which plates they want to fix.
-#' 2) touchup = numeric vector of plate numbers user wants to fix (plates should be whole integers).
+#' + touchup = TRUE runs a user friendly interface allowing user to enter which plates they want to fix.
+#' + touchup = numeric vector of plate numbers user wants to fix (plates should be whole integers).
 #' @param popup (optional, default = TRUE) Popup the original raw image to be registered.
 #' This can help with internal structure visualization.
 #' @param brightness (optional, default = 70) Popup image brightness.
 #' @param font_col (optional, default = "white")
 #' @param font_size (optional, default = 40)
 #' @param font_location (optional, default  = "+100+100") Move text from center of gravity parameter in pixels.
-#' @param gravity (optional, "southwest") - location of text annotation. e.g. "southwest" means bottom left of screen.
+#' @param gravity (optional, "southwest") Location of text annotation. e.g. "southwest" means bottom left of screen.
 #' @details This functions creates a vector list of registration information for each registration slice.
-#' Note: This is not a return. The vector regis is automatically created.
+#' Note: This is not a return. The vector *regis* is automatically created.
 #' @md
 #' @export
 
@@ -42,10 +42,6 @@ regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL
                                  filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf"),
                                  autoloop = FALSE, touchup = FALSE, reference = FALSE, popup = TRUE, brightness = 70,
                                  font_col = "white", font_size = 40, font_location = "+100+100", gravity = "southwest") {
-
-  # ######## Get necessary functions NOTE: these will be modified to be internal package functions later
-  # source('wb_functions.R')
-  # ########
 
   # Match filetype argument
   filetype <- match.arg(filetype)
@@ -81,7 +77,7 @@ regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL
 
       # Saving image. Note: the extra window is to correct for a bug in savePlot in windows
       curwin <- dev.cur()
-      windows()
+      quartz()
       savePlot(filename = savepath, type = filetype, device = curwin)
       graphics.off()
 
@@ -170,7 +166,7 @@ regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL
       indices <- which(unlist(lapply(regis, is.null)))
 
       if (length(indices) == 0){
-        stop("There are no plates that haven't been registered! If you like to change an existing registration, please set touchup = TRUE")
+        stop("There are no plates that haven't been registered! If you like to change an existing registration, please set touchup = TRUE and regis = regis.")
       }
 
       # Store AP and z values of registrations plates to loop through

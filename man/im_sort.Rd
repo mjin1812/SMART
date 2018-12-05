@@ -21,7 +21,7 @@ is called, the user input is skipped.}
 }
 \value{
 \emph{image_paths} is list of sorted paths. The first element is a sorted
-character vector of registration channel. The second element is a sorted
+character vector of registration channel paths. The second element is a sorted
 character vector of segmentation channel paths.
 }
 \description{

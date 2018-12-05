@@ -12,7 +12,7 @@
 #' @details Compared to the [list.files()] function, this function will sort 100+
 #' files in their appropriate order by z plane.
 #' @return *image_paths* is list of sorted paths. The first element is a sorted
-#'   character vector of registration channel. The second element is a sorted
+#'   character vector of registration channel paths. The second element is a sorted
 #'   character vector of segmentation channel paths.
 #' @md
 #' @export
