@@ -1,6 +1,8 @@
 #'@title Duplicate cell cleanup **(W)**
 #'@description Duplicate cell count clean up of segmentation output from the
 #'  [wb_segmentation_loop()] function. For use with mapping whole brain only.
+#'  Note: if the imaging dataset is large this will be a time intensive process.
+#'  Processing time will be printed once the function is finished.
 #'@param setup (required) Contains setup parameters.
 #'@param segs (required) Segmentation data.
 #'@param xy_thresh (optional, default = 1) Threshold in the xy planes for the
@@ -136,7 +138,7 @@ clean_duplicates <- function(setup, segs, xy_thresh = 1, z_thresh = 10, compare_
     }
   }
   return(segs)
-  tictoc::toc()
+  tictoc::toc() # Return processing time
 }
 
 
