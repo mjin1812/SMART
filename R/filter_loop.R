@@ -154,7 +154,7 @@ filter_loop <- function(setup, image_paths, channel = c("regi", "seg"), filter =
           for (p in pts ) {
             if ( p == 1 | p == 2) {
               filter[[p]] <- readline(user_prompt[[p]])
-              filter[[p]] <- sort(as.numeric(unlist(strsplit(filter[[p]], ","))), decreasing = TRUE)
+              filter[[p]] <- sort(as.numeric(unlist(strsplit(filter[[p]], ","))))
             } else if (p==7) {
               filter[[p]] <- as.numeric(readline(user_prompt[[p]]))
             } else {

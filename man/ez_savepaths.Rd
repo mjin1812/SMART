@@ -13,7 +13,7 @@ ez_savepaths(setup)
 \emph{savepaths} is a list containing savepaths to the data directories where analysis output will be stored.
 }
 \description{
-User friendly way to create standardized save directories based on the setup information from the \emph{wb_setup} function.
+User friendly way to create standardized save directories based on the setup information from \code{\link[=setup_pl]{setup_pl()}}.
 Returns a list of savepaths to subfolders in the output folder.
 }
 \details{

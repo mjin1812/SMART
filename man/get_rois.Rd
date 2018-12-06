@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_rois.R
 \name{get_rois}
 \alias{get_rois}
-\title{wb_get_rois}
+\title{Get ROI data from a mapped wholebrain dataset.}
 \usage{
 get_rois(dataset, rois = c("ACB", "CEA"))
 }

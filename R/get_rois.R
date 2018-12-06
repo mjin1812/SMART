@@ -1,4 +1,4 @@
-#' @title  wb_get_rois
+#' @title  Get ROI data from a mapped wholebrain dataset.
 #' @description Allows the user to enter a character vector of the regions of
 #'   interest (ROIs) and obtain a subset of the dataframe from the wholebrain
 #'   dataset of just the ROIs.

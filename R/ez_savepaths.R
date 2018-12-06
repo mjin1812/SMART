@@ -1,5 +1,5 @@
 #' Automatically generates savepaths and save directories.
-#' @description  User friendly way to create standardized save directories based on the setup information from the *wb_setup* function.
+#' @description  User friendly way to create standardized save directories based on the setup information from [setup_pl()].
 #' Returns a list of savepaths to subfolders in the output folder.
 #' @param setup (required) The output folder from the setup list is used to generate save directories
 #' @return *savepaths* is a list containing savepaths to the data directories where analysis output will be stored.

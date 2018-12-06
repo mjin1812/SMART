@@ -19,13 +19,13 @@ Generates a setup list of length 7 if the user is registering a partial
 brain or of length 16 if the user is mapping a whole brain. If a setup list
 already exists, calling this function will simply ask the user to verify
 setup info. Info can be changed if necessary. However, be conservative with
-changing information, especially if different users work on the same brain.
+changing setup parameters, especially if different users work on the same brain.
 }
 \details{
 Descriptions of list elements for a \strong{partial brain}.
 \enumerate{
 \item Animal ID
-\item User's Initials
+\item User's Initials.
 \item Registration channel image folder path (normally an autofluorescence
 channel)
 \item Segmentation channel image folder path (can be different than the
