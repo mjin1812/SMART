@@ -196,7 +196,7 @@ regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL
         image <- magick::image_annotate(image, paste0("Plate ", toString(platereturn(AP)),", AP ",
                                                       toString(round(AP, digits=2)), ", z ", toString(imnum)),
                                         gravity = gravity, size= font_size , color = font_col, location = font_location)
-        windows(canvas="black", title= paste("z-slice ", toString(imnum)))
+        quartz(canvas="black", title= paste("z-slice ", toString(imnum)))
         plot(image)
 
         # Run registration improvement loop
@@ -224,7 +224,7 @@ regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL
 
       # Saving image. Note: the extra window is to correct for a bug in savePlot in windows
       curwin <- dev.cur()
-      windows()
+      quartz()
       savePlot(filename = savepath, type = filetype, device = curwin)
       graphics.off()
 

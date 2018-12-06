@@ -19,8 +19,8 @@ choice(setup, savepaths, image_paths, filetype = c("tif"), xpos = c(0,
 \item{filetype}{(optional, default = "tif") Image format to save.
 Setting this argument as a vector of image formats, e.g. c("tif", "png")
 will save both image types. Options: common image formats like "tiff", "png",
-"jpeg", "gif", "rgb" or "rgba". See "magick" package documentation for more info
-on the \emph{image_write} function}
+"jpeg", "gif", "rgb" or "rgba". See \link{magick} package documentation for more info
+on the \code{\link[=image_write]{image_write()}} function}
 
 \item{xpos}{(optional, default = c(0, 660, 1250)) A vector of x-positions in
 pixels justified to the left of the main computer screen for the three choice windows.}

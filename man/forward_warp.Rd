@@ -58,10 +58,12 @@ registration data.
 }
 \description{
 Loop through all segmented cells and perform forward warp loop
-back onto atlas space using registration and segmentation data.
-Options for plotting a schematic plot and saving forward warp images. For a
-whole brain, this function should be used after the segmentation list
-\emph{segs} has been cleaned of duplicate cell counts
+back onto atlas space using registration and segmentation data. Options for
+plotting a schematic plot and saving forward warp images. For a whole
+brain, this function should be used after the segmentation list \emph{segs} has
+been cleaned of duplicate cell counts. Note: if the imaging dataset is
+large this will be a time intensive process. Processing time will be
+printed once the function is finished.
 }
 \seealso{
 See also \code{\link[wholebrain:schematic.plot]{wholebrain::schematic.plot()}}.

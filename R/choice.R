@@ -8,8 +8,8 @@
 #' @param filetype (optional, default = "tif") Image format to save.
 #' Setting this argument as a vector of image formats, e.g. c("tif", "png")
 #' will save both image types. Options: common image formats like "tiff", "png",
-#' "jpeg", "gif", "rgb" or "rgba". See "magick" package documentation for more info
-#' on the *image_write* function
+#' "jpeg", "gif", "rgb" or "rgba". See [magick] package documentation for more info
+#' on the [image_write()] function
 #' @param xpos (optional, default = c(0, 660, 1250)) A vector of x-positions in
 #' pixels justified to the left of the main computer screen for the three choice windows.
 #' @param brightness (optional, default = 70) Popup image brightness.
@@ -29,10 +29,6 @@ choice <- function(setup, savepaths, image_paths, filetype = c("tif"),
                       xpos = c(0, 660, 1250), brightness = 70,
                       font_col = "white", font_size = 80, font_location = "+100+30",
                       gravity = "southwest", choice_step = c(200,100,30,10)) {
-
-  # ##### Get necessary functions NOTE: these will be modified to be internal package functions later
-  # source('wb_functions.R')
-  # #####
 
   # Interpolate z numbers base on first and last aligned imagesgi
   fl_AP <- roundAP(c(setup$first_AP, setup$last_AP))
@@ -78,7 +74,7 @@ choice <- function(setup, savepaths, image_paths, filetype = c("tif"),
           ref_im <- magick::image_contrast(ref_im)
           ref_im <- magick::image_annotate(ref_im, paste(toString(i), ", ", toString(im_num)),
                                            gravity = gravity, size = font_size, color = font_col , location = font_location)
-          windows(canvas="black", title= paste("z-slice ", toString(im_num)), xpos= xpos[i])
+          quartz(canvas="black", title= paste("z-slice ", toString(im_num)), xpos= xpos[i])
           plot(ref_im)
         }
 
@@ -150,7 +146,7 @@ choice <- function(setup, savepaths, image_paths, filetype = c("tif"),
                                                       toString(round(midpnt_ref_AP[n], digits=2)), ", est. z ",
                                                       toString(midpnt_ref_z[n])), gravity = gravity, size= font_size,
                                       color = font_col, location = font_location)
-    windows(canvas="black", title= paste("z-slice ", toString(midpnt_ref_z[n])))
+    quartz(canvas="black", title= paste("z-slice ", toString(midpnt_ref_z[n])))
     plot(ref_im)
     line  <- TRUE
     while (line != "Y" & line!="y" & line !="N" & line != "n"){
@@ -195,7 +191,7 @@ choice <- function(setup, savepaths, image_paths, filetype = c("tif"),
           ref_im <- magick::image_contrast(ref_im)
           ref_im <- magick::image_annotate(ref_im, paste(toString(i), ", ", toString(im_num)),
                                          gravity = gravity, size = font_size, color = font_col , location = font_location)
-          windows(canvas="black", title= paste("z-slice ", toString(im_num)), xpos= xpos[i])
+          quartz(canvas="black", title= paste("z-slice ", toString(im_num)), xpos= xpos[i])
           plot(ref_im)
         }
 
