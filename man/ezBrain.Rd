@@ -24,7 +24,7 @@ the recommended variable name will also be the same name as the argument.
 
 \enumerate{
 \item \code{\link[=setup_pl]{setup_pl()}} User friendly way to setup parameters for whole or
-patrial brain pipeline analysis.
+partial brain pipeline analysis.
 \item \code{\link[=im_sort]{im_sort()}}  A function to sort image paths for imaging datasets.
 \item \code{\link[=ez_savepaths]{ez_savepaths()}} Generate savepaths and save directories.
 }

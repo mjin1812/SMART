@@ -16,7 +16,7 @@
 #' @section Part 1. Setup pipeline:
 #'
 #' 1) [setup_pl()] User friendly way to setup parameters for whole or
-#' patrial brain pipeline analysis.
+#' partial brain pipeline analysis.
 #' 2) [im_sort()]  A function to sort image paths for imaging datasets.
 #' 3) [ez_savepaths()] Generate savepaths and save directories.
 #'
