@@ -37,7 +37,7 @@ roundAP <- function(AP) {
 
 # Get cell counts of data based on regions of interest given
 get_count <- function(dataset, roi = c('MO', 'TH')){
-  out <- unlist(lapply(roi, function(x)sum(dataset$acronym %in% get.sub.structure(x)) ) )
+  out <- unlist(lapply(roi, function(x)sum(dataset$acronym %in% wholebrain::get.sub.structure(x))))
   roi.data <- data.frame(acronym = roi, cell.count = out)
   return(roi.data)
 }

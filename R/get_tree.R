@@ -34,7 +34,6 @@
 
 
 get_tree <- function(dataset, rois = c("CH", "BS"), base =  "grey", subtract = TRUE){
-  tictoc::tic()
   children <- get_all_children(rois)
 
   # Add necessary parent regions
@@ -122,9 +121,6 @@ get_tree <- function(dataset, rois = c("CH", "BS"), base =  "grey", subtract = T
   # densities <- wholebrain::normalize.volume(dataset)
   # densities <- densities[rois]
   # tree$density <- densities
-
-  # End timer
-  tictoc::toc()
 
   # Return allows the user to assign to a variable of their choosing
   return(tree)

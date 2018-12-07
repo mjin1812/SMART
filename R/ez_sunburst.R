@@ -25,12 +25,11 @@ ez_sunburst <- function(dataset, rois = c("CH", "BS"), parent = TRUE){
  }
 
  # Convert tree to a JSON
-
-d3_data <- d3r::d3_nest(tree, value_cols = c("counts", "color"))
+ d3_data <- d3r::d3_nest(tree, value_cols = c("counts", "color"))
  # d3_data <- d3r::d3_nest(tree, value_cols = c("counts", "density" ,"color"))
 
  # Generate sunburst
- sb_obj <- sunburstR::sunburst(data = d3_data, valueField = "counts", count = TRUE,
+ sb_obj <- sunburstR::sunburst(data = d3_data, valueField = "counts", count = TRUE, legend = FALSE,
                                colors = htmlwidgets::JS("function(d){return d3.select(this).datum().data.color;}"), withD3 = TRUE)
  return(sb_obj)
 }

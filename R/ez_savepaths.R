@@ -33,7 +33,6 @@ ez_savepaths <- function (setup) {
   if (!file.exists(out_R_data)){
     # Create directories
     dir.create(out_R_data)
-    dir.create(out_reference_aligned)
     dir.create(out_auto_registration)
     dir.create(out_registration)
     dir.create(out_registration_warps)
@@ -43,6 +42,7 @@ ez_savepaths <- function (setup) {
     if (length(setup)>7) {
       # Create folder for brain morph if whole brain project
       dir.create(out_RC_brain_morph)
+      dir.create(out_reference_aligned)
     }
   }
 
@@ -61,7 +61,6 @@ ez_savepaths <- function (setup) {
   } else {
     ## Create list of savepaths
     savepaths <- list(envir_savepath = envir_savepath,
-                      out_reference_aligned = out_reference_aligned,
                       out_auto_registration = out_auto_registration,
                       out_registration = out_registration,
                       out_registration_warps = out_registration_warps,
