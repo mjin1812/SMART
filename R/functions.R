@@ -1,19 +1,12 @@
 #' @title Helper background functions
 #' @description  necessary functions and data structures to load
 #' @family aggregate functions
-#' @export
 #
 # # Load whole brain atlas index
 # load(file.path(.libPaths()[1],"wholebrain","data","atlasIndex.RData"))
 
 # Load whole brain atlasIndex values and extract only coronal slices
 # at_ind  <- atlasIndex$mm.from.bregma[1:132]
-
-# Initiate quartz
-if (.Platform$OS.type == "windows" | .Platform$OS.type == "unix") {
-  quartz <- function(width,height){
-    windows(width, height)}
-}
 
 # return plate number based on entered AP
 platereturn <- function(AP) {
