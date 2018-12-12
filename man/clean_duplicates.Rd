@@ -27,7 +27,7 @@ duplicate counts have been assigned NA.
 }
 \description{
 Duplicate cell count clean up of segmentation output from the
-\code{\link[=wb_segmentation_loop]{wb_segmentation_loop()}} function. For use with mapping whole brain only.
+\code{\link[=seg_loop]{seg_loop()}} function. For use with mapping whole brain only.
 Note: if the imaging dataset is large this will be a time intensive process.
 Processing time will be printed once the function is finished.
 }

@@ -239,7 +239,7 @@ choice <- function(setup, savepaths, image_paths, filetype = c("tif"),
 
   # Consolidate new reference points
   ref_z  <- sort(c(ref_z , new_z))
-  ref_AP <- round(sort(c(ref_AP, new_AP ), decreasing = TRUE), digits = 2)
+  ref_AP <- roundAP(sort(c(ref_AP, new_AP ), decreasing = TRUE))
 
   #### MIDPOINT CHECK END ####
   }

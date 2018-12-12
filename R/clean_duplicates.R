@@ -1,6 +1,6 @@
 #'@title Duplicate cell cleanup **(W)**
 #'@description Duplicate cell count clean up of segmentation output from the
-#'  [wb_segmentation_loop()] function. For use with mapping whole brain only.
+#'  [seg_loop()] function. For use with mapping whole brain only.
 #'  Note: if the imaging dataset is large this will be a time intensive process.
 #'  Processing time will be printed once the function is finished.
 #'@param setup (required) Contains setup parameters.

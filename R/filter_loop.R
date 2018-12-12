@@ -12,7 +12,7 @@
 #' @param console (optional, default = TRUE) Display console interface to modify filter parameters
 #' instead of using the built-in GUI.
 #' @seealso See also the [wholebrain::segment()] function in wholebrain.
-#' @returns returns *filter* with adjusted values.
+#' @return Returns *filter* with adjusted values.
 #' @export
 #' @md
 

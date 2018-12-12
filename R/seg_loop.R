@@ -1,7 +1,7 @@
 #' @title Loop through and segment images in the segmentation channel
 #' @description Loop through the z images in the segmentation folder path. For a
 #'   whole brain, every N images is segmented, where N is equal to
-#'   'setup$seg_step.' For a partial brain, all the images in 'setup$regi_z' are
+#'   `setup$seg_step.` For a partial brain, all the images in `setup$regi_z` are
 #'   segmented. The function will return a list called *segs* of length 2. Note:
 #'   if the imaging dataset is large this will be a time intensive process.
 #'   Processing time will be printed once the function is finished.

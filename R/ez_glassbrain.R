@@ -20,7 +20,6 @@
 #' @export
 #' @md
 
-
 ez_glassbrain <- function(dataset, high.res = "OFF", dim = c(720, 1080), device = TRUE,
                           col = "region", cex = 0.5, hemisphere = "right", spheres = FALSE,
                           alpha = 1, laterality = TRUE, plane = "coronal", jitter = FALSE){

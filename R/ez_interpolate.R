@@ -11,10 +11,6 @@
 
 ez_interpolate <- function(setup, method = "l") {
 
-  # ###### Get necessary functions NOTE: these will be modified to be internal package functions later
-  # source('wb_functions.R')
-  # ######
-
   # Combine first, last, and internals
   AP <- roundAP(c(setup$first_AP, setup$internal_ref_AP, setup$last_AP))
   z  <- c(setup$first_z, setup$internal_ref_z, setup$last_z)
@@ -36,7 +32,7 @@ ez_interpolate <- function(setup, method = "l") {
   }
 
   # Store interpolated values into the setup list
-  setup$regi_AP <- sort(c(AP_interp, setup$internal_ref_AP), decreasing = TRUE)
-  setup$regi_z <- sort(c(z_interp, setup$internal_ref_z))
+  setup$regi_AP <- sort(c(AP_interp, setup$internal_ref_AP, setup$first_AP, setup$last_AP), decreasing = TRUE)
+  setup$regi_z <- sort(c(z_interp, setup$internal_ref_z, setup$first_z, setup$last_z))
   return(setup)
 }

@@ -1,7 +1,7 @@
 #' @title Helper background functions
 #' @description  necessary functions and data structures to load
 #' @family aggregate functions
-#
+#' @export
 # # Load whole brain atlas index
 # load(file.path(.libPaths()[1],"wholebrain","data","atlasIndex.RData"))
 

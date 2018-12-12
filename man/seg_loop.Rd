@@ -36,7 +36,7 @@ returns \emph{segs} A list of length 2. Each list element is described below:
 \description{
 Loop through the z images in the segmentation folder path. For a
 whole brain, every N images is segmented, where N is equal to
-'setup$seg_step.' For a partial brain, all the images in 'setup$regi_z' are
+\code{setup$seg_step.} For a partial brain, all the images in \code{setup$regi_z} are
 segmented. The function will return a list called \emph{segs} of length 2. Note:
 if the imaging dataset is large this will be a time intensive process.
 Processing time will be printed once the function is finished.

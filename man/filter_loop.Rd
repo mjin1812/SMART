@@ -19,6 +19,9 @@ filter_loop(setup, image_paths, channel = c("regi", "seg"),
 \item{console}{(optional, default = TRUE) Display console interface to modify filter parameters
 instead of using the built-in GUI.}
 }
+\value{
+Returns \emph{filter} with adjusted values.
+}
 \description{
 This function will take a filter and loop through all images in a partial brain
 or just the reference images across the brain in either the registration or segmentation channel.

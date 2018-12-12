@@ -1,0 +1,634 @@
+---
+title: "ezBrain"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+---
+Author(s):
+Maintainer: Michelle Jin 
+- michelle.jin@nih.gov 
+- <span style="color:#337ab7">@</span>[Michelle_Jin1](https://twitter.com/michelle_jin1)
+
+Contributor: Joseph Nguyen 
+- jdnguyen@email.wm.edu
+
+## Introduction:
+This package builds a pipeline interfacing with the
+[wholebrain](https://github.com/tractatus/wholebrain) package ^[Daniel Furth -
+@wholebrainsuite (2015). wholebrain: Functions to segment and register cells
+  from microscopic image files with R. R package version 0.1.1.] to process
+  whole brain imaging datasets. Datasets of a handful of single slice images
+  across the brain can also be fed into this pipeline. For brevity, I'll refer
+  to these datasets as partial brains.
+
+There are six main advancements that ezBrain builds on top of the wholebrain
+base package:
+  
+1. Guides the user through setting up analysis parameters and feeds the imaging
+data through registration, segmentation, and forward warp process. It automates
+looping through these analyses with simple function calls so the user does not
+have to set up this looping.
+
+2. Provides a user-friendly interface whenever possible. This includes a console
+interface during the registration process, that allows for easy adding,
+changing, and removing correspondance points or reverting back to a previous
+correspondance change.
+
+3. Helps to solve non-linear relationships between atlas AP coordinates to
+actual distances in the anterior-posterior axis in real imaging datasets. This
+is critical when dealing with tissue clearing methods that cause non-uniform
+tissue morphing across the AP-axis.
+
+4. Organizes and stores the output of wholebrain analysis in automatically
+generated subdirectories. This standardized organization will be
+beneficial when sharing data output from wholebrain.
+
+5. Provides more ways to parse whole brain datasets and visualize data across
+ROIs.
+
+*Disclaimer. This package is intended for coronal plane datasets. Preprocessing
+must be done to align the dataset coronally before it should be analyzed with
+the pipeline.*
+
+**Below is an illustratratration of the pipeline schematic:**
+![](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/pipeline_schematic.PNG)
+
+***
+
+##Installation of ezBrain:
+
+To use ezBrain, wholebrain must first be installed. The instructions to install
+wholebrain can be found [here](http://www.wholebrainsoftware.org/cms/install).
+Please note, if you are using a windows machine, manual installation of opencv
+is no longer necessary. I highly recommend reading through some of the documentation 
+for wholebrain before using this package. 
+
+ezBrain is easily installed from github using the devtools package:
+
+```{r, eval = FALSE}
+# Load devtools
+library(devtools) 
+ 
+# Install ezBrain
+devtools::install_github("mjin1812/ezBrain")
+
+# Load ezBrain
+library(ezBrain)
+
+# Pull up package descriptions and list of functions
+?ezBrain
+```
+
+***
+
+## Pipeline breakdown:
+As illustrated in the schematic and stated in the package descriptions, not all
+parts of this pipeline will be used when analyzing a partial brain. Sections/functions exclusively meant to be used with whole brain datasets will be marked with **(W)**. Additionally, some package functions may be useful for analysis outside the pipeline we present here.
+
+For processing a wholebrain dataset, the pipeline is split into 5 sections. These sections are listed below along with the functions that belong to each section:
+
+**Part 1: Setup pipeline**
+
++ [`setup_pl()`](#id1)  User friendly way to setup parameters for whole or partial brain pipeline analysis.
++ [`im_sort()`](#id2) A function to sort image paths for imaging datasets.
++ [`ez_savepaths()`](#id3) Generate savepaths and save directories.
+
+**Part 2: Alignment (W) **
+
++ [`choice()`](#id4)  **(W)** User friendly choice game to align internal reference atlas plates.
++ [`brainmorph()`](#id5) **(W)** Generate a brain morph plot.
++ [`ez_interpolate()`](#id6)**(W)** Interpolate all AP and z numbers for atlas plates in a whole brain project   
+
+**Part 3: Registration**
+
++ [`ez_regi()`](#id7) Console user interface built on top of registration() function from the wholebrain package.
++ [`regi_loop()`](#id8) Automatically loops through the image registration processs for the imaging dataset.
+
+**Part 4: Segmentation, duplicate cleanup, & forward warping**
+
++ [`filter_loop()`](#id9) Loops through reference slices and allows user to check/change filter settings for segmentation or registration throughout the brain.
++ [`seg_loop()`](#id10)   Loop through and segment images in the segmentation channel.
++ [`clean_duplicates()`](#id11) **(W)** Duplicate cell count clean up of segmentation output
++ [`forward_warp()`](#id12) Perform forward warp loop back onto atlas space using segmentation and registration data.
+
+**Part 5. Dataset manipulation and plotting**
+
++ [`get_rois()`](#id13) Get subset of the forward warped dataframe of just regions of interest.
++ [`ez_sunburst()`](#id14) Generate a sunburst plot using a forward warped dataset.
++ [`get_tree()`](#id15) Create a dataframe of hierarchical region cell count data.
++ [`ez_glassbrain()`](#id16) Generate 3D plot of cells with option of plotting or removing glassbrain in the background.
+
+Below is a walkthrough of each of these functions and the pipeline as a whole
+using an example whole brain dataset. Feel free to use the function links above
+to skip sections!
+
+For convention, if a return value is given by a function, the recommended variable name is indicated in italics in the return section of each function's help page. If this return value is a required argument for another function in the pipeline, the the recommended variable name will also be the same name as the argument.
+
+
+```{r, echo = FALSE, eval = FALSE, cache = TRUE}
+load(paste0(getwd(),"/R_data/setup.RData"))
+load(paste0(getwd(),"/R_data/savepaths.RData"))
+```
+
+***
+
+## Part 1: Setup pipeline
+
+This sections sets up analysis parameters, sorted image paths, and generates
+savepaths and directories for the rest of the pipeline.
+
+<a id="id1"></a> 
+
+**Step 1.** 
+
+**`setup_pl()()`** This function asks the user for setup information. Based on input from the user, the function returns a list of parameters for either a whole or partial brain analysis.
+
+```{r, eval = FALSE}
+
+# Scroll to the details section of the help page to see the setup parameters
+?setup_pl()
+
+# Run setup_pl, enter parameter information to the console, 
+# and store the output list into a variable named setup
+
+setup <- setup_pl()
+
+# Check or modify your setup parameters 
+setup <- setup_pl(setup)
+
+# Note: Whenever a different user works on analyzing the same dataset,
+# run the above command to change user initials. This will keep track of
+# who did what. 
+```
+
+> Tips: When providing folder paths, do not put quotes around the path to the console input. 
+
+For convention, sequential image numbers are z image numbers, even for a partial brain analysis. Z image number should start at 1 and end at the number of images. Image files should start indexing 1 in the filenames to match image number.
+
+For a whole brain analysis, the first and last atlas plates must be qualitatively aligned with the first and last z image numbers. Note that the `setup$internal_ref_z`, `setup$regi_AP`, `setup$regi_z` parameters are not user modifiable and will be NULL until the`choice()` or `ez_interpolate()` functions are run.
+
+Additionally, there are a few default pipeline parameters for whole brain analysis:
+
++ Spacing between registrations (mm). DEFAULT: 0.100
++ Segmentation step (integer). DEFAULT: 1.
++ AP coordinates of internal reference planes. DEFAULT: 1.91, 1.10, -.42, -0.93
+, -1.94 , -2.95, -3.96. 
+
+The above coordinates correspond to PFC, NAc, antHyp, startHip, posHyp, VTA,
+PAG, respectively. These coordinates will be the atlas plates used to
+"calibrate" to internal z images. They'll be used to interpolate and match the z
+images of remaining atlas plates. They were chosen because: 1) Based on our
+experience, they contain easy internal region landmarks that can be consistently
+identified by different users and 2) They are somewhat evenly spaced throughout
+the brain. However, these coordinates are user modifiable to account for user
+preference and varying AP ranges of imaging datasets.
+
+If you are using this pipeline for the first time, I recommend you take the default values. 
+
+The console code below shows the setup list I am using:
+
+```{r, eval = FALSE}
+
+# Check setup list
+
+> setup <- setup_pl(setup)
+$`anim_ID`
+[1] "2606"
+
+$user_init
+[1] "MJ"
+
+$regi_channel
+[1] "E:/Test/R1_S20_2606_SG_coronal_C02"
+
+$seg_channel
+[1] "E:/Test/R1_S20_2606_SG_coronal_C01"
+
+$output
+[1] "C:/Users/mjin1/Documents/Test/packagetest_W"
+
+$z_space
+[1] 0.0025
+
+$regi_step
+[1] 0.1
+
+$seg_step
+[1] 1
+
+$first_AP
+[1] 2.411794
+
+$first_z
+[1] 1
+
+$last_AP
+[1] -4.769504
+
+$last_z
+[1] 2673
+
+$internal_ref_AP
+[1]  1.9060687  1.0969084 -0.4202672 -0.9259924 -1.9374427 -2.9488931 -3.9603435
+
+$internal_ref_z
+NULL
+
+$regi_AP
+NULL
+
+$regi_z
+NULL
+
+Please review your setup information above: 
+Do you want to change any settings: Y/N?
+
+>
+
+```
+<a id="id2"></a> 
+**Step 2.** 
+**`im_sort()`**  User friendly way to sort images from the registration channel. Asks for user input to account for flexible naming conventions for images.
+
+```{r, eval = FALSE}
+# Sort images and store them 
+
+# There will be user walk through for 'separator' 
+# and 'position' information necessary to sort images 
+image_paths <- im_sort(setup, extension = "tif")
+
+# Note: Setting the position argument will skip the user walkthrough. 
+# e.g.
+image_paths <- im_sort(setup, extension = "tif", position = 4)
+
+# Check image_paths
+image_paths
+
+```
+
+<a id="id3"></a> 
+**Step 3.**
+
+**`ez_savepaths()`**  User friendly way to create standardized save directories based on the setup information from `setup_pl()`. Returns a list of savepaths to subfolders in the output folder.
+
+```{r, eval = FALSE}
+# Create savepaths and generate data subdirectories automatically 
+savepaths <- ez_savepaths(setup)
+
+# Check the output folder to see the subdirectories created!
+
+# Show savepaths generated
+savepaths
+
+# To save the global environment at any time during an analysis session run: 
+save.image(savepaths$envir_savepath)
+
+# Going to the R_data folder in the output folder and clicking on the 
+# .RData folder by date will revert the global environment back to a previous session.
+# Saving everyday will prevent you from losing more than a day's worth work.
+```
+
+> Tip: rerun the save.image() expression to update the global environment savepath every day.
+
+Below shows my console output for my savepaths variable:
+
+```{r, eval = FALSE}
+  
+# Update and show savepaths
+
+> savepaths <- ez_savepaths(setup)
+> savepaths
+$`envir_savepath`
+[1] "C:/Users/mjin1/Documents/Test/packagetest_W/R_data/Animal_2606_2018-12-10_MJ.RData"
+
+$out_reference_aligned
+[1] "C:/Users/mjin1/Documents/Test/packagetest_W/Reference_aligned"
+
+$out_RC_brain_morph
+[1] "C:/Users/mjin1/Documents/Test/packagetest_W/RC_brain_morph"
+
+$out_auto_registration
+[1] "C:/Users/mjin1/Documents/Test/packagetest_W/Registrations_auto"
+
+$out_registration
+[1] "C:/Users/mjin1/Documents/Test/packagetest_W/Registrations_manual"
+
+$out_registration_warps
+[1] "C:/Users/mjin1/Documents/Test/packagetest_W/Registration_warps"
+
+$out_segmentation_warps
+[1] "C:/Users/mjin1/Documents/Test/packagetest_W/Segmentation_warpimages"
+
+$out_segmentation_schem
+[1] "C:/Users/mjin1/Documents/Test/packagetest_W/Segmentation_schematics"
+
+>
+```
+
+***
+
+## Part 2: Alignment **(W)**
+
+This section is necessary for whole brain datasets only. Users first "calibrate"
+the reference atlas plates with their appropriate z image number by running
+`choice()` and playing the choice game. Based on the aligned reference plates,
+the user can match all remaining atlas plates with an interpolated z image using
+`ez_interpolate().`
+
+
+<a id="id4"></a> 
+**Step 4.**
+
+**`choice()` (W) **  User friendly way to play the wholebrain choice game to
+align internal reference atlas plates. Automatically saves images of chosen
+aligned images in the folder specified by `savepaths$out_reference_aligned`.
+
+Below is my console output when I run`choice()` with my setup, savepaths, and
+image_paths variables.
+
+```{r, eval = FALSE}
+
+# Run the choice game and save the aligned 
+# z reference number back into the setup list:
+
+> setup <- choice(setup, savepaths, image_paths, filetype = "tif") # save chosen images as tifs
+Play the choice game!
+Your reference AP is 1.91 
+Your current image sampling choice_step is  200 
+
+Which image matches best?
+Enter 1, 2 or 3:
+
+```
+
+**How the choice game works:**
+
+The choice game will cycle through the internal reference atlas plates
+(represented below by dotted vertical lines). Three choice windows will popup
+for each reference AP coordinate, corresponding to choices 1,2 or 3,
+respectively.
+
+<center>
+
+![**Internal reference atlas plates**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/Reference_atlas_schem.PNG){width=30%}
+
+</center>
+
+The middlemost window (choice 2) is ezBrain's best guess at the z images best
+aligned with the atlas coordinate based on the first and last aligned atlas
+plates (represented above by solid vertical lines). 
+
+<center>
+
+![**Display and prompt**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/choice_game_1.PNG){width=65%}
+
+</center>
+
+> Note: The default positions the windows pop up on screen can be set by the
+`xpos` argument.
+
+The current `choice_step` indicates how many z images the
+anteriormost (choice 1) or posteriormost (choice 3) images are from the middlemost image
+(choice 2). Entering 1, 2 or 3 into the console has three outcomes:
+
+1. **Choice 1** The anteriormost image becomes the new choice 2 on the next
+choice option.
+2. **Choice 2** On the next choice option, there is a smaller `choice_step` on
+the left and right images. Choosing this option will progressively "zoom in" on
+the `choice_step` options until the steps can't get smaller. The choice game
+will then move on to the next atlas coordinate. By default, the smallest step is 10.
+3. **Choice 3** The posteriormost image becomes the new choice 2 on the next
+choice option.
+
+> Note: the `choice_step` progression is a user modifiable argument.
+
+<center>
+
+![**Midpoint quality check**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/midpoint_schem.PNG){width=30%}
+
+</center>
+
+Once all the internal references atlas coordinates have been aligned, the
+`choice()` function will cycle through the midpoint AP coordinates of the
+aligned references as a quality check (represented above with black arrows).
+After comparing midpoints, any unsatisfactory midpoints become another internal
+reference point. The choice game is replayed for those midpoints.
+
+<center>
+
+![**Midpoint quality check display**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/choice_game_2.PNG){width=40%}
+
+</center>
+
+Below are my internal reference AP coordinates and z numbers after
+running`choice()` with my setup:
+```{r, eval = FALSE}
+
+# Check internal reference AP numbers
+> setup$internal_ref_AP
+[1]  1.9060687  1.5014885  1.0969084  0.2877481 -0.4202672 -0.9259924 -1.9374427 -2.9488931 -3.9603435
+
+# Check matched image z numbers
+> setup$internal_ref_z
+[1]  219  404  590  781 1155 1273 1689 2096 2472
+```
+
+
+<a id="id5"></a> 
+**`brainmorph()` (W) **  Generate a brain morph plot showing areas of relative
+expansion vs compression along the AP axis compared to the Allen Mouse Brain
+Atlas AP coodinates (normalized to 1). The reference atlas points used to
+generate the morph plot are plotted in red. Note: setting `saveplot = TRUE` will
+save the brain morph into the data folder designated by
+`savepaths$out_RC_brain_morph`
+
+```{r, eval = FALSE}
+# Generate brainmorph. 
+brainmorph(setup, savepaths, saveplot = FALSE)
+```
+  
+<center>
+  
+![**Brainmorph plot**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/brainmorph.tif){width=40%}
+
+</center> 
+
+
+<a id="id6"></a> 
+**Step 5.**
+
+**`ez_interpolate()` (W) **  This function interpolates all corresponding z and AP values for atlas plates that are not reference plates. 
+
+```{r, eval = FALSE}
+# Interpolate all remaining atlas plates and their z number
+setup <- ez_interpolate(setup, method = "s" )
+```
+
+Now checking the setup list will show all matched internal AP plates and z numbers:
+```{r, eval = FALSE}
+
+> setup$regi_AP
+ [1]  2.31064885  2.20950382  2.10835878  2.00721374  1.90606870  1.80492366  1.70377863  1.60263359  1.50148855
+[10]  1.40034351  1.29919847  1.19805344  1.09690840  0.99576336  0.89461832  0.79347328  0.69232824  0.59118321
+[19]  0.49003817  0.38889313  0.28774809  0.18660305  0.08545802 -0.01568702 -0.11683206 -0.21797710 -0.31912214
+[28] -0.42026718 -0.52141221 -0.62255725 -0.72370229 -0.82484733 -0.92599237 -1.02713740 -1.12828244 -1.22942748
+[37] -1.33057252 -1.43171756 -1.53286260 -1.63400763 -1.73515267 -1.83629771 -1.93744275 -2.03858779 -2.03858779
+[46] -2.13973282 -2.24087786 -2.34202290 -2.44316794 -2.54431298 -2.64545802 -2.74660305 -2.84774809 -2.94889313
+[55] -3.05003817 -3.15118321 -3.25232824 -3.35347328 -3.45461832 -3.55576336 -3.65690840 -3.75805344 -3.85919847
+[64] -3.96034351 -4.06148855 -4.16263359 -4.26377863 -4.36492366 -4.46606870 -4.56721374 -4.66835878
+
+> setup$regi_z
+ [1]   45   88  132  175  219  265  311  358  404  450  497  544  590  614  638  662  685  709  733  757  781  834
+[23]  888  941  995 1048 1102 1155 1179 1202 1226 1249 1273 1315 1356 1398 1439 1481 1523 1564 1606 1647 1689 1730
+[45] 1730 1770 1811 1852 1893 1933 1974 2015 2055 2096 2134 2171 2209 2246 2284 2322 2359 2397 2434 2472 2497 2522
+[67] 2547 2573 2598 2623 2648
+
+```
+***
+
+## Part 3: Registration
+
+This section automates looping through through and registering all atlas plates
+to images from the registration channel. It also allows for easy modification of
+registrations.
+
+<a id="id7"></a> 
+
+**`ez_regi()`** Provides a user friendly interface to alter registrations. This
+retains the same arguments from the `registration()` function in wholebrain.
+This function may be useful for those who already have their own established
+analysis pipelines. Check out the function help page for more details.
+
+<center>
+
+![**Registration interface**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/registration_console.PNG){width=70%}
+
+</center>
+The schematic above illustrates the user-friendly console interface that allows
+for modification of the correspondance plates on a given atlas plate. The
+`regi_loop()` function integrates this user-friendly registration interface with
+the pipeline.
+
+
+<a id="id8"></a> 
+**Step 6.** 
+
+**`regi_loop()`**  User friendly function to alter atlas to image registration.
+When run with defaults, this function will automatically create a list in the
+global environment called `regis`. It will loop through the atlas plates
+according to the user preferences. The user also has the option to save the
+global environment after every manual registration.
+
+
+```{r, eval = FALSE}
+
+# Example run of automated registration loop
+
+# Create filter for registration
+filter<-structure(list(alim = c(50, 50),
+                           threshold.range = c(50000, 60000L),
+                           eccentricity = 999L,
+                           Max = 1000,
+                           Min = 150,
+                           brain.threshold = 270L,
+                           resize = 0.25,
+                           blur = 7L,
+                           downsample = 2))
+
+# Run the autoloop
+regi_loop(setup, savepaths, image_paths, autoloop = TRUE, filter = filter)
+
+```
+
+> Note: The function [`filter_loop()`](#id17) allows the user to modify the
+filter for registration or segmentation and loop through the references plates
+to check filter adjustments in images across the brain.
+
+There are four different loop options:
+
+1. `autoloop = TRUE` runs wholebrain's first pass at registering all atlas plates.
+Registration is  stored in the *Registrations_auto* folder. This is useful to
+check the quality of registrations across all atlas plates using current filter
+settings.
+2. `reference = TRUE` loops through reference atlas plates only and displays the
+console interface.
+3. The `touchup` argument is designed to edit a subset of atlas plates that have
+been previously registered
+
+  + `touchup = TRUE` runs a user friendly interface allowing user to enter which
+  plates they want to fix.
+  + `touchup =` Numeric vector of plate numbers (integers) the user wants to
+  fix. Plate numbers are automatically saved alongside AP and z numbers in
+  output filenames.
+  
+4. Setting all the arguments above to `FALSE` will loop through all atlas plates
+and display the console interface.
+
+>Tip: Save the global environment after every 2-3 registrations. The save time
+lengthens significantly as more registrations are stored in the `regis` list.
+
+Once the `regi_loop()` function has been run for the first time, the `regis`
+argument must be set to the `regis` list automatically generated in the global
+environment.
+
+For example:
+
+```{r, eval = FALSE}
+# Loop through and modify only reference atlas plates
+regi_loop(setup, savepaths, image_paths, regis = regis, filter = filter, reference = TRUE)
+
+```
+
+Below is an example of a registration before and after manual improvement:
+
+<center>
+
+![**After auto-registration**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/before_registration.PNG){width=50%}
+
+![**After registration correction**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/after_registration.PNG){width=50%}
+
+</center>
+
+***
+
+## Part 4: Segmentation, duplicate cleanup, & forward warping
+
+<a id="id9"></a> 
+<a id="id17"></a> 
+**Step 7.** 
+
+**`filter_loop()`** This function takes a registration or segmentation filter
+and loops through all images in a partial brain or just the reference images
+across the brain in either the registration or segmentation channel. The `wholebrain::segment()` 
+function is used to display the segmentation output. The user can change filter parameters after exiting out of every.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Part 5: Dataset manipulation and plotting:
+
+
+```{r, eval = FALSE}
+# Plot sunburst plot using the ez_sunburst() function
+ezBrain::ez_sunburst(dataset)
+```
+
+```{r, echo = FALSE, cache = TRUE}
+load("C:/Users/mjin1/Documents/Test/packagetest_W/R_data/dataset.RData")
+ezBrain::ez_sunburst(dataset)
+```
+
+
