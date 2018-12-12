@@ -58,6 +58,10 @@ forward_warp <- function(setup, savepaths, segs, regis,
     regi_ind <- 1:length(segs$seg_z)
   }
 
+  # Interpolate all z images numbers to AP values
+  my_function <- approxfun(setup$regi_z, setup$regi_AP, method = "linear")
+  z_matched_AP <- my_function(segs$seg_z)
+
   # Loop through every z-image and perform forward warp
   for (n in 1:length(segs$seg_z)) {
     regi <- regis[[regi_ind[n]]]
@@ -79,8 +83,8 @@ forward_warp <- function(setup, savepaths, segs, regis,
     data <- data[!data$id==0,]
     data$animal <- setup$anim_ID
 
-    # Delete this later
-    data$AP<-roundAP(data$AP)
+    # Set AP to interpolated value
+    data$AP<- z_matched_AP[n]
 
     # Add to master dataset
     if (n==1) {
