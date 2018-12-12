@@ -129,10 +129,6 @@ to skip sections!
 For convention, if a return value is given by a function, the recommended variable name is indicated in italics in the return section of each function's help page. If this return value is a required argument for another function in the pipeline, the the recommended variable name will also be the same name as the argument.
 
 
-```{r, echo = FALSE, eval = FALSE, cache = TRUE}
-load(paste0(getwd(),"/R_data/setup.RData"))
-load(paste0(getwd(),"/R_data/savepaths.RData"))
-```
 
 ***
 
@@ -602,6 +598,10 @@ Below is an example of a registration before and after manual improvement:
 
 ## Part 4: Segmentation, duplicate cleanup, & forward warping
 
+This section loops through all the images of the segmentation channel and
+automates the forward looping process. At the end of this section, you will have
+a mapped dataset!
+
 <a id="id9"></a> 
 <a id="id17"></a> 
 **Step 7.** 
@@ -652,77 +652,62 @@ segs <- clean_duplicates(setup, segs, z_thresh = 10, compare_depth = 200)
 <a id="id12"></a> 
 **Step 10.** 
 
-**`forward_warp()` (W) ** Loop through all segmented cells and perform forward warp loop back onto atlas space using registration and segmentation data. There are user options for plotting a schematic plot and saving forward warp images. The function will automatically interpolate AP coordinate values of z images
-in between atlas plates and assign them to the dataset.
+**`forward_warp()` (W) ** Loop through all segmented cells and perform forward
+warp loop back onto atlas space using registration and segmentation data. There
+are user options for plotting a schematic plot and saving forward warp images.
+The function will automatically interpolate AP coordinate values of z images in
+between atlas plates and assign them to the dataset.
 
 ```{r, eval = FALSE}
 # Perform forward warp
 dataset <- forward_warp(setup, savepaths, segs, regis)
 ```
-
-
-Below is are representative forward warp and schematic images:
-
-<center>
-
-**Forward warp image**
-
-![](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/forwardwarp.tif){width=75%}
+Below are representative forward warp and schematic images:
+  
+  <center>
+  
+  **Forward warp image**
+  
+  ![](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/forwardwarp.tif){width=75%}
 
 **Schematic plot**
-
-![](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/schematic.tif){width=40%}
+  
+  ![](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/schematic.tif){width=40%}
 
 </center>
- 
+  
 > Note: `forward_warp()` will automatically clean up any cell counts that aren't assigned a region ID. 
 
+***
 ## Part 5: Dataset manipulation and plotting:
 
+Following Step 10, there are no more steps in the pipeline. The remaining
+functions are designed for easy manipulation and plotting of the dataset.
+
+<a id="id13"></a> 
+**`get_rois()`** Allows the user to enter a character vector of Allen Mouse
+Brain Atlas abbreviations of regions of interest (ROIs). A subset of the
+dataframe from the wholebrain dataset of just the ROIs (and their subregions)
+are returned.
 
 `get_rois()` is especially useful in plotting cell count tables of regions of interest:
 
 ```{r, eval = FALSE}
-# Plot region cell counts in a table
-
 # Get dataset of just rois
 rois <- get_rois(dataset, rois = c("ACB", "CEA", "BLA", "HIP"))
 
-# Generate dot plot
+# Plot region cell counts in a table
 quartz()
 wholebrain::dot.plot(rois)
 ```
-
 <center>
 
-![**Region plot**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/dotplot.PNG){width=50%}
+![**Region plot**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/dotplot.PNG){width=70%}
 
 </center>
 
-
-
-**`ez_glassbrain()` ** A modified version of wholebrain::glassbrain() that: 
-
-1. Gives the user an option to plot the "jitter" in cell placement in original glassbrain function (the jitter gives a more space filled look) .
-
-2. Does not show the glass brain display when `high.res` is set to "OFF" (otherwise set to TRUE or FALSE). Setting high.res to TRUE or FALSE will render a high or low resolution atlas boundary
-
-```{r, eval = FALSE}
-# Generate grl object and plot glassbrain without 3D atlas boundaries
-glassbrain <- ez_glassbrain(dataset, high.res = "OFF", jitter = FALSE) 
-
-# visualize glass brain 
-glassbrain
-```
-
-<center>
-
-```{r, echo=FALSE, cache = TRUE}
-htmltools::includeHTML(file.path(getwd(), "/schematics/glassbrain.html"))
-```
-
-</center>
-
+<a id="id14"></a> 
+**`ez_sunburst()`** Generate a sunburst plot using a forward warped dataset. 
 
 ```{r, eval = FALSE}
 # Plot sunburst plot using the ez_sunburst() function
@@ -733,5 +718,50 @@ ezBrain::ez_sunburst(dataset)
 load("C:/Users/mjin1/Documents/Test/packagetest_W/R_data/dataset.RData")
 ezBrain::ez_sunburst(dataset)
 ```
+
+> Note: By setting the `rois` argument, the sunburst will display only ROI data.
+If the `parent` argument is set to `FALSE`, the base layer in sunburst will be
+the first ROI.
+
+
+
+<a id="id15"></a> 
+**`get_tree()`** Create a dataframe of hierarchical region cell count data. 
+
+The code below generates a dataframe of the hierarchy tree for the hypothalamus: 
+
+```{r, eval = FALSE}
+# Hierarchical dataframe of just the hypothalamus
+tree <- get_tree(dataset, rois = "HY")
+View(tree)
+
+```
+> Note: this dataframe may be useful for generating other heirarchical plots with the dataset such as [treemaps](https://github.com/cran/treemap).
+
+\newpage
+<a id="id16"></a> 
+**`ez_glassbrain()` ** A modified version of wholebrain::glassbrain(). New options include:
+
+1. Gives the user an option to turn off the "jitter" in cell placement in original glassbrain function (the jitter gives a more space filled look).
+
+2. Does not show the glass brain display when `high.res` is set to "OFF" (otherwise set to TRUE or FALSE). Setting high.res to TRUE or FALSE will render a high or low resolution atlas boundary
+
+```{r, eval = FALSE}
+# Generate rgl object and plot glassbrain without 3D atlas boundaries
+glassbrain <- ez_glassbrain(dataset, high.res = "OFF", jitter = FALSE) 
+
+# visualize glass brain 
+glassbrain
+```
+```{r, echo = FALSE,  cache = TRUE}
+htmltools::includeHTML(file.path(getwd(), "/schematics/glassbrain.html"))
+```
+
+
+> Tip: Combine the `get_rois()` function output with `ez_glassbrain()` to get a glass brain of just ROIs.
+
+
+
+
 
 
