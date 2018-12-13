@@ -106,27 +106,27 @@ For processing a wholebrain dataset, the pipeline is split into 5 sections. Thes
 **Part 3: Registration**
 
 + [`ez_regi()`](#id7) Console user interface built on top of registration() function from the wholebrain package.
-+ [`regi_loop()`](#id8) Automatically loops through the image registration processs for the imaging dataset.
++ [`regi_loop()`](#id8) Automatically loops through the image registration process for the imaging dataset.
 
 **Part 4: Segmentation, duplicate cleanup, & forward warping**
 
-+ [`filter_loop()`](#id9) Loops through reference slices and allows user to check/change filter settings for segmentation or registration throughout the brain.
-+ [`seg_loop()`](#id10)   Loop through and segment images in the segmentation channel.
-+ [`clean_duplicates()`](#id11) **(W)** Duplicate cell count clean up of segmentation output
-+ [`forward_warp()`](#id12) Perform forward warp loop back onto atlas space using segmentation and registration data.
++ [`filter_loop()`](#id9) Loops through reference slices and allows user to check/change filter settings for segmentation or registration.
++ [`seg_loop()`](#id10)   Loop through and segments images in the segmentation channel.
++ [`clean_duplicates()`](#id11) **(W)** Duplicate cell count clean up of segmentation output.
++ [`forward_warp()`](#id12) Performs forward warp loop back onto atlas space using segmentation and registration output.
 
 **Part 5. Dataset manipulation and plotting**
 
-+ [`get_rois()`](#id13) Get subset of the forward warped dataframe of just regions of interest.
-+ [`ez_sunburst()`](#id14) Generate a sunburst plot using a forward warped dataset.
-+ [`get_tree()`](#id15) Create a dataframe of hierarchical region cell count data.
-+ [`ez_glassbrain()`](#id16) Generate 3D plot of cells with option of plotting or removing glassbrain in the background.
++ [`get_rois()`](#id13) Gets a subset of the forward warped dataframe of just regions of interest.
++ [`ez_sunburst()`](#id14) Generates a sunburst plot using a forward warped dataset.
++ [`get_tree()`](#id15) Creates a dataframe of hierarchical region cell count data.
++ [`ez_glassbrain()`](#id16) Generates a 3D plot of cells counts with option of removing glassbrain in the background.
 
 Below is a walkthrough of each of these functions and the pipeline as a whole
 using an example whole brain dataset. Feel free to use the function links above
 to skip sections!
 
-For convention, if a return value is given by a function, the recommended variable name is indicated in italics in the return section of each function's help page. If this return value is a required argument for another function in the pipeline, the the recommended variable name will also be the same name as the argument.
+For convention, if a return value is given by a function, the recommended variable name is indicated in italics in the return section of each function's help page. If this return value is a required argument for another function in the pipeline, the recommended variable name will also be the same name as the argument.
 
 
 
@@ -163,7 +163,7 @@ setup <- setup_pl(setup)
 
 > Tips: When providing folder paths, do not put quotes around the path to the console input. 
 
-For convention, sequential image numbers are z image numbers, even for a partial brain analysis. Z image number should start at 1 and end at the number of images. Image files should start indexing 1 in the filenames to match image number.
+For convention, sequential image numbers are z image numbers, even for a partial brain analysis. Z image number should start at 1 and end at the number of images. Image files should start indexing at 1 in the filenames to match image number.
 
 For a whole brain analysis, the first and last atlas plates must be qualitatively aligned with the first and last z image numbers. Note that the `setup$internal_ref_z`, `setup$regi_AP`, `setup$regi_z` parameters are not user modifiable and will be NULL until the`choice()` or `ez_interpolate()` functions are run.
 
@@ -174,8 +174,8 @@ Additionally, there are a few default pipeline parameters for whole brain analys
 + AP coordinates of internal reference planes. DEFAULT: 1.91, 1.10, -.42, -0.93
 , -1.94 , -2.95, -3.96. 
 
-The above coordinates correspond to PFC, NAc, antHyp, startHip, posHyp, VTA,
-PAG, respectively. These coordinates will be the atlas plates used to
+The above coordinates correspond to PFC, NAc, antHyp, start of HIP, posterior Hyp, VTA,
+and the PAG, respectively. These coordinates will be the atlas plates used to
 "calibrate" to internal z images. They'll be used to interpolate and match the z
 images of remaining atlas plates. They were chosen because: 
 
@@ -346,8 +346,8 @@ the user can match all remaining atlas plates with an interpolated z image using
 align internal reference atlas plates. Automatically saves images of chosen
 aligned images in the folder specified by `savepaths$out_reference_aligned`.
 
-Below is my console output when I run`choice()` with my setup, savepaths, and
-image_paths variables.
+Below is my initial console output when I run`choice()` with my `setup`, `savepaths`, and
+`image_paths` variables.
 
 ```{r, eval = FALSE}
 
@@ -440,9 +440,9 @@ running`choice()` with my setup:
 
 <a id="id5"></a> 
 **`brainmorph()` (W) **  Generate a brain morph plot showing areas of relative
-expansion vs compression along the AP axis compared to the Allen Mouse Brain
+expansion or compression along the AP axis compared to the Allen Mouse Brain
 Atlas AP coodinates (normalized to 1). The reference atlas points used to
-generate the morph plot are plotted in red. Note: setting `saveplot = TRUE` will
+generate the morph plot are plotted in red. Setting `saveplot = TRUE` will
 save the brain morph into the data folder designated by
 `savepaths$out_RC_brain_morph`
 
@@ -453,7 +453,7 @@ brainmorph(setup, savepaths, saveplot = FALSE)
   
 <center>
   
-![**Brainmorph plot**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/brainmorph.tif){width=40%}
+![**Brainmorph plot**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/brainmorph.PNG){width=40%}
 
 </center> 
 
@@ -500,7 +500,7 @@ registrations.
 
 <a id="id7"></a> 
 
-**`ez_regi()`** Provides a user friendly interface to alter registrations. This
+**`ez_regi()`** Provides a user friendly interface to alter registrations. It
 retains the same arguments from the `registration()` function in wholebrain.
 This function may be useful for those who already have their own established
 analysis pipelines. Check out the function help page for more details.
@@ -552,7 +552,7 @@ to check filter adjustments in images across the brain.
 There are four different loop options:
 
 1. `autoloop = TRUE` runs wholebrain's first pass at registering all atlas plates.
-Registration is  stored in the *Registrations_auto* folder. This is useful to
+Registrations are  stored in the *Registrations_auto* folder. This is useful to
 check the quality of registrations across all atlas plates using current filter
 settings.
 2. `reference = TRUE` loops through reference atlas plates only and displays the
@@ -563,8 +563,7 @@ been previously registered
   + `touchup = TRUE` runs a user friendly interface allowing user to enter which
   plates they want to fix.
   + `touchup =` Numeric vector of plate numbers (integers) the user wants to
-  fix. Plate numbers are automatically saved alongside AP and z numbers in
-  output filenames.
+  fix. 
   
 4. Setting all the arguments above to `FALSE` will loop through all atlas plates
 and display the console interface.
@@ -607,11 +606,10 @@ a mapped dataset!
 **Step 7.** 
 
 **`filter_loop()`** This function takes a registration or segmentation filter
-and loops through all images in a partial brain or just the reference images
-across the brain in either the registration or segmentation channel. The
-`wholebrain::segment()` function is used to display the segmentation output.
-There is a console menu option for the user to adjust filter parameters if they
-need. 
+and loops through all images in a partial brain or just the reference images in
+either the registration or segmentation channel. The `wholebrain::segment()`
+function is used to display the segmentation output. There is a console menu
+option for the user to adjust filter parameters if they need.
 
 ```{r, eval = FALSE}
 # Check and modify filter settings in the segmentaion channel
@@ -668,11 +666,11 @@ Below are representative forward warp and schematic images:
   
   **Forward warp image**
   
-  ![](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/forwardwarp.tif){width=75%}
+  ![](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/forwardwarp.PNG){width=75%}
 
 **Schematic plot**
   
-  ![](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/schematic.tif){width=40%}
+  ![](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/schematic.PNG){width=40%}
 
 </center>
   
@@ -736,7 +734,7 @@ tree <- get_tree(dataset, rois = "HY")
 View(tree)
 
 ```
-> Note: this dataframe may be useful for generating other heirarchical plots with the dataset such as [treemaps](https://github.com/cran/treemap).
+> Note: this dataframe may be useful for generating other heirarchical plots such as [treemaps](https://github.com/cran/treemap).
 
 \newpage
 <a id="id16"></a> 
