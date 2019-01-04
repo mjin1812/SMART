@@ -200,7 +200,7 @@ regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL
         plot(image)
 
         # Run registration improvement loop
-        regis[[index]] <<- ez_regi(im_path, coordinate = AP, filter = filter,
+        regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter,
                                            correspondance = regis[[index]], plane = plane,
                                            closewindow = closewindow,
                                            output.folder = savepaths$out_registration_warps)
@@ -211,7 +211,7 @@ regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL
 
         # Run registration improvement loop
         regis[[index]] <<-list(NULL) # Clear memory space
-        regis[[index]] <<- ez_regi(im_path, coordinate = AP, filter = filter,
+        regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter,
                                            correspondance = regis[[index]], plane = plane,
                                            closewindow = closewindow,
                                            output.folder = savepaths$out_registration_warps)

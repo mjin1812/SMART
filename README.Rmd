@@ -1,12 +1,15 @@
 ---
-title: "ezBrain"
+# title: "SMART:\nSemi-manual alignment to reference templates"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
----
+
+# SMART: Semi-manual alignment to reference templates
+***
+
 Author(s):
 Maintainer: Michelle Jin 
 - michelle.jin@nih.gov 
@@ -15,7 +18,7 @@ Maintainer: Michelle Jin
 Contributor: Joseph Nguyen 
 - jdnguyen@email.wm.edu
 
-## Introduction:
+### Introduction:
 This package builds a pipeline interfacing with the
 [wholebrain](https://github.com/tractatus/wholebrain) package ^[Daniel Furth -
 @wholebrainsuite (2015). wholebrain: Functions to segment and register cells
@@ -24,7 +27,7 @@ This package builds a pipeline interfacing with the
   across the brain can also be fed into this pipeline. For brevity, I'll refer
   to these datasets as partial brains.
 
-There are six main advancements that ezBrain builds on top of the wholebrain
+There are five main advancements that SMART builds on top of the wholebrain
 base package:
   
 1. Guides the user through setting up analysis parameters and feeds the imaging
@@ -55,37 +58,37 @@ the pipeline.*
 
 
 **Below is an illustratratration of the pipeline schematic:**
-![](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/pipeline_schematic.PNG)
+![](C:/Users/mjin1/Documents/GitHub/SMART/schematics/pipeline_schematic.PNG)
 
 ***
 
-##Installation of ezBrain:
+###Installation of SMART:
 
-To use ezBrain, wholebrain must first be installed. The instructions to install
+To use SMART, wholebrain must first be installed. The instructions to install
 wholebrain can be found [here](http://www.wholebrainsoftware.org/cms/install).
 Please note, if you are using a windows machine, manual installation of opencv
 is no longer necessary. I highly recommend reading through some of the documentation 
 for wholebrain before using this package. 
 
-ezBrain is easily installed from github using the devtools package:
+SMART is easily installed from github using the devtools package:
 
 ```{r, eval = FALSE}
 # Load devtools
 library(devtools) 
  
-# Install ezBrain
-devtools::install_github("mjin1812/ezBrain")
+# Install SMART
+devtools::install_github("mjin1812/SMART")
 
-# Load ezBrain
-library(ezBrain)
+# Load SMART
+library(SMART)
 
 # Pull up package descriptions and list of functions
-?ezBrain
+?SMART
 ```
 
 ***
 
-## Pipeline breakdown:
+### Pipeline breakdown:
 As illustrated in the schematic and stated in the package descriptions, not all
 parts of this pipeline will be used when analyzing a partial brain. Sections/functions exclusively meant to be used with whole brain datasets will be marked with **(W)**. Additionally, some package functions may be useful for analysis outside the pipeline we present here.
 
@@ -95,17 +98,17 @@ For processing a wholebrain dataset, the pipeline is split into 5 sections. Thes
 
 + [`setup_pl()`](#id1)  User friendly way to setup parameters for whole or partial brain pipeline analysis.
 + [`im_sort()`](#id2) A function to sort image paths for imaging datasets.
-+ [`ez_savepaths()`](#id3) Generate savepaths and save directories.
++ [`get_savepaths()`](#id3) Generate savepaths and save directories.
 
 **Part 2: Alignment (W) **
 
 + [`choice()`](#id4)  **(W)** User friendly choice game to align internal reference atlas plates.
 + [`brainmorph()`](#id5) **(W)** Generate a brain morph plot.
-+ [`ez_interpolate()`](#id6)**(W)** Interpolate all AP and z numbers for atlas plates in a whole brain project   
++ [`interpolate()`](#id6)**(W)** Interpolate all AP and z numbers for atlas plates in a whole brain project   
 
 **Part 3: Registration**
 
-+ [`ez_regi()`](#id7) Console user interface built on top of registration() function from the wholebrain package.
++ [`registration2()`](#id7) Console user interface built on top of registration() function from the wholebrain package.
 + [`regi_loop()`](#id8) Automatically loops through the image registration process for the imaging dataset.
 
 **Part 4: Segmentation, duplicate cleanup, & forward warping**
@@ -118,9 +121,9 @@ For processing a wholebrain dataset, the pipeline is split into 5 sections. Thes
 **Part 5. Dataset manipulation and plotting**
 
 + [`get_rois()`](#id13) Gets a subset of the forward warped dataframe of just regions of interest.
-+ [`ez_sunburst()`](#id14) Generates a sunburst plot using a forward warped dataset.
++ [`get_sunburst()`](#id14) Generates a sunburst plot using a forward warped dataset.
 + [`get_tree()`](#id15) Creates a dataframe of hierarchical region cell count data.
-+ [`ez_glassbrain()`](#id16) Generates a 3D plot of cells counts with option of removing glassbrain in the background.
++ [`get_glassbrain()`](#id16) Generates a 3D plot of cells counts with option of removing glassbrain in the background.
 
 Below is a walkthrough of each of these functions and the pipeline as a whole
 using an example whole brain dataset. Feel free to use the function links above
@@ -132,7 +135,7 @@ For convention, if a return value is given by a function, the recommended variab
 
 ***
 
-## Part 1: Setup pipeline
+### Part 1: Setup pipeline
 
 This sections sets up analysis parameters, sorted image paths, and generates
 savepaths and directories for the rest of the pipeline.
@@ -165,7 +168,7 @@ setup <- setup_pl(setup)
 
 For convention, sequential image numbers are z image numbers, even for a partial brain analysis. Z image number should start at 1 and end at the number of images. Image files should start indexing at 1 in the filenames to match image number.
 
-For a whole brain analysis, the first and last atlas plates must be qualitatively aligned with the first and last z image numbers. Note that the `setup$internal_ref_z`, `setup$regi_AP`, `setup$regi_z` parameters are not user modifiable and will be NULL until the`choice()` or `ez_interpolate()` functions are run.
+For a whole brain analysis, the first and last atlas plates must be qualitatively aligned with the first and last z image numbers. Note that the `setup$internal_ref_z`, `setup$regi_AP`, `setup$regi_z` parameters are not user modifiable and will be NULL until the`choice()` or `interpolate()` functions are run.
 
 Additionally, there are a few default pipeline parameters for whole brain analysis:
 
@@ -272,11 +275,11 @@ image_paths
 <a id="id3"></a> 
 **Step 3.**
 
-**`ez_savepaths()`** Create standardized save directories based on the setup information from `setup_pl()`. Returns a list of savepaths to subfolders in the output folder.
+**`get_savepaths()`** Create standardized save directories based on the setup information from `setup_pl()`. Returns a list of savepaths to subfolders in the output folder.
 
 ```{r, eval = FALSE}
 # Create savepaths and generate data subdirectories automatically 
-savepaths <- ez_savepaths(setup)
+savepaths <- get_savepaths(setup)
 
 # Check the output folder to see the subdirectories created!
 
@@ -299,7 +302,7 @@ Below shows my console output for my savepaths variable:
   
 # Update and show savepaths
 
-> savepaths <- ez_savepaths(setup)
+> savepaths <- get_savepaths(setup)
 > savepaths
 $`envir_savepath`
 [1] "C:/Users/mjin1/Documents/Test/packagetest_W/R_data/Animal_2606_2018-12-10_MJ.RData"
@@ -330,13 +333,13 @@ $out_segmentation_schem
 
 ***
 
-## Part 2: Alignment **(W)**
+### Part 2: Alignment **(W)**
 
 This section is necessary for whole brain datasets only. Users first "calibrate"
 the reference atlas plates with their appropriate z image number by running
 `choice()` and playing the choice game. Based on the aligned reference plates,
 the user can match all remaining atlas plates with an interpolated z image using
-`ez_interpolate().`
+`interpolate().`
 
 
 <a id="id4"></a> 
@@ -374,17 +377,17 @@ choice windows and enters the best qualitative match.
 
 <center>
 
-![**Internal reference atlas plates**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/Reference_atlas_schem.PNG){width=30%}
+![**Internal reference atlas plates**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/Reference_atlas_schem.PNG){width=30%}
 
 </center>
 
-The middlemost window (choice 2) is ezBrain's best guess at the z image best
+The middlemost window (choice 2) is SMART's best guess at the z image best
 aligned with the atlas coordinate based on the first and last aligned atlas
 plates (represented above by solid vertical lines). 
 
 <center>
 
-![**Display and prompt**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/choice_game_1.PNG){width=60%}
+![**Display and prompt**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/choice_game_1.PNG){width=60%}
 
 </center>
 
@@ -408,7 +411,7 @@ choice option.
 
 <center>
 
-![**Midpoint quality check**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/midpoint_schem.PNG){width=30%}
+![**Midpoint quality check**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/midpoint_schem.PNG){width=30%}
 
 </center>
 
@@ -420,7 +423,7 @@ reference point. The choice game is replayed for those midpoints.
 
 <center>
 
-![**Midpoint quality check display**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/choice_game_2.PNG){width=35%}
+![**Midpoint quality check display**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/choice_game_2.PNG){width=35%}
 
 </center>
 
@@ -453,7 +456,7 @@ brainmorph(setup, savepaths, saveplot = FALSE)
   
 <center>
   
-![**Brainmorph plot**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/brainmorph.PNG){width=40%}
+![**Brainmorph plot**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/brainmorph.PNG){width=40%}
 
 </center> 
 
@@ -461,11 +464,11 @@ brainmorph(setup, savepaths, saveplot = FALSE)
 <a id="id6"></a> 
 **Step 5.**
 
-**`ez_interpolate()` (W) **  This function interpolates all corresponding z and AP values for atlas plates that are not reference plates. 
+**`interpolate()` (W) **  This function interpolates all corresponding z and AP values for atlas plates that are not reference plates. 
 
 ```{r, eval = FALSE}
 # Interpolate all remaining atlas plates and their z number
-setup <- ez_interpolate(setup, method = "s" )
+setup <- interpolate(setup, method = "s" )
 ```
 
 Now checking the setup list will show all matched internal AP plates and z numbers:
@@ -492,7 +495,7 @@ Now checking the setup list will show all matched internal AP plates and z numbe
 ```
 ***
 
-## Part 3: Registration
+### Part 3: Registration
 
 This section automates looping through through and registering all atlas plates
 to images from the registration channel. It also allows for easy modification of
@@ -500,14 +503,14 @@ registrations.
 
 <a id="id7"></a> 
 
-**`ez_regi()`** Provides a user friendly interface to alter registrations. It
+**`registration2()`** Provides a user friendly interface to alter registrations. It
 retains the same arguments from the `registration()` function in wholebrain.
 This function may be useful for those who already have their own established
 analysis pipelines. Check out the function help page for more details.
 
 <center>
 
-![**Registration interface**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/registration_console.PNG){width=70%}
+![**Registration interface**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/registration_console.PNG){width=70%}
 
 </center>
 The schematic above illustrates the user-friendly console interface that allows
@@ -587,15 +590,15 @@ Below is an example of a registration before and after manual improvement:
 
 <center>
 
-![**After auto-registration**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/before_registration.PNG){width=50%}
+![**After auto-registration**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/before_registration.PNG){width=50%}
 
-![**After registration correction**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/after_registration.PNG){width=50%}
+![**After registration correction**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/after_registration.PNG){width=50%}
 
 </center>
 
 ***
 
-## Part 4: Segmentation, duplicate cleanup, & forward warping
+### Part 4: Segmentation, duplicate cleanup, & forward warping
 
 This section loops through all the images of the segmentation channel and
 automates the forward looping process. At the end of this section, you will have
@@ -666,18 +669,18 @@ Below are representative forward warp and schematic images:
   
   **Forward warp image**
   
-  ![](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/forwardwarp.PNG){width=75%}
+  ![](C:/Users/mjin1/Documents/GitHub/SMART/schematics/forwardwarp.PNG){width=75%}
 
 **Schematic plot**
   
-  ![](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/schematic.PNG){width=40%}
+  ![](C:/Users/mjin1/Documents/GitHub/SMART/schematics/schematic.PNG){width=40%}
 
 </center>
   
 > Note: `forward_warp()` will automatically clean up any cell counts that aren't assigned a region ID. 
 
 ***
-## Part 5: Dataset manipulation and plotting:
+### Part 5: Dataset manipulation and plotting:
 
 Following Step 10, there are no more steps in the pipeline. The remaining
 functions are designed for easy manipulation and plotting of the dataset.
@@ -700,21 +703,21 @@ wholebrain::dot.plot(rois)
 ```
 <center>
 
-![**Region plot**](C:/Users/mjin1/Documents/GitHub/ezBrain/schematics/dotplot.PNG){width=70%}
+![**Region plot**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/dotplot.PNG){width=70%}
 
 </center>
 
 <a id="id14"></a> 
-**`ez_sunburst()`** Generate a sunburst plot using a forward warped dataset. 
+**`get_sunburst()`** Generate a sunburst plot using a forward warped dataset. 
 
 ```{r, eval = FALSE}
-# Plot sunburst plot using the ez_sunburst() function
-ezBrain::ez_sunburst(dataset)
+# Plot sunburst plot using the get_sunburst() function
+SMART::get_sunburst(dataset)
 ```
 
 ```{r, echo = FALSE, cache = TRUE}
 load("C:/Users/mjin1/Documents/Test/packagetest_W/R_data/dataset.RData")
-ezBrain::ez_sunburst(dataset)
+SMART::get_sunburst(dataset)
 ```
 
 > Note: By setting the `rois` argument, the sunburst will display only ROI data.
@@ -738,7 +741,7 @@ View(tree)
 
 \newpage
 <a id="id16"></a> 
-**`ez_glassbrain()` ** A modified version of wholebrain::glassbrain(). New options include:
+**`get_glassbrain()` ** A modified version of wholebrain::glassbrain(). New options include:
 
 1. Gives the user an option to turn off the "jitter" in cell placement in original glassbrain function (the jitter gives a more space filled look).
 
@@ -746,7 +749,7 @@ View(tree)
 
 ```{r, eval = FALSE}
 # Generate rgl object and plot glassbrain without 3D atlas boundaries
-glassbrain <- ez_glassbrain(dataset, high.res = "OFF", jitter = FALSE) 
+glassbrain <- get_glassbrain(dataset, high.res = "OFF", jitter = FALSE) 
 
 # visualize glass brain 
 glassbrain
@@ -756,7 +759,7 @@ htmltools::includeHTML(file.path(getwd(), "/schematics/glassbrain.html"))
 ```
 
 
-> Tip: Combine the `get_rois()` function output with `ez_glassbrain()` to get a glass brain of just ROIs.
+> Tip: Combine the `get_rois()` function output with `get_glassbrain()` to get a glass brain of just ROIs.
 
 
 

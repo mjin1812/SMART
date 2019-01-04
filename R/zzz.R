@@ -1,4 +1,4 @@
-#' @title On attachment of ezBrain
+#' @title On attachment of SMART
 #' @description setup the quartz function depending on the user platform
 
 .onAttach<-function(...){
