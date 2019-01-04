@@ -6,7 +6,7 @@
 \alias{SMART-package}
 \title{SMART (Semi-manual alignment to reference template): a pipeline for whole brain mapping projects.}
 \description{
-This package interfaces with the \link{wholebrain} by Daniel Furth to process
+This package interfaces with the \link{wholebrain} package by Daniel Furth to process
 whole brain imaging datasets. The pipeline is split into five different
 parts, with the purpose of each function per part explained below. Note that
 all functions that are exclusively meant to be used with whole brain datasets

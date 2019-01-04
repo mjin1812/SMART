@@ -2,7 +2,7 @@
 % Please edit documentation in R/zzz.R
 \name{.onAttach}
 \alias{.onAttach}
-\title{On attachment of ezBrain}
+\title{On attachment of SMART}
 \usage{
 .onAttach(...)
 }
