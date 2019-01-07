@@ -37,8 +37,8 @@ have to set up this looping.
 
 2. Provides a user-friendly interface whenever possible. This includes a console
 interface during the registration process, that allows for easy adding,
-changing, and removing correspondance points or reverting back to a previous
-correspondance change.
+changing, and removing correspondence points or reverting back to a previous
+correspondence change.
 
 3. Helps to solve non-linear relationships between atlas AP coordinates to
 actual distances in the anterior-posterior axis in real imaging datasets. This
@@ -198,19 +198,19 @@ The console code below shows the setup list I am using:
 
 > setup <- setup_pl(setup)
 $`anim_ID`
-[1] "2606"
+[1] "1602"
 
 $user_init
 [1] "MJ"
 
 $regi_channel
-[1] "E:/Test/R1_S20_2606_SG_coronal_C02"
+[1] "D:/SMART_pilot_data/R15_1602_SG_Rein_NoTest_coronal_C02"
 
 $seg_channel
-[1] "E:/Test/R1_S20_2606_SG_coronal_C01"
+[1] "D:/SMART_pilot_data/R15_1602_SG_Rein_NoTest_coronal_C01"
 
 $output
-[1] "C:/Users/mjin1/Documents/Test/packagetest_W"
+[1] "D:/SMART_pilot_data/output"
 
 $z_space
 [1] 0.0025
@@ -222,16 +222,16 @@ $seg_step
 [1] 1
 
 $first_AP
-[1] 2.411794
+[1] 2.917519
 
 $first_z
 [1] 1
 
 $last_AP
-[1] -4.769504
+[1] -4.971794
 
 $last_z
-[1] 2673
+[1] 2800
 
 $internal_ref_AP
 [1]  1.9060687  1.0969084 -0.4202672 -0.9259924 -1.9374427 -2.9488931 -3.9603435
@@ -265,7 +265,7 @@ image_paths <- im_sort(setup, extension = "tif")
 
 # Note: Setting the position argument will skip the user walkthrough. 
 # e.g.
-image_paths <- im_sort(setup, extension = "tif", position = 4)
+image_paths <- im_sort(setup, extension = "tif", position = 9)
 
 # Check image_paths
 image_paths
@@ -291,7 +291,7 @@ save.image(savepaths$envir_savepath)
 
 # Going to the R_data folder in the output folder and clicking on the 
 # .RData folder by date will revert the global environment back to a previous session.
-# Saving everyday will prevent you from losing more than a day's worth work.
+# Saving everyday will prevent you from losing more than a day's worth of work.
 ```
 
 > Tip: rerun the save.image() expression to update the global environment savepath every day.
@@ -305,28 +305,28 @@ Below shows my console output for my savepaths variable:
 > savepaths <- get_savepaths(setup)
 > savepaths
 $`envir_savepath`
-[1] "C:/Users/mjin1/Documents/Test/packagetest_W/R_data/Animal_2606_2018-12-10_MJ.RData"
+[1] "D:/SMART_pilot_data/output/R_data/Animal_1602_2019-01-07_MJ.RData"
 
 $out_reference_aligned
-[1] "C:/Users/mjin1/Documents/Test/packagetest_W/Reference_aligned"
+[1] "D:/SMART_pilot_data/output/Reference_aligned"
 
 $out_RC_brain_morph
-[1] "C:/Users/mjin1/Documents/Test/packagetest_W/RC_brain_morph"
+[1] "D:/SMART_pilot_data/output/RC_brain_morph"
 
 $out_auto_registration
-[1] "C:/Users/mjin1/Documents/Test/packagetest_W/Registrations_auto"
+[1] "D:/SMART_pilot_data/output/Registrations_auto"
 
 $out_registration
-[1] "C:/Users/mjin1/Documents/Test/packagetest_W/Registrations_manual"
+[1] "D:/SMART_pilot_data/output/Registrations_manual"
 
 $out_registration_warps
-[1] "C:/Users/mjin1/Documents/Test/packagetest_W/Registration_warps"
+[1] "D:/SMART_pilot_data/output/Registration_warps"
 
 $out_segmentation_warps
-[1] "C:/Users/mjin1/Documents/Test/packagetest_W/Segmentation_warpimages"
+[1] "D:/SMART_pilot_data/output/Segmentation_warpimages"
 
 $out_segmentation_schem
-[1] "C:/Users/mjin1/Documents/Test/packagetest_W/Segmentation_schematics"
+[1] "D:/SMART_pilot_data/output/Segmentation_schematics"
 
 >
 ```
@@ -433,11 +433,12 @@ running`choice()` with my setup:
 
 # Check internal reference AP numbers
 > setup$internal_ref_AP
-[1]  1.9060687  1.5014885  1.0969084  0.2877481 -0.4202672 -0.9259924 -1.9374427 -2.9488931 -3.9603435
+ [1]  1.9060687  1.0969084 -0.4202672 -0.9259924 -1.9374427 -2.4431679 -2.9488931 -3.4546183 -3.9603435
+ [10] -4.4660687
 
 # Check matched image z numbers
 > setup$internal_ref_z
-[1]  219  404  590  781 1155 1273 1689 2096 2472
+ [1]  350  657 1305 1425 1813 1978 2202 2422 2541 2681
 ```
 
 
@@ -468,29 +469,29 @@ brainmorph(setup, savepaths, saveplot = FALSE)
 
 ```{r, eval = FALSE}
 # Interpolate all remaining atlas plates and their z number
-setup <- interpolate(setup, method = "s" )
+setup <- interpolate(setup)
 ```
 
 Now checking the setup list will show all matched internal AP plates and z numbers:
 ```{r, eval = FALSE}
 
 > setup$regi_AP
- [1]  2.41179400  2.31064885  2.20950382  2.10835878  2.00721374  1.90606870  1.80492366  1.70377863  1.60263359
-[10]  1.50148855  1.40034351  1.29919847  1.19805344  1.09690840  0.99576336  0.89461832  0.79347328  0.69232824
-[19]  0.59118321  0.49003817  0.38889313  0.28774809  0.18660305  0.08545802 -0.01568702 -0.11683206 -0.21797710
-[28] -0.31912214 -0.42026718 -0.52141221 -0.62255725 -0.72370229 -0.82484733 -0.92599237 -1.02713740 -1.12828244
-[37] -1.22942748 -1.33057252 -1.43171756 -1.53286260 -1.63400763 -1.73515267 -1.83629771 -1.93744275 -2.03858779
-[46] -2.03858779 -2.13973282 -2.24087786 -2.34202290 -2.44316794 -2.54431298 -2.64545802 -2.74660305 -2.84774809
-[55] -2.94889313 -3.05003817 -3.15118321 -3.25232824 -3.35347328 -3.45461832 -3.55576336 -3.65690840 -3.75805344
-[64] -3.85919847 -3.96034351 -4.06148855 -4.16263359 -4.26377863 -4.36492366 -4.46606870 -4.56721374 -4.66835878
-[73] -4.76950400
+[1]  2.91751908  2.81637405  2.71522901  2.61408397  2.51293893  2.41179389  2.31064885  2.20950382  2.10835878
+[10]  2.00721374  1.90606870  1.80492366  1.70377863  1.60263359  1.50148855  1.40034351  1.29919847  1.19805344
+[19]  1.09690840  0.99576336  0.89461832  0.79347328  0.69232824  0.59118321  0.49003817  0.38889313  0.28774809
+[28]  0.18660305  0.08545802 -0.01568702 -0.11683206 -0.21797710 -0.31912214 -0.42026718 -0.52141221 -0.62255725
+[37] -0.72370229 -0.82484733 -0.92599237 -1.02713740 -1.12828244 -1.22942748 -1.33057252 -1.43171756 -1.53286260
+[46] -1.53286260 -1.63400763 -1.73515267 -1.83629771 -1.93744275 -2.03858779 -2.13973282 -2.24087786 -2.34202290
+[55] -2.44316794 -2.54431298 -2.64545802 -2.74660305 -2.84774809 -2.94889313 -3.05003817 -3.15118321 -3.25232824
+[64] -3.35347328 -3.45461832 -3.55576336 -3.65690840 -3.75805344 -3.85919847 -3.96034351 -4.06148855 -4.16263359
+[73] -4.26377863 -4.36492366 -4.46606870 -4.56721374 -4.66835878 -4.76950382 -4.87064885 -4.97179389
 
 
 > setup$regi_z
- [1]    1   45   88  132  175  219  265  311  358  404  450  497  544  590  614  638  662  685  709  733  757
-[22]  781  834  888  941  995 1048 1102 1155 1179 1202 1226 1249 1273 1315 1356 1398 1439 1481 1523 1564 1606
-[43] 1647 1689 1730 1730 1770 1811 1852 1893 1933 1974 2015 2055 2096 2134 2171 2209 2246 2284 2322 2359 2397
-[64] 2434 2472 2497 2522 2547 2573 2598 2623 2648 2673
+ [1]    1   36   71  106  141  176  210  245  280  315  350  388  427  465  504  542  580  619  657  700  743
+[22]  787  830  873  916  959 1003 1046 1089 1132 1175 1219 1262 1305 1329 1353 1377 1401 1425 1464 1503 1541
+[43] 1580 1619 1658 1658 1697 1735 1774 1813 1846 1879 1912 1945 1978 2023 2068 2112 2157 2202 2246 2290 2334
+[64] 2378 2422 2446 2470 2493 2517 2541 2569 2597 2625 2653 2681 2705 2729 2752 2776 2800
 
 ```
 ***
@@ -514,7 +515,7 @@ analysis pipelines. Check out the function help page for more details.
 
 </center>
 The schematic above illustrates the user-friendly console interface that allows
-for modification of the correspondance plates on a given atlas plate. The
+for modification of the correspondence plates on a given atlas plate. The
 `regi_loop()` function integrates this user-friendly registration interface with
 the pipeline.
 

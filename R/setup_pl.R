@@ -54,16 +54,17 @@
 #' @md
 
 setup_pl <- function(setup = NULL) {
+
   # Setup user prompts for whole brain
   user_prompt <- vector(mode = "list", length = 13)
   user_prompt[[1]]  <- "1) Enter your Animal ID: \n"
   user_prompt[[2]]  <- "2) Enter your Initials: \n"
   user_prompt[[3]]  <- paste0("3) Enter the path to the registration channel folder: ",
-                              "\n NOTE: Please change all '\\' to '/' so that R can read your path!\n")
+                              "\n No need to enter quotes.\n")
   user_prompt[[4]]  <- paste0("4) Enter the path to the segmentation channel folder: ",
-                              "\n NOTE: Please change all '\\' to '/' so that R can read your path!\n")
+                              "\n No need to enter quotes.\n")
   user_prompt[[5]]  <- paste0("5) Enter the path to output folder. If it doesn't exist, please create it: ",
-                              "\n NOTE: Please change all '\\' to '/' so that R can read your path!\n")
+                              "\n No need to enter quotes.\n")
   user_prompt[[6]]  <- "6) What is your spacing (mm) between adjacent z images? \n"
   user_prompt[[7]]  <- "7) What is your spacing between registrations (mm) ?\n"
   user_prompt[[8]]  <- "8) What is your segmentation step size (integer)?\n"
@@ -84,11 +85,11 @@ setup_pl <- function(setup = NULL) {
   user_prompt2[[1]]  <- "1) Enter your Animal ID: \n"
   user_prompt2[[2]]  <- "2) Enter your Initials: \n"
   user_prompt2[[3]]  <- paste0("3) Enter the path to the registration channel folder: ",
-                              "\n NOTE: Please change all '\\' to '/' so that R can read your path!\n")
+                               "\n No need to enter quotes.\n")
   user_prompt2[[4]]  <- paste0("4) Enter the path to the segmentation channel folder: ",
-                              "\n NOTE: Please change all '\\' to '/' so that R can read your path!\n")
+                               "\n No need to enter quotes.\n")
   user_prompt2[[5]]  <- paste0("5) Enter the path to output folder. If it doesn't exist, please create it: ",
-                              "\n NOTE: Please change all '\\' to '/' so that R can read your path!\n")
+                               "\n No need to enter quotes.\n")
   user_prompt2[[6]]  <- paste0("6) Enter all known AP coordinates in order from anterior to posterior (mm): ",
                                 "\nPlease enter at least 2 decimal digits per coordinate and separate values by a ','.\n")
   user_prompt2[[7]]  <- paste0("7) Enter all z image number in order corresponding to entered AP coordinates: ",
@@ -113,11 +114,11 @@ setup_pl <- function(setup = NULL) {
         # 2)  User's Initials
         setup[[2]] <- readline(user_prompt2[[2]])
         # 3)  Registration channel image folder path
-        setup[[3]] <- readline(user_prompt2[[3]])
+        setup[[3]] <- convertpath(readline(user_prompt2[[3]]))
         # 4)  Segmentation channel image folder path
-        setup[[4]] <- readline(user_prompt2[[4]])
+        setup[[4]] <- convertpath(readline(user_prompt2[[4]]))
         # 5)  Output folder path to store data
-        setup[[5]] <- readline(user_prompt2[[5]])
+        setup[[5]] <- convertpath(readline(user_prompt2[[5]]))
         # 6) Vector to store known AP coordinates
         setup[[6]] <- readline(user_prompt2[[6]])
         setup[[6]] <- as.numeric(unlist(strsplit(setup[[6]], ",")))
@@ -128,7 +129,6 @@ setup_pl <- function(setup = NULL) {
         ## Name the elements of the list
         names(setup)  <- c("anim_ID", "user_init","regi_channel", "seg_channel", "output",
                            "regi_AP", "regi_z")
-
         done <- TRUE
 
       } else if (inp=="W" || inp=="w") {
@@ -150,11 +150,11 @@ setup_pl <- function(setup = NULL) {
         # 2)  User's Initials
         setup[[2]] <- readline(user_prompt[[2]])
         # 3)  Registration channel image folder path
-        setup[[3]] <- readline(user_prompt[[3]])
+        setup[[3]] <- convertpath(readline(user_prompt[[3]]))
         # 4)  Segmentation channel image folder path
-        setup[[4]] <- readline(user_prompt[[4]])
+        setup[[4]] <- convertpath(readline(user_prompt[[4]]))
         # 5)  Output folder path to store data
-        setup[[5]] <- readline(user_prompt[[5]])
+        setup[[5]] <- convertpath(readline(user_prompt[[5]]))
         # 6) Spacing between adjacent z images
         setup[[6]] <- as.numeric(readline(user_prompt[[6]]))
 
@@ -242,8 +242,10 @@ setup_pl <- function(setup = NULL) {
           # Settings 1 through 5 should remain as strings.
           # Setting values should be parsed by ',' before converting to numeric.
           # Other input is converted to numeric.
-          if (sum(s==1:5)>=1) {
+          if (sum(s==1:2)>=1) {
             setup[[s]] <- readline(user_prompt2[[s]])
+          } else if (sum(s==3:5)>=1) {
+            setup[[s]] <- convertpath(readline(user_prompt2[[s]]))
           } else if (s==6) {
             setup[[s]] <- readline(user_prompt2[[s]])
             setup[[s]] <- roundAP(as.numeric(unlist(strsplit(setup[[s]], ","))))
@@ -326,12 +328,14 @@ setup_pl <- function(setup = NULL) {
           # Settings 1 through 5 should remain as strings.
           # Setting 13 values should be parsed by ',' before converting to numeric.
           # Other input is converted to numeric.
-          if (sum(s==1:5)>=1) {
+          if (sum(s==1:2)>=1) {
             setup[[s]] <- readline(user_prompt[[s]])
+          } else if (sum(s==3:5)>=1) {
+            setup[[s]] <- convertpath(readline(user_prompt[[s]]))
           } else if (s==9 | s==11){
-            setup[[s]] <- roundAP(as.numeric(setup[[s]]))
+            setup[[s]] <- roundAP(as.numeric(readline(user_prompt[[s]])))
           } else if (s==10 | s==12) {
-            setup[[s]] <- round(as.numeric(setup[[s]]), digits=0)
+            setup[[s]] <- round(as.numeric(readline(user_prompt[[s]])), digits=0)
           } else if (s==13) {
             setup[[s]] <- readline(user_prompt[[s]])
             setup[[s]] <- roundAP(sort(as.numeric(unlist(strsplit(setup[[s]], ","))), decreasing = TRUE))
