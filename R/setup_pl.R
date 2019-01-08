@@ -121,7 +121,7 @@ setup_pl <- function(setup = NULL) {
         setup[[5]] <- convertpath(readline(user_prompt2[[5]]))
         # 6) Vector to store known AP coordinates
         setup[[6]] <- readline(user_prompt2[[6]])
-        setup[[6]] <- as.numeric(unlist(strsplit(setup[[6]], ",")))
+        setup[[6]] <- roundAP(as.numeric(unlist(strsplit(setup[[6]], ","))))
         # 7) Vector to store known z numbers
         setup[[7]] <- readline(user_prompt2[[7]])
         setup[[7]] <- round(as.numeric(unlist(strsplit(setup[[7]], ","))))
@@ -159,11 +159,11 @@ setup_pl <- function(setup = NULL) {
         setup[[6]] <- as.numeric(readline(user_prompt[[6]]))
 
         # 9) First AP coordinate
-        setup[[9]] <- as.numeric(readline(user_prompt[[9]]))
+        setup[[9]] <- roundAP(as.numeric(readline(user_prompt[[9]])))
         # 10) First z image
         setup[[10]] <- as.numeric(readline(user_prompt[[10]]))
         # 11) Last AP coordinate
-        setup[[11]] <- as.numeric(readline(user_prompt[[11]]))
+        setup[[11]] <- roundAP(as.numeric(readline(user_prompt[[11]])))
         # 12) Last z image
         setup[[12]] <- as.numeric(readline(user_prompt[[12]]))
 

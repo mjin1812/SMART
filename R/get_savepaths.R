@@ -14,7 +14,6 @@ get_savepaths <- function (setup) {
   out_R_data <- file.path(setup$output, "R_data")
   envir_savepath <- paste0(out_R_data,"/","Animal_",toString(setup[[1]]),
                            "_", Sys.Date(),"_", setup[[2]], ".RData")
-
   # Folder for aligned reference images
   out_reference_aligned <- file.path(setup$output, "Reference_aligned")
   # Folder to store automated registration images

@@ -72,7 +72,7 @@ segmentation and registration data.
 interest.
 \item \code{\link[=get_sunburst]{get_sunburst()}} Generate a sunburst plot using a forward warped dataset.
 \item \code{\link[=get_tree]{get_tree()}} Create a dataframe of hierarchical region cell count data.
-\item \code{\link[=get_glassbrain]{get_glassbrain()}} Generate 3D plot of cells with option of plotting or
+\item \code{\link[=glassbrain2]{glassbrain2()}} Generate 3D plot of cells with option of plotting or
 removing glassbrain in the background.
 }
 }

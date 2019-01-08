@@ -123,7 +123,7 @@ For processing a wholebrain dataset, the pipeline is split into 5 sections. Thes
 + [`get_rois()`](#id13) Gets a subset of the forward warped dataframe of just regions of interest.
 + [`get_sunburst()`](#id14) Generates a sunburst plot using a forward warped dataset.
 + [`get_tree()`](#id15) Creates a dataframe of hierarchical region cell count data.
-+ [`get_glassbrain()`](#id16) Generates a 3D plot of cells counts with option of removing glassbrain in the background.
++ [`glassbrain2()`](#id16) Generates a 3D plot of cells counts with option of removing glassbrain in the background.
 
 Below is a walkthrough of each of these functions and the pipeline as a whole
 using an example whole brain dataset. Feel free to use the function links above
@@ -742,7 +742,7 @@ View(tree)
 
 \newpage
 <a id="id16"></a> 
-**`get_glassbrain()` ** A modified version of wholebrain::glassbrain(). New options include:
+**`glassbrain2()` ** A modified version of wholebrain::glassbrain(). New options include:
 
 1. Gives the user an option to turn off the "jitter" in cell placement in original glassbrain function (the jitter gives a more space filled look).
 
@@ -750,7 +750,7 @@ View(tree)
 
 ```{r, eval = FALSE}
 # Generate rgl object and plot glassbrain without 3D atlas boundaries
-glassbrain <- get_glassbrain(dataset, high.res = "OFF", jitter = FALSE) 
+glassbrain <- glassbrain2(dataset, high.res = "OFF", jitter = FALSE) 
 
 # visualize glass brain 
 glassbrain
@@ -760,7 +760,7 @@ htmltools::includeHTML(file.path(getwd(), "/schematics/glassbrain.html"))
 ```
 
 
-> Tip: Combine the `get_rois()` function output with `get_glassbrain()` to get a glass brain of just ROIs.
+> Tip: Combine the `get_rois()` function output with `glassbrain2()` to get a glass brain of just ROIs.
 
 
 

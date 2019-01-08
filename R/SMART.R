@@ -53,7 +53,7 @@
 #' interest.
 #' 2) [get_sunburst()] Generate a sunburst plot using a forward warped dataset.
 #' 3) [get_tree()] Create a dataframe of hierarchical region cell count data.
-#' 4) [get_glassbrain()] Generate 3D plot of cells with option of plotting or
+#' 4) [glassbrain2()] Generate 3D plot of cells with option of plotting or
 #' removing glassbrain in the background.
 #' @md
 #' @docType package
