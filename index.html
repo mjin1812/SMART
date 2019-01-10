@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">SMART</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="installation.html">Installation</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div id="smart-semi-manual-alignment-to-reference-templates" class="section level1">
+<h1>SMART: Semi-manual alignment to reference templates</h1>
+<hr />
+<p>Author(s): Maintainer: Michelle Jin - <a href="mailto:michelle.jin@nih.gov">michelle.jin@nih.gov</a> - <span style="color:#337ab7">@</span><a href="https://twitter.com/michelle_jin1">Michelle_Jin1</a></p>
+<p>Contributor: Joseph Nguyen - <a href="mailto:jdnguyen@email.wm.edu">jdnguyen@email.wm.edu</a></p>
+<div id="introduction" class="section level3">
+<h3>Introduction:</h3>
+<p>This package builds a pipeline interfacing with the <a href="https://github.com/tractatus/wholebrain">wholebrain</a> package <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> to process whole brain imaging datasets. Datasets of a handful of single slice images across the brain can also be fed into this pipeline. For brevity, I’ll refer to these datasets as partial brains.</p>
+<p>There are five main advancements that SMART builds on top of the wholebrain base package:</p>
+<ol style="list-style-type: decimal">
+<li><p>Guides the user through setting up analysis parameters and feeds the imaging data through registration, segmentation, and forward warp process. It automates looping through these analyses with simple function calls so the user does not have to set up this looping.</p></li>
+<li><p>Provides a user-friendly interface whenever possible. This includes a console interface during the registration process, that allows for easy adding, changing, and removing correspondence points or reverting back to a previous correspondence change.</p></li>
+<li><p>Helps to solve non-linear relationships between atlas AP coordinates to actual distances in the anterior-posterior axis in real imaging datasets. This is critical when dealing with tissue clearing methods that cause non-uniform tissue morphing across the AP-axis.</p></li>
+<li><p>Organizes and stores the output of wholebrain analysis in automatically generated subdirectories. This standardized organization will be beneficial when sharing data output from wholebrain.</p></li>
+<li><p>Provides more ways to parse whole brain datasets and visualize data across ROIs.</p></li>
+</ol>
+<p><em>Disclaimer. This package is intended for coronal plane datasets. Preprocessing must be done to align the dataset coronally before it should be analyzed with the pipeline.</em></p>
+<p><strong>Below is an illustratratration of the pipeline schematic:</strong> <img src="C:/Users/mjin1/Documents/GitHub/SMART/schematics/pipeline_schematic.PNG" /></p>
+<hr />
+</div>
+<div id="installation-of-smart" class="section level3">
+<h3>Installation of SMART:</h3>
+<p>To use SMART, wholebrain must first be installed. The instructions to install wholebrain can be found <a href="http://www.wholebrainsoftware.org/cms/install">here</a>. Please note, if you are using a windows machine, manual installation of opencv is no longer necessary. I highly recommend reading through some of the documentation for wholebrain before using this package.</p>
+<p>SMART is easily installed from github using the devtools package:</p>
+<pre class="r"><code># Load devtools
+library(devtools) 
+ 
+# Install SMART
+devtools::install_github(&quot;mjin1812/SMART&quot;)
+
+# Load SMART
+library(SMART)
+
+# Pull up package descriptions and list of functions
+?SMART</code></pre>
+<hr />
+</div>
+<div id="pipeline-breakdown" class="section level3">
+<h3>Pipeline breakdown:</h3>
+<p>As illustrated in the schematic and stated in the package descriptions, not all parts of this pipeline will be used when analyzing a partial brain. Sections/functions exclusively meant to be used with whole brain datasets will be marked with <strong>(W)</strong>. Additionally, some package functions may be useful for analysis outside the pipeline we present here.</p>
+<p>For processing a wholebrain dataset, the pipeline is split into 5 sections. These sections are listed below along with the functions that belong to each section:</p>
+<p><strong>Part 1: Setup pipeline</strong></p>
+<ul>
+<li><a href="#id1"><code>setup_pl()</code></a> User friendly way to setup parameters for whole or partial brain pipeline analysis.</li>
+<li><a href="#id2"><code>im_sort()</code></a> A function to sort image paths for imaging datasets.</li>
+<li><a href="#id3"><code>get_savepaths()</code></a> Generate savepaths and save directories.</li>
+</ul>
+<p><strong>Part 2: Alignment (W) </strong></p>
+<ul>
+<li><a href="#id4"><code>choice()</code></a> <strong>(W)</strong> User friendly choice game to align internal reference atlas plates.</li>
+<li><a href="#id5"><code>brainmorph()</code></a> <strong>(W)</strong> Generate a brain morph plot.</li>
+<li><a href="#id6"><code>interpolate()</code></a><strong>(W)</strong> Interpolate all AP and z numbers for atlas plates in a whole brain project</li>
+</ul>
+<p><strong>Part 3: Registration</strong></p>
+<ul>
+<li><a href="#id7"><code>registration2()</code></a> Console user interface built on top of registration() function from the wholebrain package.</li>
+<li><a href="#id8"><code>regi_loop()</code></a> Automatically loops through the image registration process for the imaging dataset.</li>
+</ul>
+<p><strong>Part 4: Segmentation, duplicate cleanup, &amp; forward warping</strong></p>
+<ul>
+<li><a href="#id9"><code>filter_loop()</code></a> Loops through reference slices and allows user to check/change filter settings for segmentation or registration.</li>
+<li><a href="#id10"><code>seg_loop()</code></a> Loop through and segments images in the segmentation channel.</li>
+<li><a href="#id11"><code>clean_duplicates()</code></a> <strong>(W)</strong> Duplicate cell count clean up of segmentation output.</li>
+<li><a href="#id12"><code>forward_warp()</code></a> Performs forward warp loop back onto atlas space using segmentation and registration output.</li>
+</ul>
+<p><strong>Part 5. Dataset manipulation and plotting</strong></p>
+<ul>
+<li><a href="#id13"><code>get_rois()</code></a> Gets a subset of the forward warped dataframe of just regions of interest.</li>
+<li><a href="#id14"><code>get_sunburst()</code></a> Generates a sunburst plot using a forward warped dataset.</li>
+<li><a href="#id15"><code>get_tree()</code></a> Creates a dataframe of hierarchical region cell count data.</li>
+<li><a href="#id16"><code>glassbrain2()</code></a> Generates a 3D plot of cells counts with option of removing glassbrain in the background.</li>
+</ul>
+<p>Below is a walkthrough of each of these functions and the pipeline as a whole using an example whole brain dataset. Feel free to use the function links above to skip sections!</p>
+<p>For convention, if a return value is given by a function, the recommended variable name is indicated in italics in the return section of each function’s help page. If this return value is a required argument for another function in the pipeline, the recommended variable name will also be the same name as the argument.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Daniel Furth - <span class="citation">@wholebrainsuite</span> (2015). wholebrain: Functions to segment and register cells from microscopic image files with R. R package version 0.1.1.<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
