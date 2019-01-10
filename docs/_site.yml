@@ -1,8 +1,0 @@
-name: "SMART"
-navbar:
-  title: "SMART"
-  left:
-    - text: "Home"
-      href: index.html
-    - text: "Installation"
-      href: installation.html
