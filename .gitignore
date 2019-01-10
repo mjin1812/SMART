@@ -16,3 +16,5 @@ schematics*
 README_cache
 .RDataTmp1
 ez_treemap.R
+choice_old.R
+.RData*

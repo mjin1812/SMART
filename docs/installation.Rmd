@@ -1,0 +1,31 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+###Installation of SMART:
+***
+To use SMART, wholebrain must first be installed. The instructions to install
+wholebrain can be found [here](http://www.wholebrainsoftware.org/cms/install).
+Please note, if you are using a windows machine, manual installation of opencv
+is no longer necessary. I highly recommend reading through some of the documentation 
+for wholebrain before using this package. 
+
+SMART is easily installed from github using the devtools package:
+
+```{r, eval = FALSE}
+# Load devtools
+library(devtools) 
+ 
+# Install SMART
+devtools::install_github("mjin1812/SMART")
+
+# Load SMART
+library(SMART)
+
+# Pull up package descriptions and list of functions
+?SMART
+```

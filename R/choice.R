@@ -1,39 +1,42 @@
 #' @title Alignment choice game to align internal reference planes **(W)**.
-#' @description  User friendly way to play the wholebrain choice game to align internal
-#' reference atlas plates. Automatically saves images of chosen aligned images in the
-#' folder specified by *savepaths$out_reference_aligned*. For use with mapping whole brain only.
-#' @param setup (required) Setup list is used to access internal reference AP coordinates.
+#' @description  User friendly way to play the wholebrain choice game to align
+#'   internal reference atlas plates. Automatically saves images of chosen
+#'   aligned images in the folder specified by
+#'   *savepaths$out_reference_aligned*. For use with mapping whole brain only.
+#' @param setup (required) Setup list is used to access internal reference AP
+#'   coordinates.
 #' @param savepaths (required) Paths to data directories.
 #' @param image_paths (required) Paths to access registration images.
-#' @param touchup (default = NA) Enter a vector of reference AP coordinates.
-#'   The choice game will replay for just those points.
+#' @param touchup (default = NA) Enter a vector of reference AP coordinates. The
+#'   choice game will replay for just those points. Note: Numbers entered will
+#'   be rounded to the nearest atlas plates. No need to enter exact atlas AP
+#'   numbers.
 #' @param midpoint (default = FALSE) Play the midpoint game following choice the
 #'   choice game.
-#' @param filetype (optional, default = "tif") Image format to save.
-#' Setting this argument as a vector of image formats, e.g. c("tif", "png")
-#' will save both image types. Options: common image formats like "tiff", "png",
-#' "jpeg", "gif", "rgb" or "rgba". See [magick] package documentation for more info
-#' on the [image_write()] function
+#' @param filetype (optional, default = "tif") Image format to save. Setting
+#'   this argument as a vector of image formats, e.g. c("tif", "png") will save
+#'   both image types. Options: common image formats like "tiff", "png", "jpeg",
+#'   "gif", "rgb" or "rgba". See [magick] package documentation for more info on
+#'   the [image_write()] function
 #' @param xpos (optional, default = c(0, 660, 1250)) A vector of x-positions in
-#' pixels justified to the left of the main computer screen for the three choice windows.
+#'   pixels justified to the left of the main computer screen for the three
+#'   choice windows.
 #' @param brightness (optional, default = 70) Popup image brightness.
 #' @param font_col (optional, default = "white") Image annotation font color.
 #' @param font_size (optional, default = 80) Image annotation font size.
-#' @param font_location (optional, default  = "+100+30")
-#' Text position from center of gravity parameter in pixels
-#' @param choice_step (optional, default= c(200,100,30,10))
-#' Determines the successive "zoom" of images picked on either side of the center image.
-#' @return The argument assigned to *setup* is returned with aligned internal
-#' z numbers matching internal AP coordinates.
+#' @param font_location (optional, default  = "+100+30") Text position from
+#'   center of gravity parameter in pixels
+#' @param choice_step (optional, default= c(200,100,30,10)) Determines the
+#'   successive "zoom" of images picked on either side of the center image.
+#' @return The argument assigned to *setup* is returned with aligned internal z
+#'   numbers matching internal AP coordinates.
 #' @md
 #' @export
-#'
+
 choice <- function(setup, savepaths, image_paths, touchup = NA, midpoint = FALSE, filetype = c("tif"),
                    xpos = c(0, 660, 1250), brightness = 70,
                    font_col = "white", font_size = 80, font_location = "+100+30",
                    gravity = "southwest", choice_step = c(200,100,30,10)) {
-
-
 
   # Interpolate z numbers base on first and last aligned imagesgi
   fl_AP       <- c(setup$first_AP, setup$last_AP)
@@ -41,14 +44,14 @@ choice <- function(setup, savepaths, image_paths, touchup = NA, midpoint = FALSE
   ref_AP      <- sort(c(fl_AP, setup$internal_ref_AP), decreasing = TRUE)
   ref_z       <- sort(c(fl_z, setup$internal_ref_z))
 
-  if (isFALSE(midpoint) && is.na(touchup)) {
+  if (isFALSE(midpoint) && all(is.na(touchup))) {
 
     # Estimate z numbers
     my_function <- approxfun(fl_AP, fl_z, method = "linear")
     loop_z       <- sort(c(fl_z, round(my_function(setup$internal_ref_AP))))
     loop_AP      <- ref_AP
 
-  } else if (isTRUE(midpoint) && is.na(touchup)) {
+  } else if (isTRUE(midpoint) && all(is.na(touchup))) {
 
     my_function2  <- approxfun(ref_AP, ref_z, method = "linear")
     midpnt_ref_AP <- roundAP((ref_AP[2:length(ref_AP)]+ref_AP[1:length(ref_AP)-1])/2)
