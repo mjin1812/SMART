@@ -86,7 +86,7 @@ choice <- function(setup, savepaths, image_paths, touchup = NA, midpoint = FALSE
       graphics.off()
     }
 
-    if(is.null(new_z)) {
+    if(is.null(loop_AP)) {
       stop("You liked all the midpoints! You don't need to play the choice game again.")
     } else {
       cat("Play the choice game for your newly added reference points!")
