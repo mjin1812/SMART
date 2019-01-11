@@ -185,7 +185,16 @@ setup_pl <- function(setup = NULL) {
     # Ask User to check over current setup parameters
     change_done <-FALSE
     while (!change_done) {
-      print(setup)
+
+      # Print relevant information
+      print(setup$anim_ID, quote = FALSE)
+      print(setup$user_init, quote = FALSE)
+      print(setup$regi_channel, quote = FALSE)
+      print(setup$seg_channel, quote = FALSE)
+      print(setup$output, quote = FALSE)
+      print(setup$regi_AP, quote = FALSE)
+      print(setup$regi_z, quote = FALSE)
+
       cat("Please review your setup information above: ")
       inp <- readline("Do you want to change any settings: Y/N?" )
       if (inp=="Y" || inp=="y") {
@@ -265,7 +274,22 @@ setup_pl <- function(setup = NULL) {
     # Ask User to check over current setup parameters
     change_done <-FALSE
     while (!change_done) {
-      print(setup)
+
+      # Print relevant information
+      print(setup$anim_ID, quote = FALSE)
+      print(setup$user_init, quote = FALSE)
+      print(setup$regi_channel, quote = FALSE)
+      print(setup$seg_channel, quote = FALSE)
+      print(setup$output, quote = FALSE)
+      print(setup$z_space, quote = FALSE)
+      print(setup$regi_step, quote = FALSE)
+      print(setup$seg_step, quote = FALSE)
+      print(setup$first_AP, quote = FALSE)
+      print(setup$first_z, quote = FALSE)
+      print(setup$last_AP, quote = FALSE)
+      print(setup$last_z, quote = FALSE)
+      print(setup$internal_ref_AP, quote = FALSE)
+
       cat("Please review your setup information above: ")
       inp <- readline("Do you want to change any settings: Y/N?" )
       if (inp=="Y" || inp=="y") {

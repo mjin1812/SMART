@@ -38,11 +38,11 @@ choice <- function(setup, savepaths, image_paths, touchup = NA, midpoint = FALSE
                    font_col = "white", font_size = 80, font_location = "+100+30",
                    gravity = "southwest", choice_step = c(200,100,30,10)) {
 
-  # Interpolate z numbers base on first and last aligned imagesgi
-  fl_AP       <- c(setup$first_AP, setup$last_AP)
-  fl_z        <- c(setup$first_z, setup$last_z)
-  ref_AP      <- sort(c(fl_AP, setup$internal_ref_AP), decreasing = TRUE)
-  ref_z       <- sort(c(fl_z, setup$internal_ref_z))
+  # Interpolate z numbers base on first and last aligned images
+  fl_AP       <- roundAP(c(setup$first_AP, setup$last_AP))
+  fl_z        <- roundAP(c(setup$first_z, setup$last_z))
+  ref_AP      <- roundAP(sort(c(fl_AP, setup$internal_ref_AP), decreasing = TRUE))
+  ref_z       <- roundAP(sort(c(fl_z, setup$internal_ref_z)))
 
   if (isFALSE(midpoint) && all(is.na(touchup))) {
 

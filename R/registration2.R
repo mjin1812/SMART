@@ -44,33 +44,40 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
                        plateimage = plateimage, forward.warp = forward.warp, filter = filter,
                        output.folder =  output.folder, batch.mode = batch.mode, channel = channel,
                        verbose = verbose)
+
   ### START OF REGISTRATION IMPROVEMENT LOOP ###
 
   # Initialize value for while loop check
   regi_done <- FALSE
   while (!regi_done ) {
+      corr_done <- FALSE
 
-  # Loop ends when regi_done equals "Y" (user is done with changing registration)
-    corr_better <- FALSE
-    while (corr_better!= "Y" & corr_better!= "y" & corr_better!= "N" & corr_better!= "n" ){
+      while (corr_done!= "A" & corr_done!= "a" & corr_done!= "C" & corr_done!= "c" & corr_done!= "R" & corr_done !=
+             "r" & corr_done!= "F" & corr_done!= "f" & corr_done!= "Z" & corr_done!= "z" ) {
+        # Loop ends when user has entered whether they want to adjust correspondance points
+        corr_done <- readline(paste0("Do you want to modify any correspondance points?\n",
+                                     "If add, enter               : A\n",
+                                     "If change, enter            : C\n",
+                                     "If remove, enter            : R\n",
+                                     "If finished, enter          : F\n",
+                                     "If revert to previous change: Z\n"))
 
-  # Loop ends when user has entered "Y" or "N"
-
-      corr_better <- readline("Do you like this registration? Y/N: ") # Gets user input
-      if (corr_better == "Y" | corr_better == "y") {                 # If user likes most recent changes, update the registration file
-
-        if (exists("regi_new")) {
-          regi <- regi_new
-        }
-
-        corr_done <- FALSE
-        while (corr_done!= "A" & corr_done!= "a" & corr_done!= "C" & corr_done!= "c" & corr_done!= "R" & corr_done!= "r" & corr_done!= "N" & corr_done!= "n") {
-          # Loop ends when user has entered whether they want to adjust correspondance points
-          corr_done <- readline(paste0("Do you want to add, change, or remove correspondance points?\n",
-                                       "If add, enter   : A\n",
-                                       "If change, enter: C\n",
-                                       "If remove, enter: R\n",
-                                       "If No, enter    : N\n"))
+        if (corr_done == "Z" | corr_done == "z") {
+          # If user doesn't like recent changes, revert to previous registration file
+          cat("This is your previous registration.\n\n")
+          quartz()
+          regi_new <- wholebrain::registration(input, coordinate = coordinate, plane = plane,
+                                               right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
+                                               brain.threshold = brain.threshold, blurring = blurring,
+                                               pixel.resolution = pixel.resolution, resize = resize, correspondance = regi,
+                                               resolutionLevel = resolutionLevel, num.nested.objects = num.nested.objects,
+                                               plateimage = plateimage, forward.warp = forward.warp, filter = filter,
+                                               output.folder =  output.folder, batch.mode = batch.mode, channel = channel,
+                                               verbose = verbose)
+        } else {
+          if (exists("regi_new")) {
+            regi <- regi_new
+          }
 
           if (corr_done == "A" | corr_done == "a") {
 
@@ -94,13 +101,13 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
             }
             quartz()
             regi_new <- wholebrain::registration(input, coordinate = coordinate, plane = plane,
-                         right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
-                         brain.threshold = brain.threshold, blurring = blurring,
-                         pixel.resolution = pixel.resolution, resize = resize, correspondance = regi_new,
-                         resolutionLevel = resolutionLevel, num.nested.objects = num.nested.objects,
-                         plateimage = plateimage, forward.warp = forward.warp, filter = filter,
-                         output.folder =  output.folder, batch.mode = batch.mode, channel = channel,
-                         verbose = verbose)
+                                                 right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
+                                                 brain.threshold = brain.threshold, blurring = blurring,
+                                                 pixel.resolution = pixel.resolution, resize = resize, correspondance = regi_new,
+                                                 resolutionLevel = resolutionLevel, num.nested.objects = num.nested.objects,
+                                                 plateimage = plateimage, forward.warp = forward.warp, filter = filter,
+                                                 output.folder =  output.folder, batch.mode = batch.mode, channel = channel,
+                                                 verbose = verbose)
           } else if (corr_done =="C" | corr_done =="c") {
             ## User wants to change correspondance pts ##
             val <- TRUE
@@ -205,29 +212,17 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
                                                  resolutionLevel = resolutionLevel, num.nested.objects = num.nested.objects,
                                                  plateimage = plateimage, forward.warp = forward.warp, filter = filter,
                                                  output.folder =  output.folder, batch.mode = batch.mode, channel = channel,
-                                                 verbose = verbose)
-          } else if (corr_done =="N" | corr_done =="n") {
+                                               verbose = verbose)
+          } else if (corr_done =="F" | corr_done =="f") {
 
             ## User is done changing pts --> exit registration improvement loop  ##
             if (exists("regi_new")) {
               rm("regi_new")
             }
-             regi_done <- TRUE
+            regi_done <- TRUE
           }
         }
-      } else if (corr_better == "N" | corr_better == "n") {
-        cat("This is your previous registration.\n\n")               # If user doesn't like recent changes, revert to previous registration file
-        quartz()
-        regi_new <- wholebrain::registration(input, coordinate = coordinate, plane = plane,
-                                         right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
-                                         brain.threshold = brain.threshold, blurring = blurring,
-                                         pixel.resolution = pixel.resolution, resize = resize, correspondance = regi,
-                                         resolutionLevel = resolutionLevel, num.nested.objects = num.nested.objects,
-                                         plateimage = plateimage, forward.warp = forward.warp, filter = filter,
-                                         output.folder =  output.folder, batch.mode = batch.mode, channel = channel,
-                                         verbose = verbose)
       }
-    }
   }
   ### END OF REGISTRATION IMPROVEMENT LOOP ###
   return(regi)
