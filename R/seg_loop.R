@@ -5,8 +5,7 @@
 #'   segmented. The function will return a list called *segs* of length 2. Note:
 #'   if the imaging dataset is large this will be a time intensive process.
 #'   Processing time will be printed once the function is finished.
-#' @param setup (required) Contains setup parameters.
-#' @param image_paths (required) segmentation image paths
+#' @param setup (required) Setup list from [setup_pl()].
 #' @param filter (required) Filter optimized for segmentation of images in the segmentation channel.
 #' @param numthresh (optional, default = 8) Original argument from [wholebrain::segment()].
 #' @param downsample (optional, default = 0.25) Original argument from [wholebrain::segment()].
@@ -22,8 +21,7 @@
 #' @md
 
 
-seg_loop <- function(setup, image_paths, filter,
-                                 numthresh = 8, downsample = 0.25, post = NULL,
+seg_loop <- function(setup, filter, numthresh = 8, downsample = 0.25, post = NULL,
                                  pre = NULL, get.contour = FALSE, channel = 0) {
   tictoc::tic()
   if (length(setup) > 7) {
@@ -44,7 +42,7 @@ seg_loop <- function(setup, image_paths, filter,
   for (s in 1:length(seg_z)) {
    # Setup loop variables
    imnum   <- seg_z[s]
-   im_path <- image_paths$seg_paths[imnum]
+   im_path <- setup$image_paths$seg_paths[imnum]
 
    # Segment and store segmentation in segs list
    segs$segmentations[[s]] <- wholebrain::segment(im_path, numthresh = 8, downsample = downsample, filter = filter,

@@ -11,9 +11,10 @@
 #'   is called, the user input is skipped.
 #' @details Compared to the [list.files()] function, this function will sort 100+
 #' files in their appropriate order by z plane.
-#' @return *image_paths* is list of sorted paths. The first element is a sorted
-#'   character vector of registration channel paths. The second element is a sorted
-#'   character vector of segmentation channel paths.
+#' @return *setup* is returned with *setup$image_paths* filled as a list of
+#'   sorted paths. The first element is a sorted character vector of
+#'   registration channel paths. The second element is a sorted character vector
+#'   of segmentation channel paths.
 #' @md
 #' @export
 
@@ -92,6 +93,7 @@ im_sort <- function(setup, extension = "tif", separator = "_", position = NULL) 
   seg_paths     <- file.path(setup$seg_channel, seg_paths[test$ix])
 
   #### Return a list of sorted image path files
-  return(list(regi_paths = regi_paths,
-              seg_paths  = seg_paths ))
+  setup$image_paths <- list(regi_paths = regi_paths,
+                           seg_paths  = seg_paths )
+  return(setup)
 }

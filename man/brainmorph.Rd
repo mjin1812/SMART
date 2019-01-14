@@ -4,14 +4,12 @@
 \alias{brainmorph}
 \title{Generate a brain morph plot \strong{(W)}}
 \usage{
-brainmorph(setup, savepaths, lineplot = TRUE, saveplot = TRUE,
+brainmorph(setup, lineplot = TRUE, saveplot = TRUE,
   filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp",
   "ps", "eps", "pdf"))
 }
 \arguments{
-\item{setup}{(required) Argument is used to get internal reference AP and z coordinates.}
-
-\item{savepaths}{(required) Save directory path.}
+\item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
 
 \item{lineplot}{(optional, default = TRUE) Plot horizontal line at y = 1.0.}
 

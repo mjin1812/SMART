@@ -1,7 +1,7 @@
 #' @title User friendly way to setup whole brain pipeline analysis
 #' @description Asks user for setup information for wholebrain analysis.
-#'   Generates a setup list of length 7 if the user is registering a partial
-#'   brain or of length 16 if the user is mapping a whole brain. If a setup list
+#'   Generates a setup list of length 9 if the user is registering a partial
+#'   brain or of length 18 if the user is mapping a whole brain. If a setup list
 #'   already exists, calling this function will simply ask the user to verify
 #'   setup info. Info can be changed if necessary. However, be conservative with
 #'   changing setup parameters, especially if different users work on the same brain.
@@ -19,6 +19,9 @@
 #' 6)  All AP coordinates ranging from the first to last AP. User manually
 #' entered.
 #' 7)  All z image numbers matching element 6. User manually entered.
+#' 8) Savepaths list containing paths to the data directories. Will be
+#' NULL until [get_savepath()] is run.
+#' 10) List of sorted image paths. Will be NULL until [im_sort()] is run.
 #'
 #' Descriptions of list elements for a **whole brain**.
 #' 1)  Animal ID
@@ -48,7 +51,11 @@
 #' [choice()] is run.
 #' 15) All AP coordinates ranging from the first to last AP.
 #'     Will be NULL until [ez_interpolate()] is run.
-#' 16) All z image numbers matching 16. Will be NULL until [ez_interpolate()] is run.
+#' 16) All z image numbers matching 16. Will be NULL until [ez_interpolate()] is
+#' run.
+#' 17) Savepaths list containing paths to the data directories. Will be
+#' NULL until [get_savepath()] is run.
+#' 18) List of sorted image paths. Will be NULL until [im_sort()] is run.
 #' @return *setup* is a list of length 7 or length 16 with parameters for the pipeline analysis.
 #' @export
 #' @md
@@ -106,7 +113,8 @@ setup_pl <- function(setup = NULL) {
       if (inp=="P" || inp=="p") {
 
         # Initializing setup for a partial brain analysis
-        setup <- vector(mode = "list", length = 7)
+        setup <- vector(mode = "list", length = 9)
+
 
         ## Ask for user input
         # 1)  Animal ID
@@ -128,13 +136,13 @@ setup_pl <- function(setup = NULL) {
 
         ## Name the elements of the list
         names(setup)  <- c("anim_ID", "user_init","regi_channel", "seg_channel", "output",
-                           "regi_AP", "regi_z")
+                           "regi_AP", "regi_z", "savepaths", "image_paths")
         done <- TRUE
 
       } else if (inp=="W" || inp=="w") {
 
         # Initializing setup for a whole brain analysis
-        setup <- vector(mode = "list", length = 16)
+        setup <- vector(mode = "list", length = 18)
 
         ## Set defaults in the vector
         # 8) Spacing between registrations (mm). DEFAULT: 0.100
@@ -173,29 +181,28 @@ setup_pl <- function(setup = NULL) {
                            "z_space", "regi_step",
                            "seg_step", "first_AP", "first_z", "last_AP",
                            "last_z", "internal_ref_AP",
-                           "internal_ref_z", "regi_AP", "regi_z")
+                           "internal_ref_z", "regi_AP", "regi_z", "savepaths", "image_paths")
 
         done <- TRUE
       }
     }
   }
 
-  if (length(setup)==7){
+  if (length(setup)==9){
     # IF PARTIAL BRAIN ANALYSIS
     # Ask User to check over current setup parameters
     change_done <-FALSE
     while (!change_done) {
 
       # Print relevant information
-      print(setup$anim_ID, quote = FALSE)
-      print(setup$user_init, quote = FALSE)
-      print(setup$regi_channel, quote = FALSE)
-      print(setup$seg_channel, quote = FALSE)
-      print(setup$output, quote = FALSE)
-      print(setup$regi_AP, quote = FALSE)
-      print(setup$regi_z, quote = FALSE)
-
-      cat("Please review your setup information above: ")
+      cat("\nYour animal ID         : ", setup$anim_ID)
+      cat("\nYour initials          : ", setup$user_init)
+      cat("\nYour registration path : ", setup$regi_channel)
+      cat("\nYour segmentation path : ", setup$seg_channel)
+      cat("\nYour output path       : ", setup$output)
+      cat("\nYour AP coordinates    : ", round(setup$regi_AP, digits = 2))
+      cat("\nYour z numbers         : ", setup$regi_z)
+      cat("\nPlease review your setup information above: ")
       inp <- readline("Do you want to change any settings: Y/N?" )
       if (inp=="Y" || inp=="y") {
         # change settings
@@ -276,21 +283,21 @@ setup_pl <- function(setup = NULL) {
     while (!change_done) {
 
       # Print relevant information
-      print(setup$anim_ID, quote = FALSE)
-      print(setup$user_init, quote = FALSE)
-      print(setup$regi_channel, quote = FALSE)
-      print(setup$seg_channel, quote = FALSE)
-      print(setup$output, quote = FALSE)
-      print(setup$z_space, quote = FALSE)
-      print(setup$regi_step, quote = FALSE)
-      print(setup$seg_step, quote = FALSE)
-      print(setup$first_AP, quote = FALSE)
-      print(setup$first_z, quote = FALSE)
-      print(setup$last_AP, quote = FALSE)
-      print(setup$last_z, quote = FALSE)
-      print(setup$internal_ref_AP, quote = FALSE)
+      cat("\nYour animal ID         : ", setup$anim_ID)
+      cat("\nYour initials          : ", setup$user_init)
+      cat("\nYour registration path : ", setup$regi_channel)
+      cat("\nYour segmentation path : ", setup$seg_channel)
+      cat("\nYour output path       : ", setup$output)
+      cat("\nYour z spacing         : ", setup$z_space)
+      cat("\nYour registration step : ", setup$regi_step)
+      cat("\nYour segmentation step : ", setup$seg_step)
+      cat("\nYour first AP          : ", round(setup$first_AP, digits = 2))
+      cat("\nYour first z           : ", setup$first_z)
+      cat("\nYour last AP           : ", round(setup$last_AP, digits = 2))
+      cat("\nYour last z            : ", setup$last_z)
+      cat("\nYour internal reference AP coordinates: ", round(setup$internal_ref_AP, digits = 2))
 
-      cat("Please review your setup information above: ")
+      cat("\nPlease review your setup information above: ")
       inp <- readline("Do you want to change any settings: Y/N?" )
       if (inp=="Y" || inp=="y") {
 

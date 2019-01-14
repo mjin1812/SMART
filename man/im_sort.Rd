@@ -20,9 +20,10 @@ filename.}
 is called, the user input is skipped.}
 }
 \value{
-\emph{image_paths} is list of sorted paths. The first element is a sorted
-character vector of registration channel paths. The second element is a sorted
-character vector of segmentation channel paths.
+\emph{setup} is returned with \emph{setup$image_paths} filled as a list of
+sorted paths. The first element is a sorted character vector of
+registration channel paths. The second element is a sorted character vector
+of segmentation channel paths.
 }
 \description{
 User friendly way to sort images from the registration channel.

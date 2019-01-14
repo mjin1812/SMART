@@ -4,18 +4,13 @@
 \alias{choice}
 \title{Alignment choice game to align internal reference planes \strong{(W)}.}
 \usage{
-choice(setup, savepaths, image_paths, touchup = NA, midpoint = FALSE,
-  filetype = c("tif"), xpos = c(0, 660, 1250), brightness = 70,
-  font_col = "white", font_size = 80, font_location = "+100+30",
-  gravity = "southwest", choice_step = c(200, 100, 30, 10))
+choice(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
+  xpos = c(0, 660, 1250), brightness = 70, font_col = "white",
+  font_size = 80, font_location = "+100+30", gravity = "southwest",
+  choice_step = c(200, 100, 30, 10))
 }
 \arguments{
-\item{setup}{(required) Setup list is used to access internal reference AP
-coordinates.}
-
-\item{savepaths}{(required) Paths to data directories.}
-
-\item{image_paths}{(required) Paths to access registration images.}
+\item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
 
 \item{touchup}{(default = NA) Enter a vector of reference AP coordinates. The
 choice game will replay for just those points. Note: Numbers entered will
@@ -55,5 +50,5 @@ numbers matching internal AP coordinates.
 User friendly way to play the wholebrain choice game to align
 internal reference atlas plates. Automatically saves images of chosen
 aligned images in the folder specified by
-\emph{savepaths$out_reference_aligned}. For use with mapping whole brain only.
+\emph{setup$savepaths$out_reference_aligned}. For use with mapping whole brain only.
 }

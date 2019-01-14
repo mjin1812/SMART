@@ -4,17 +4,15 @@
 \alias{forward_warp}
 \title{Forward warp back to atlas space}
 \usage{
-forward_warp(setup, savepaths, segs, regis, filetype = c("tif", "tiff",
-  "wmf", "emf", "png", "jpg", "jpeg", "bmp", "ps", "eps", "pdf"),
+forward_warp(setup, segs, regis, filetype = c("tif", "tiff", "wmf",
+  "emf", "png", "jpg", "jpeg", "bmp", "ps", "eps", "pdf"),
   savewarp = TRUE, saveschematic = TRUE, plane = "coronal",
   title = FALSE, mm.grid = TRUE, dev.size = c(5.4, 4.465),
   pch = 21, cex = 0.5, col = "black", scale.bar = FALSE,
   region.colors = TRUE)
 }
 \arguments{
-\item{setup}{(required) Contains setup parameters.}
-
-\item{savepaths}{(required) Savepaths for saving images.}
+\item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
 
 \item{segs}{(required) Segmentation data.}
 
@@ -25,10 +23,10 @@ forward_warp(setup, savepaths, segs, regis, filetype = c("tif", "tiff",
 "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf"}
 
 \item{savewarp}{(optional, default = TRUE) Save forward warp plot image in
-folder 'savepaths$out_segmentation_warps'.}
+folder 'setup$savepaths$out_segmentation_warps'.}
 
 \item{saveschematic}{(optional, default = TRUE) Save schematic plot images in
-folder savepaths$out_segmentation_schem.}
+folder 'setup$savepaths$out_segmentation_schem'.}
 
 \item{plane}{(optional, default = "coronal") Atlas plane to register to.
 options: "coronal", "sagittal"}

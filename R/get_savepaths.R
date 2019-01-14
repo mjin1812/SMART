@@ -1,8 +1,11 @@
 #' Automatically generates savepaths and save directories.
-#' @description Create standardized save directories based on the setup information from [setup_pl()].
+#' @description Create standardized save directories based on the setup
+#'   information from [setup_pl()].
 #' Returns a list of savepaths to subfolders in the output folder.
-#' @param setup (required) The output folder from the setup list is used to generate save directories
-#' @return *savepaths* is a list containing savepaths to the data directories where analysis output will be stored.
+#' @param setup (required) The output folder from the setup list is used to
+#'   generate save directories
+#' @return *setup* is returned with *setup$savepaths* filled containing
+#'   savepaths to the data directories where analysis output will be stored.
 #' @details Data directories are automatically created in the output folder.
 #' @md
 #' @export
@@ -46,27 +49,27 @@ get_savepaths <- function (setup) {
   }
 
   # Return a list of the paths
-  if (length(setup)>7) {
+  if (length(setup)>9) {
     ## Create list of savepaths
-    savepaths <- list(envir_savepath = envir_savepath,
-                      out_reference_aligned = out_reference_aligned,
-                      out_RC_brain_morph = out_RC_brain_morph,
-                      out_auto_registration = out_auto_registration,
-                      out_registration = out_registration,
-                      out_registration_warps = out_registration_warps,
-                      out_segmentation_warps = out_segmentation_warps,
-                      out_segmentation_schem = out_segmentation_schem)
+    setup$savepaths <-list(envir_savepath = envir_savepath,
+                           out_reference_aligned = out_reference_aligned,
+                           out_RC_brain_morph = out_RC_brain_morph,
+                           out_auto_registration = out_auto_registration,
+                           out_registration = out_registration,
+                           out_registration_warps = out_registration_warps,
+                           out_segmentation_warps = out_segmentation_warps,
+                           out_segmentation_schem = out_segmentation_schem)
 
   } else {
     ## Create list of savepaths
-    savepaths <- list(envir_savepath = envir_savepath,
-                      out_auto_registration = out_auto_registration,
-                      out_registration = out_registration,
-                      out_registration_warps = out_registration_warps,
-                      out_segmentation_warps = out_segmentation_warps,
-                      out_segmentation_schem = out_segmentation_schem)
+    setup$savepaths <- list(envir_savepath = envir_savepath,
+                            out_auto_registration = out_auto_registration,
+                            out_registration = out_registration,
+                            out_registration_warps = out_registration_warps,
+                            out_segmentation_warps = out_segmentation_warps,
+                            out_segmentation_schem = out_segmentation_schem)
   }
-  return(savepaths)
+  return(setup)
 }
 
 

@@ -6,17 +6,16 @@
 #'   been cleaned of duplicate cell counts. Note: if the imaging dataset is
 #'   large this will be a time intensive process. Processing time will be
 #'   printed once the function is finished.
-#' @param setup (required) Contains setup parameters.
-#' @param savepaths (required) Savepaths for saving images.
+#' @param setup (required) Setup list from [setup_pl()].
 #' @param segs (required) Segmentation data.
 #' @param regis (required) Registration data.
 #' @param filetype (optional, default = "tif") Image type to save as. See the
 #'   *type* argument in the function [savePlot()]. Options: "tif", "tiff",
 #'   "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf"
 #' @param savewarp (optional, default = TRUE) Save forward warp plot image in
-#'   folder 'savepaths$out_segmentation_warps'.
+#'   folder 'setup$savepaths$out_segmentation_warps'.
 #' @param saveschematic (optional, default = TRUE) Save schematic plot images in
-#'   folder savepaths$out_segmentation_schem.
+#'   folder 'setup$savepaths$out_segmentation_schem'.
 #' @param plane (optional, default = "coronal") Atlas plane to register to.
 #'   options: "coronal", "sagittal"
 #' @param title (optional, default = FALSE) Title for the schematic plot.
@@ -36,7 +35,7 @@
 #' @export
 #' @md
 
-forward_warp <- function(setup, savepaths, segs, regis,
+forward_warp <- function(setup, segs, regis,
                             filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf"),
                             savewarp = TRUE, saveschematic = TRUE,
                             plane = "coronal", title = FALSE,
@@ -71,7 +70,7 @@ forward_warp <- function(setup, savepaths, segs, regis,
     data <- wholebrain::inspect.registration(regi, seg, soma = TRUE,
                                              forward.warps = TRUE, batch.mode=TRUE)
     if (savewarp) {
-      path <- paste0(savepaths$out_segmentation_warps, "/forwardwarp_z_", toString(segs$seg_z[n]),
+      path <- paste0(setup$savepaths$out_segmentation_warps, "/forwardwarp_z_", toString(segs$seg_z[n]),
                      "_AP_", toString(round(regi$coordinate, digits = 2)), "_plate_",
                      platereturn(round(regi$coordinate, digits = 2)), ".", filetype)
 
@@ -98,7 +97,7 @@ forward_warp <- function(setup, savepaths, segs, regis,
       wholebrain::schematic.plot(dataset = data, plane = plane, save.plots = FALSE, title = title, mm.grid = mm.grid,
                                  dev.size = dev.size, pch = pch, cex = cex, col = "black",
                                  scale.bar = scale.bar, region.colors = region.colors )
-      path <- paste0(savepaths$out_segmentation_schem, "/schematic_z_", toString(segs$seg_z[n]),
+      path <- paste0(setup$savepaths$out_segmentation_schem, "/schematic_z_", toString(segs$seg_z[n]),
                      "_AP_", toString(round(regi$coordinate, digits = 2)), "_plate_",
                      platereturn(round(regi$coordinate, digits = 2)), ".", filetype)
       savePlot(filename = path, type = filetype)

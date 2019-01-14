@@ -7,13 +7,16 @@
 get_savepaths(setup)
 }
 \arguments{
-\item{setup}{(required) The output folder from the setup list is used to generate save directories}
+\item{setup}{(required) The output folder from the setup list is used to
+generate save directories}
 }
 \value{
-\emph{savepaths} is a list containing savepaths to the data directories where analysis output will be stored.
+\emph{setup} is returned with \emph{setup$savepaths} filled containing
+savepaths to the data directories where analysis output will be stored.
 }
 \description{
-Create standardized save directories based on the setup information from \code{\link[=setup_pl]{setup_pl()}}.
+Create standardized save directories based on the setup
+information from \code{\link[=setup_pl]{setup_pl()}}.
 Returns a list of savepaths to subfolders in the output folder.
 }
 \details{

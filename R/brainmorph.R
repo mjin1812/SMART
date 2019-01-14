@@ -10,8 +10,7 @@
 #' @title Generate a brain morph plot **(W)**
 #' @description Generate a brain morph plot (normalized to 1). For use with mapping whole brain only.
 #' Creates a plot that can be easily modified using 'par()' to query or set graphical parameters
-#' @param setup (required) Argument is used to get internal reference AP and z coordinates.
-#' @param savepaths (required) Save directory path.
+#' @param setup (required) Setup list from [setup_pl()].
 #' @param saveplot (optional, default=TRUE) Save the plot.
 #' Note: saveplot will automatically save the device without leaving the device open
 #' @param filetype (optional, default = "tif) Image type to save as. See the *type* argument in the function *saveplot.*
@@ -20,7 +19,7 @@
 #' @export
 #' @md
 
-brainmorph <- function(setup, savepaths, lineplot = TRUE, saveplot = TRUE,
+brainmorph <- function(setup, lineplot = TRUE, saveplot = TRUE,
                           filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf")) {
 
   AP <- roundAP(c(setup$first_AP, setup$internal_ref_AP, setup$last_AP))
@@ -72,7 +71,7 @@ brainmorph <- function(setup, savepaths, lineplot = TRUE, saveplot = TRUE,
   # Saving plot
   if (saveplot) {
     filetype <- match.arg(filetype)
-    savepath <- file.path(savepaths$out_RC_brain_morph, paste0("Animal_", setup[[1]], "_brain_morph_", setup[[2]],".", filetype))
+    savepath <- file.path(setup$savepaths$out_RC_brain_morph, paste0("Animal_", setup[[1]], "_brain_morph_", setup[[2]],".", filetype))
     savePlot( filename = savepath, type = filetype)
     dev.off()
   }

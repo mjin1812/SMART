@@ -4,13 +4,11 @@
 \alias{seg_loop}
 \title{Loop through and segment images in the segmentation channel}
 \usage{
-seg_loop(setup, image_paths, filter, numthresh = 8, downsample = 0.25,
+seg_loop(setup, filter, numthresh = 8, downsample = 0.25,
   post = NULL, pre = NULL, get.contour = FALSE, channel = 0)
 }
 \arguments{
-\item{setup}{(required) Contains setup parameters.}
-
-\item{image_paths}{(required) segmentation image paths}
+\item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
 
 \item{filter}{(required) Filter optimized for segmentation of images in the segmentation channel.}
 

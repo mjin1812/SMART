@@ -4,19 +4,15 @@
 \alias{regi_loop}
 \title{Automatically loops through the image registration process}
 \usage{
-regi_loop(setup, savepaths, image_paths, filter = NULL, regis = NULL,
-  plane = "coronal", closewindow = TRUE, filetype = c("tif", "tiff",
-  "wmf", "emf", "png", "jpg", "jpeg", "bmp", "ps", "eps", "pdf"),
-  autoloop = FALSE, touchup = FALSE, reference = FALSE,
-  popup = TRUE, brightness = 70, font_col = "white",
-  font_size = 40, font_location = "+100+100", gravity = "southwest")
+regi_loop(setup, filter = NULL, regis = NULL, plane = "coronal",
+  closewindow = TRUE, filetype = c("tif", "tiff", "wmf", "emf", "png",
+  "jpg", "jpeg", "bmp", "ps", "eps", "pdf"), autoloop = FALSE,
+  touchup = FALSE, reference = FALSE, popup = TRUE,
+  brightness = 70, font_col = "white", font_size = 40,
+  font_location = "+100+100", gravity = "southwest")
 }
 \arguments{
-\item{setup}{(required) This argument is needed to get internal reference coordinates.}
-
-\item{savepaths}{(required) Paths for saving registration images and the global environment.}
-
-\item{image_paths}{(required) Paths to registration images.}
+\item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
 
 \item{filter}{(required) Filter optimized for registration of images in the registration channel.}
 

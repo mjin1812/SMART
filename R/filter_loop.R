@@ -5,8 +5,7 @@
 #' menu option for the user to adjust filter parameters if they need. If the filter has been changed by the
 #' user, either through the GUI or through the console menu, the function can reloop through
 #' the start of the image sequence.
-#' @param setup (required) Setup parameters. Needed to get internal references.
-#' @param image_paths (required) Paths to images.
+#' @param setup (required) Setup list from [setup_pl()].
 #' @param channel (optional, default = "regi") Which channel you are checking the filter for.
 #' @param filter (optional, default = NULL) User entered custom filter.
 #' @param console (optional, default = TRUE) Display console interface to modify filter parameters
@@ -16,7 +15,7 @@
 #' @export
 #' @md
 
-filter_loop <- function(setup, image_paths, channel = c("regi", "seg"), filter = NULL, console = TRUE){
+filter_loop <- function(setup, channel = c("regi", "seg"), filter = NULL, console = TRUE){
 
   #________________SETUP________________
 
@@ -88,7 +87,7 @@ filter_loop <- function(setup, image_paths, channel = c("regi", "seg"), filter =
   while(s <= length(loop_z)) {
     old_filter <- filter
     z <- loop_z[s]
-    seg <- wholebrain::segment(image_paths[[c]][z], filter = filter)
+    seg <- wholebrain::segment(setup$image_paths[[c]][z], filter = filter)
     filter <- seg$filter
 
 #________console interface start ________

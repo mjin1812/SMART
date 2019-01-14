@@ -5,9 +5,7 @@
 #' The function will loop through every single image listed in setup$regi_z in order.
 #' A simple user interface built into the console is provided to improve each registration.
 #' The user has the option to save the environment after every registration.
-#' @param setup (required) This argument is needed to get internal reference coordinates.
-#' @param savepaths (required) Paths for saving registration images and the global environment.
-#' @param image_paths (required) Paths to registration images.
+#' @param setup (required) Setup list from [setup_pl()].
 #' @param filter (required) Filter optimized for registration of images in the registration channel.
 #' @param regis (optional, default = NULL) List for storing registration output.
 #' On the first run of this function, the regis list will be automatically created in the global environment.
@@ -38,7 +36,7 @@
 #' @md
 #' @export
 
-regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL, plane = "coronal", closewindow = TRUE,
+regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", closewindow = TRUE,
                                  filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf"),
                                  autoloop = FALSE, touchup = FALSE, reference = FALSE, popup = TRUE, brightness = 70,
                                  font_col = "white", font_size = 40, font_location = "+100+100", gravity = "southwest") {
@@ -57,7 +55,7 @@ regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL
 
   if (autoloop) {
     # Run autoloop if you want to automatically run first pass registration.
-    # Output images will be saved in folder structure savepaths$out_auto_registration.
+    # Output images will be saved in folder structure setup$savepaths$out_auto_registration.
     for (s in 1:length(setup$regi_z)){
 
       # Get image number and AP number
@@ -66,12 +64,12 @@ regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL
 
       # Register image
       quartz()
-      regis[[s]] <<- wholebrain::registration(image_paths$regi_paths[imnum], AP,
+      regis[[s]] <<- wholebrain::registration(setup$image_paths$regi_paths[imnum], AP,
                                               plane = plane, filter = filter, display = TRUE,
-                                              output.folder = savepaths$out_registration_warps)
+                                              output.folder = setup$savepaths$out_registration_warps)
 
       ## save, annotate, then resave the registration image using magick.
-      savepath <- paste0(savepaths$out_auto_registration, "/registration_z_", toString(imnum),
+      savepath <- paste0(setup$savepaths$out_auto_registration, "/registration_z_", toString(imnum),
                          "_plate_", toString(platereturn(AP)),
                          "_AP_", toString(round(AP, digits=2)),".", filetype)
 
@@ -182,7 +180,7 @@ regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL
 
       imnum   <- loop_z[s]
       AP      <- loop_AP[s]
-      im_path <- image_paths$regi_paths[imnum]
+      im_path <- setup$image_paths$regi_paths[imnum]
       index   <- which(imnum==setup$regi_z)
 
       if (popup) {
@@ -203,7 +201,7 @@ regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL
         regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter,
                                            correspondance = regis[[index]], plane = plane,
                                            closewindow = closewindow,
-                                           output.folder = savepaths$out_registration_warps)
+                                           output.folder = setup$savepaths$out_registration_warps)
       } else {
         # Run registration loop without popup window
         # window
@@ -214,11 +212,11 @@ regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL
         regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter,
                                            correspondance = regis[[index]], plane = plane,
                                            closewindow = closewindow,
-                                           output.folder = savepaths$out_registration_warps)
+                                           output.folder = setup$savepaths$out_registration_warps)
       }
 
       ## save, annotate, then resave the registration image using magick.
-      savepath <- paste0(savepaths$out_registration, "/registration_z_", toString(imnum),
+      savepath <- paste0(setup$savepaths$out_registration, "/registration_z_", toString(imnum),
                          "_plate_", toString(platereturn(AP)),
                          "_AP_", toString(round(AP, digits=2)),".", filetype)
 
@@ -240,7 +238,7 @@ regi_loop <- function(setup, savepaths, image_paths, filter = NULL, regis = NULL
       while (!done) {
         input <- readline("Would you like to save the global environment after this registration? Y/N")
         if (input == 'Y' | input == 'y') {
-          save.image(file = savepaths$envir_savepath)
+          save.image(file = setup$savepaths$envir_savepath)
           done <- TRUE
         } else if (input == 'N' | input == 'n') {
           done <- TRUE

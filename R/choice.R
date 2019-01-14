@@ -2,11 +2,8 @@
 #' @description  User friendly way to play the wholebrain choice game to align
 #'   internal reference atlas plates. Automatically saves images of chosen
 #'   aligned images in the folder specified by
-#'   *savepaths$out_reference_aligned*. For use with mapping whole brain only.
-#' @param setup (required) Setup list is used to access internal reference AP
-#'   coordinates.
-#' @param savepaths (required) Paths to data directories.
-#' @param image_paths (required) Paths to access registration images.
+#'   *setup$savepaths$out_reference_aligned*. For use with mapping whole brain only.
+#' @param setup (required) Setup list from [setup_pl()].
 #' @param touchup (default = NA) Enter a vector of reference AP coordinates. The
 #'   choice game will replay for just those points. Note: Numbers entered will
 #'   be rounded to the nearest atlas plates. No need to enter exact atlas AP
@@ -33,7 +30,7 @@
 #' @md
 #' @export
 
-choice <- function(setup, savepaths, image_paths, touchup = NA, midpoint = FALSE, filetype = c("tif"),
+choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
                    xpos = c(0, 660, 1250), brightness = 70,
                    font_col = "white", font_size = 80, font_location = "+100+30",
                    gravity = "southwest", choice_step = c(200,100,30,10)) {
@@ -60,11 +57,11 @@ choice <- function(setup, savepaths, image_paths, touchup = NA, midpoint = FALSE
     loop_AP <- c()
     loop_z  <- c()
 
-    cat("Please the check the estimated midpoints.
-        If you do not like them, midpoints will be used as another reference point.")
+    cat("Please the check the estimated midpoints.,",
+        "\nIf you do not like them, midpoints will be used as another reference point.")
 
     for (n in 1:length(midpnt_ref_z) ) {
-      refpath  <-  image_paths$regi_paths[midpnt_ref_z[n]]
+      refpath <- setup$image_paths$regi_paths[midpnt_ref_z[n]]
       ref_im  <- magick::image_read(refpath)
       ref_im  <- magick::image_normalize(ref_im)
       ref_im  <- magick::image_modulate(ref_im, brightness = brightness)
@@ -126,12 +123,12 @@ choice <- function(setup, savepaths, image_paths, touchup = NA, midpoint = FALSE
           # accounts for calculated images references that are out-of-bounds
           if (im_num <= 0) {
             im_num <- 1
-          } else if (im_num >= length(image_paths$regi_paths)) {
-            im_num <- length(image_paths$regi_paths)
+          } else if (im_num >= length(setup$image_paths$regi_paths)) {
+            im_num <- length(setup$image_paths$regi_paths)
           }
 
           # autonormalizing image brightness and contrast and plotting
-          refpath <- image_paths$regi_paths[im_num]
+          refpath <- setup$image_paths$regi_paths[im_num]
           ref_im <- magick::image_read(refpath)
           ref_im <- magick::image_normalize(ref_im)
           ref_im <- magick::image_modulate(ref_im, brightness = brightness)
@@ -168,7 +165,7 @@ choice <- function(setup, savepaths, image_paths, touchup = NA, midpoint = FALSE
       # Saving chosen image
       loop_z[n] <- ref_num
     } else {
-      refpath  <-  image_paths$regi_paths[ref_num]
+      refpath  <-  setup$image_paths$regi_paths[ref_num]
     }
 
     # Saving chosen image
@@ -181,7 +178,7 @@ choice <- function(setup, savepaths, image_paths, touchup = NA, midpoint = FALSE
                                       gravity = gravity, size= font_size , color = font_col, location = font_location)
 
     for (t in 1:length(filetype)) {
-      magick::image_write(ref_im, path = paste0(savepaths$out_reference_aligned,"/z_",toString(ref_num),
+      magick::image_write(ref_im, path = paste0(setup$savepaths$out_reference_aligned,"/z_",toString(ref_num),
                                                 "_plate_", toString(platereturn(AP)), "_AP_",
                                                 toString(round(AP, digits=2)),".", filetype[t]), format = filetype[t])
     }
@@ -205,7 +202,6 @@ choice <- function(setup, savepaths, image_paths, touchup = NA, midpoint = FALSE
 
 # store new aligned imaged choices in setup list
   return(setup)
-
 }
 
 

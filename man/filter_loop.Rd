@@ -4,13 +4,11 @@
 \alias{filter_loop}
 \title{Loop through reference slices}
 \usage{
-filter_loop(setup, image_paths, channel = c("regi", "seg"),
-  filter = NULL, console = TRUE)
+filter_loop(setup, channel = c("regi", "seg"), filter = NULL,
+  console = TRUE)
 }
 \arguments{
-\item{setup}{(required) Setup parameters. Needed to get internal references.}
-
-\item{image_paths}{(required) Paths to images.}
+\item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
 
 \item{channel}{(optional, default = "regi") Which channel you are checking the filter for.}
 
