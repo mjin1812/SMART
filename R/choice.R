@@ -37,9 +37,9 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
 
   # Interpolate z numbers base on first and last aligned images
   fl_AP       <- roundAP(c(setup$first_AP, setup$last_AP))
-  fl_z        <- roundAP(c(setup$first_z, setup$last_z))
+  fl_z        <- c(setup$first_z, setup$last_z)
   ref_AP      <- roundAP(sort(c(fl_AP, setup$internal_ref_AP), decreasing = TRUE))
-  ref_z       <- roundAP(sort(c(fl_z, setup$internal_ref_z)))
+  ref_z       <- sort(c(fl_z, setup$internal_ref_z))
 
   if (isFALSE(midpoint) && all(is.na(touchup))) {
 
