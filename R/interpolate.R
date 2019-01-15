@@ -18,7 +18,7 @@ interpolate <- function(setup, method = "l") {
   # Get AP coordinate values needed to interpolate
   # Then remove AP values that are already matched
   AP_interp <- roundAP(seq(setup$first_AP, setup$last_AP , by = -setup$regi_step))
-  AP_interp <- AP_interp[!(AP_interp %in% AP)]
+  AP_interp <- unique(AP_interp[!(AP_interp %in% AP)])
 
   if(method == "l" ) {
     # Get linear interpolation function
