@@ -82,16 +82,6 @@ forward_warp <- function(setup, segs, regis,
     data <- data[!data$id==0,]
     data$animal <- setup$anim_ID
 
-    # Set AP to interpolated value
-    data$AP<- z_matched_AP[n]
-
-    # Add to master dataset
-    if (n==1) {
-      dataset <- data
-    } else {
-      dataset <- rbind(dataset, data)
-    }
-
     # Save schematic plot
     if(saveschematic){
       wholebrain::schematic.plot(dataset = data, plane = plane, save.plots = FALSE, title = title, mm.grid = mm.grid,
@@ -102,6 +92,16 @@ forward_warp <- function(setup, segs, regis,
                      platereturn(round(regi$coordinate, digits = 2)), ".", filetype)
       savePlot(filename = path, type = filetype)
       dev.off()
+    }
+
+    # Set AP to interpolated value
+    data$AP<- z_matched_AP[n]
+
+    # Add to master dataset
+    if (n==1) {
+      dataset <- data
+    } else {
+      dataset <- rbind(dataset, data)
     }
   }
   tictoc::toc()
