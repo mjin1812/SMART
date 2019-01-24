@@ -50,5 +50,6 @@ seg_loop <- function(setup, filter, numthresh = 8, downsample = 0.25, post = NUL
                             display = FALSE)
   }
   return(segs)
+  cat("\n")
   tictoc::toc()
 }

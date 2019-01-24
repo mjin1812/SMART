@@ -104,6 +104,7 @@ forward_warp <- function(setup, segs, regis,
       dataset <- rbind(dataset, data)
     }
   }
+  cat("\n")
   tictoc::toc()
   return(dataset)
 }

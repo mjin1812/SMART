@@ -138,6 +138,7 @@ clean_duplicates <- function(setup, segs, xy_thresh = 1, z_thresh = 10, compare_
     }
   }
   return(segs)
+  cat("\n")
   tictoc::toc() # Return processing time
 }
 

@@ -29,16 +29,16 @@ glassbrain2 <- function(dataset, high.res = "OFF", dim = c(720, 1080), device = 
     dataset <- dataset[-which(dataset$color == "#000000"),]
   }
   if (device) {
-    open3d(windowRect = c(0, 0, 1280, 720))
+    rgl::open3d(windowRect = c(0, 0, 1280, 720))
   }
 
   if (high.res!="OFF") {
-    par3d(persp)
+    rgl::par3d(persp)
     if (high.res) {
-      drawScene.rgl(list(VOLUME))
+      misc3d::drawScene.rgl(list(VOLUME))
     }
     else {
-      drawScene.rgl(list(VOLUMESMALL))
+      misc3d::drawScene.rgl(list(VOLUMESMALL))
     }
   }
 
@@ -88,12 +88,12 @@ glassbrain2 <- function(dataset, high.res = "OFF", dim = c(720, 1080), device = 
     }
   }
   if (spheres) {
-    spheres3d(wholebrain::paxTOallen(dataset$AP) - 530/2 + smp.AP, -dataset$DV *
+    rgl::spheres3d(wholebrain::paxTOallen(dataset$AP) - 530/2 + smp.AP, -dataset$DV *
                 1000/25 - 320/2, dataset$ML * 1000/25 + smp.ML, col = color,
               radius = cex, alpha = alpha)
   }
   else {
-    points3d(wholebrain::paxTOallen(dataset$AP) - 530/2 + smp.AP, (-dataset$DV *
+    rgl::points3d(wholebrain::paxTOallen(dataset$AP) - 530/2 + smp.AP, (-dataset$DV *
                                                                      1000/25 * 0.95) - 320/2, dataset$ML * 1000/25 + smp.ML,
              col = color, size = cex, alpha = alpha)
   }
