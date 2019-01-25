@@ -22,6 +22,8 @@
 #' @param channel (default = 0)
 #' @param verbose (default = TRUE) If TRUE diagnostic output is written to the R console. Default is true.
 #' @param closewindow (default = TRUE) If TRUE, windows will close after every correspondance point alteration.
+#' @param width (default = 18) Plotting window width in inches.
+#' @param height (default = 10.2 ) Plotting window height in inches.
 #' @return returns *regi*, a vector list of registration information for each registration slice.
 #' @seealso See also [wholebrain::registration()] for the original registration function from wholebrain.
 #' @export
@@ -34,7 +36,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
                             resolutionLevel = c(4, 2), num.nested.objects = 0,
                             plateimage = FALSE, forward.warp = FALSE, filter = NULL,
                             output.folder = "../", batch.mode = FALSE, channel = 0,
-                            verbose = TRUE, closewindow = TRUE) {
+                            verbose = TRUE, closewindow = TRUE, width = 18, height = 10.2) {
 
   regi <- wholebrain::registration(input, coordinate = coordinate, plane = plane,
                        right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
@@ -65,7 +67,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
         if (corr_done == "Z" | corr_done == "z") {
           # If user doesn't like recent changes, revert to previous registration file
           cat("This is your previous registration.\n\n")
-          quartz()
+          quartz(width, height)
           regi_new <- wholebrain::registration(input, coordinate = coordinate, plane = plane,
                                                right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
                                                brain.threshold = brain.threshold, blurring = blurring,
@@ -99,7 +101,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
             if (closewindow) {
               dev.off()
             }
-            quartz()
+            quartz(width, height)
             regi_new <- wholebrain::registration(input, coordinate = coordinate, plane = plane,
                                                  right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
                                                  brain.threshold = brain.threshold, blurring = blurring,
@@ -130,13 +132,13 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
                   }
                 }
                 pts_sing <- suppressWarnings(as.integer(pts_sing))    # Convert input from string into integer
-                pts <- c(colvec, pts_sing)
+                pts <- sort(c(pts_sing, colvec))
                 suppressWarnings(
                   if(sum(is.na(pts)) == 0 & flag == FALSE){
                     val <- FALSE
                   })
-              } else {
-                pts <- suppressWarnings(as.integer(pts_sing))
+              } else if (length(pts_sing)!=0) {
+                pts <- suppressWarnings(sort(as.integer(pts_sing)))
                 suppressWarnings(
                   if(!sum(is.na(pts))){
                     val <- FALSE
@@ -151,7 +153,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
               dev.off()
             }
 
-            quartz()
+            quartz(width, height)
             regi_new <- wholebrain::registration(input, coordinate = coordinate, plane = plane,
                                                  right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
                                                  brain.threshold = brain.threshold, blurring = blurring,
@@ -166,7 +168,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
             ## User wants to remove correspondance pts ##
             val <- TRUE
             while (val) {
-              pts <- readline ("Which points do you want to remove? ")
+              pts <- readline ("Which points do you want to change? ")
               pts <- unlist(strsplit(pts,","))
               pts_col  <- grep(":", pts, value=TRUE)                # points with colon
               pts_sing <- grep(":", pts, value=TRUE, invert=TRUE)   # points without colon in string
@@ -184,13 +186,13 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
                   }
                 }
                 pts_sing <- suppressWarnings(as.integer(pts_sing))    # Convert input from string into integer
-                pts <- c(colvec, pts_sing)
+                pts <- sort(c(pts_sing, colvec))
                 suppressWarnings(
                   if(sum(is.na(pts)) == 0 & flag == FALSE){
                     val <- FALSE
                   })
-              } else {
-                pts <- suppressWarnings(as.integer(pts_sing))
+              } else if (length(pts_sing)!=0) {
+                pts <- suppressWarnings(sort(as.integer(pts_sing)))
                 suppressWarnings(
                   if(!sum(is.na(pts))){
                     val <- FALSE
@@ -204,7 +206,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
             if (closewindow) {
               dev.off()
             }
-            quartz()
+            quartz(width, height)
             regi_new <- wholebrain::registration(input, coordinate = coordinate, plane = plane,
                                                  right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
                                                  brain.threshold = brain.threshold, blurring = blurring,
@@ -214,7 +216,6 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
                                                  output.folder =  output.folder, batch.mode = batch.mode, channel = channel,
                                                verbose = verbose)
           } else if (corr_done =="F" | corr_done =="f") {
-
             ## User is done changing pts --> exit registration improvement loop  ##
             if (exists("regi_new")) {
               rm("regi_new")

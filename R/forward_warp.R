@@ -104,7 +104,8 @@ forward_warp <- function(setup, segs, regis,
       dataset <- rbind(dataset, data)
     }
   }
-  cat("\n")
-  tictoc::toc()
+  # Return processing
+  time <- tictoc::toc(quiet = TRUE)
+  cat("\n", toString(round((time$toc - time$tic)/60, digits = 2)), "min elapsed")
   return(dataset)
 }

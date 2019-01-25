@@ -9,7 +9,8 @@ regi_loop(setup, filter = NULL, regis = NULL, plane = "coronal",
   "jpg", "jpeg", "bmp", "ps", "eps", "pdf"), autoloop = FALSE,
   touchup = FALSE, reference = FALSE, popup = TRUE,
   brightness = 70, font_col = "white", font_size = 40,
-  font_location = "+100+100", gravity = "southwest")
+  font_location = "+100+100", gravity = "southwest", width = 18,
+  height = 10.2)
 }
 \arguments{
 \item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
@@ -54,6 +55,10 @@ This can help with internal structure visualization.}
 \item{font_location}{(optional, default  = "+100+100") Move text from center of gravity parameter in pixels.}
 
 \item{gravity}{(optional, "southwest") Location of text annotation. e.g. "southwest" means bottom left of screen.}
+
+\item{width}{(default = 18) Registration plotting window width in inches.}
+
+\item{height}{(default = 10.2 ) Registration plotting window height in inches.}
 }
 \description{
 User friendly code to alter atlas to image registration.

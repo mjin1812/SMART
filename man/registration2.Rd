@@ -11,7 +11,7 @@ registration2(input, coordinate = NULL, plane = "coronal",
   resolutionLevel = c(4, 2), num.nested.objects = 0,
   plateimage = FALSE, forward.warp = FALSE, filter = NULL,
   output.folder = "../", batch.mode = FALSE, channel = 0,
-  verbose = TRUE, closewindow = TRUE)
+  verbose = TRUE, closewindow = TRUE, width = 18, height = 10.2)
 }
 \arguments{
 \item{input}{(required) A character vector consisting of the full path name to 16-bit raw tif image files.}
@@ -55,6 +55,10 @@ registration2(input, coordinate = NULL, plane = "coronal",
 \item{verbose}{(default = TRUE) If TRUE diagnostic output is written to the R console. Default is true.}
 
 \item{closewindow}{(default = TRUE) If TRUE, windows will close after every correspondance point alteration.}
+
+\item{width}{(default = 18) Plotting window width in inches.}
+
+\item{height}{(default = 10.2 ) Plotting window height in inches.}
 }
 \value{
 returns \emph{regi}, a vector list of registration information for each registration slice.

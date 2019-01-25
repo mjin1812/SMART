@@ -138,8 +138,9 @@ clean_duplicates <- function(setup, segs, xy_thresh = 1, z_thresh = 10, compare_
     }
   }
   return(segs)
-  cat("\n")
-  tictoc::toc() # Return processing time
+  # Return processing time
+  time <- tictoc::toc(quiet = TRUE)
+  cat("\n", toString(round((time$toc - time$tic)/60, digits = 2)), "min elapsed")
 }
 
 

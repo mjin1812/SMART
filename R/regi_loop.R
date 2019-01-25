@@ -31,6 +31,8 @@
 #' @param font_size (optional, default = 40)
 #' @param font_location (optional, default  = "+100+100") Move text from center of gravity parameter in pixels.
 #' @param gravity (optional, "southwest") Location of text annotation. e.g. "southwest" means bottom left of screen.
+#' @param width (default = 18) Registration plotting window width in inches.
+#' @param height (default = 10.2 ) Registration plotting window height in inches.
 #' @details This functions creates a vector list of registration information for each registration slice.
 #' Note: This is not a return. The vector *regis* is automatically created.
 #' @md
@@ -38,8 +40,8 @@
 
 regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", closewindow = TRUE,
                                  filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf"),
-                                 autoloop = FALSE, touchup = FALSE, reference = FALSE, popup = TRUE, brightness = 70,
-                                 font_col = "white", font_size = 40, font_location = "+100+100", gravity = "southwest") {
+                                 autoloop = FALSE, touchup = FALSE, reference = FALSE, popup = TRUE, brightness = 70, font_col = "white",
+                                 font_size = 40, font_location = "+100+100", gravity = "southwest", width = 18, height = 10.2) {
 
   # Match filetype argument
   filetype <- match.arg(filetype)
@@ -54,6 +56,7 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
   }
 
   if (autoloop) {
+    tictoc::tic()
     # Run autoloop if you want to automatically run first pass registration.
     # Output images will be saved in folder structure setup$savepaths$out_auto_registration.
     for (s in 1:length(setup$regi_z)){
@@ -63,7 +66,7 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
       AP <- setup$regi_AP[s]
 
       # Register image
-      quartz()
+      quartz(width, height)
       regis[[s]] <<- wholebrain::registration(setup$image_paths$regi_paths[imnum], AP,
                                               plane = plane, filter = filter, display = TRUE,
                                               output.folder = setup$savepaths$out_registration_warps)
@@ -86,6 +89,9 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
                                         gravity = gravity, size= font_size , color = font_col, location = font_location)
       magick::image_write(image, path = savepath)
     }
+    cat("\nRegistration autoloop was successfully completed!\n")
+    time <- tictoc::toc(quiet = TRUE)
+    cat("\n", toString(round((time$toc - time$tic)/60, digits = 2)), "min elapsed")
   } else {
     # If not auto loop, use registration improvement function for manual improvement
 
@@ -185,8 +191,7 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
 
       if (popup) {
         # plot popup image annotated
-        quartz()    # dummy window
-        quartz()    # dummy window
+        # quartz()    # dummy window
         image <- magick::image_read(im_path)
         image <- magick::image_normalize(image)
         image <- magick::image_modulate(image, brightness = brightness)
@@ -197,22 +202,25 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
         quartz(canvas="black", title= paste("z-slice ", toString(imnum)))
         plot(image)
 
+        quartz(width, height)    # dummy window
         # Run registration improvement loop
         regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter,
-                                           correspondance = regis[[index]], plane = plane,
-                                           closewindow = closewindow,
-                                           output.folder = setup$savepaths$out_registration_warps)
+                                         correspondance = regis[[index]], plane = plane,
+                                         closewindow = closewindow,
+                                         output.folder = setup$savepaths$out_registration_warps,
+                                         width = width, height = height)
       } else {
         # Run registration loop without popup window
         # window
-        quartz()
+        quartz(width, height)
 
         # Run registration improvement loop
         regis[[index]] <<-list(NULL) # Clear memory space
         regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter,
-                                           correspondance = regis[[index]], plane = plane,
-                                           closewindow = closewindow,
-                                           output.folder = setup$savepaths$out_registration_warps)
+                                         correspondance = regis[[index]], plane = plane,
+                                         closewindow = closewindow,
+                                         output.folder = setup$savepaths$out_registration_warps,
+                                         width = width, height = height)
       }
 
       ## save, annotate, then resave the registration image using magick.

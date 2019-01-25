@@ -50,6 +50,7 @@ seg_loop <- function(setup, filter, numthresh = 8, downsample = 0.25, post = NUL
                             display = FALSE)
   }
   return(segs)
-  cat("\n")
-  tictoc::toc()
+  # Return processing
+  time <- tictoc::toc(quiet = TRUE)
+  cat("\n", toString(round((time$toc - time$tic)/60, digits = 2)), "min elapsed")
 }

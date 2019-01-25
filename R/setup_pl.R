@@ -241,7 +241,7 @@ setup_pl <- function(setup = NULL) {
                   num_done <- TRUE
                 }
               })
-          } else {
+          } else if (length(pts_sing)!=0) {
             pts <- suppressWarnings(as.integer(pts_sing))
             suppressWarnings(
               if(!sum(is.na(pts))){
@@ -343,7 +343,7 @@ setup_pl <- function(setup = NULL) {
                   num_done <- TRUE
                 }
               })
-          } else {
+          } else if (length(pts_sing)!=0){
             pts <- suppressWarnings(as.integer(pts_sing))
             suppressWarnings(
               if(!sum(is.na(pts))){
