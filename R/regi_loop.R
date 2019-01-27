@@ -200,6 +200,7 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
                                                       toString(round(AP, digits=2)), ", z ", toString(imnum)),
                                         gravity = gravity, size= font_size , color = font_col, location = font_location)
         quartz(canvas="black", title= paste("z-slice ", toString(imnum)))
+        popup_cur <- dev.cur()
         plot(image)
 
         quartz(width, height)    # dummy window

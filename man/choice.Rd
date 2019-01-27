@@ -7,7 +7,7 @@
 choice(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
   xpos = c(0, 660, 1250), brightness = 70, font_col = "white",
   font_size = 80, font_location = "+100+30", gravity = "southwest",
-  choice_step = c(200, 100, 30, 10))
+  choice_step = c(200, 100, 30, 10), atlas = TRUE)
 }
 \arguments{
 \item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
@@ -41,6 +41,9 @@ center of gravity parameter in pixels}
 
 \item{choice_step}{(optional, default= c(200,100,30,10)) Determines the
 successive "zoom" of images picked on either side of the center image.}
+
+\item{atlas}{(optional, default = TRUE) Will automatically pull the atlas
+image up during the choice game.}
 }
 \value{
 The argument assigned to \emph{setup} is returned with aligned internal z

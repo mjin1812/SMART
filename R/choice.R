@@ -25,6 +25,8 @@
 #'   center of gravity parameter in pixels
 #' @param choice_step (optional, default= c(200,100,30,10)) Determines the
 #'   successive "zoom" of images picked on either side of the center image.
+#' @param atlas (optional, default = TRUE) Will automatically pull the atlas
+#'   image up during the choice game.
 #' @return The argument assigned to *setup* is returned with aligned internal z
 #'   numbers matching internal AP coordinates.
 #' @md
@@ -33,7 +35,7 @@
 choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
                    xpos = c(0, 660, 1250), brightness = 70,
                    font_col = "white", font_size = 80, font_location = "+100+30",
-                   gravity = "southwest", choice_step = c(200,100,30,10)) {
+                   gravity = "southwest", choice_step = c(200,100,30,10), atlas = TRUE) {
 
   # Interpolate z numbers base on first and last aligned images
   fl_AP       <- roundAP(c(setup$first_AP, setup$last_AP))
@@ -61,6 +63,11 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
         "\nIf you do not like them, midpoints will be used as another reference point.")
 
     for (n in 1:length(midpnt_ref_z) ) {
+
+      if (atlas){
+        pull_atlas(midpnt_ref_AP[n])
+      }
+
       refpath <- setup$image_paths$regi_paths[midpnt_ref_z[n]]
       ref_im  <- magick::image_read(refpath)
       ref_im  <- magick::image_normalize(ref_im)
@@ -70,8 +77,10 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
                                                        toString(round(midpnt_ref_AP[n], digits=2)), ", est. z ",
                                                        toString(midpnt_ref_z[n])), gravity = gravity, size= font_size,
                                         color = font_col, location = font_location)
-      quartz(canvas="black", title= paste("z-slice ", toString(midpnt_ref_z[n])))
+      quartz(canvas="black", title= paste("z-slice ", toString(midpnt_ref_z[n])), xpos = 660)
       plot(ref_im)
+
+
       line  <- TRUE
       while (line != "Y" & line!="y" & line !="N" & line != "n"){
         line <- readline("Do you like the image alignment? Y/N:" )
@@ -111,6 +120,11 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
     ref_num  <-  loop_z[n]
     AP       <-  loop_AP[n]
 
+    if (atlas && !(AP == fl_AP[1]) && !(AP == fl_AP[2])){
+      pull_atlas(AP)
+      at_dev <- dev.cur()
+    }
+
     if (!(AP == fl_AP[1]) && !(AP == fl_AP[2])) {
       # Index of the choice_step vector
       stpcnt    <- 1
@@ -148,8 +162,11 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
           inp <- readline("Which image matches best?\nEnter 1, 2 or 3:")
         }
 
-        # closing all graphics windows
-        graphics.off()
+        # closing all graphics windows except atlas graphics device
+        dev_close <- dev.list() [!(dev.list() %in% at_dev)]
+        for (g in 1:length(dev_close)){
+          dev.off(which = dev_close[g])
+        }
 
         if( inp =='1'){
           ref_num <- ref_num - choice_step[stpcnt]
@@ -164,6 +181,7 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
       }
       # Saving chosen image
       loop_z[n] <- ref_num
+      graphics.off()
     } else {
       refpath  <-  setup$image_paths$regi_paths[ref_num]
     }

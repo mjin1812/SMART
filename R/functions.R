@@ -1,13 +1,13 @@
 #' @title Helper background functions
 #' @description  necessary functions and data structures to load
 #' @family aggregate functions
-#' @export
 # # Load whole brain atlas index
 # load(file.path(.libPaths()[1],"wholebrain","data","atlasIndex.RData"))
 
 # Load whole brain atlasIndex values and extract only coronal slices
 # at_ind  <- atlasIndex$mm.from.bregma[1:132]
 
+#' @export
 # return plate number based on entered AP
 platereturn <- function(AP) {
   ind <-c()
@@ -17,6 +17,14 @@ platereturn <- function(AP) {
   return(ind)
 }
 
+#' @export
+# Get Allen Mouse Brain Atlas Return
+AMBA_return <- function(AP){
+  ind <- platereturn(AP)
+  return(atlasIndex$plate.id[ind])
+}
+
+#' @export
 # Rounds to nearest atlas coordinate in whole brain (coronal)
 roundAP <- function(AP) {
   # AP can be a vector of values
@@ -28,6 +36,7 @@ roundAP <- function(AP) {
   return(vec)
 }
 
+#' @export
 # Get cell counts of data based on regions of interest given
 get_count <- function(dataset, roi = c('MO', 'TH')){
   out <- unlist(lapply(roi, function(x)sum(dataset$acronym %in% wholebrain::get.sub.structure(x))))
@@ -35,6 +44,7 @@ get_count <- function(dataset, roi = c('MO', 'TH')){
   return(roi.data)
 }
 
+#' @export
 # Recursive function to get all child regions of entered regions of interest
 get_all_children <- function (rois, children = c()) {
   for (l in 1:length(rois)){

@@ -24,7 +24,7 @@ glassbrain2 <- function(dataset, high.res = "OFF", dim = c(720, 1080), device = 
                           col = "region", cex = 0.5, hemisphere = "right", spheres = FALSE,
                           alpha = 1, laterality = TRUE, plane = "coronal", jitter = FALSE){
 
-  data(glasbrain, package = "wholebrain")
+  data(glasbrain, package = "wholebrain", envir = environment())
   if (sum(dataset$color == "#000000") > 0) {
     dataset <- dataset[-which(dataset$color == "#000000"),]
   }
