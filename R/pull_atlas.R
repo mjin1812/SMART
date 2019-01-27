@@ -1,7 +1,8 @@
 #' @title Pull up atlas plate in graphics device.
 #' @description Enter in an AP coordinate from the Allen Mouse Brain Atlas and
+#'   pull up the atlas in a graphics device.
 #' @param AP Anterior-posterior mouse atlas coordinate.
-#' @export
+
 pull_atlas <- function(AP){
   im_path <- file.path(path.package("SMART", quiet = TRUE), "extdata/atlas", paste0(AMBA_return(AP), "_3.svg"))
   if (!file.exists(im_path)){

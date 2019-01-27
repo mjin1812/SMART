@@ -11,4 +11,5 @@ pull_atlas(AP)
 }
 \description{
 Enter in an AP coordinate from the Allen Mouse Brain Atlas and
+  pull up the atlas in a graphics device.
 }
