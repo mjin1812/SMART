@@ -196,6 +196,9 @@ $(document).ready(function () {
   <a href="example_data.html">Example data</a>
 </li>
 <li>
+  <a href="Caveats.html">Caveats</a>
+</li>
+<li>
   <a href="development_info.html">Development info</a>
 </li>
       </ul>
@@ -217,7 +220,6 @@ $(document).ready(function () {
 
 <hr />
 <p><strong>First install wholebrain</strong></p>
-<p>To use SMART, wholebrain must first be installed.</p>
 <p>If you are running on Linux or Mac OSX, the instructions to install wholebrain can be found <a href="http://www.wholebrainsoftware.org/cms/install">here</a>.</p>
 <p>If you are running windows, manual installation of opencv is no longer necessary. The most updated instructions for installation have been written by Ben D. Singer. The instructions can be downloaded <a href="https://github.com/mjin1812/SMART/blob/master/WholeBrainWindowsInstallNov2018.pdf">here</a>.</p>
 <p>Before using SMART, I highly recommend reading through the documentation for wholebrain before using this package. There are a number of tutorials on the wholebrain website that will give you a better idea of the capabilities of the base package.</p>
@@ -228,13 +230,19 @@ $(document).ready(function () {
 library(devtools) 
  
 # Install SMART
-devtools::install_github(&quot;mjin1812/SMART&quot;)
+install_github(&quot;mjin1812/SMART&quot;)
 
 # Load SMART
 library(SMART)
 
 # Pull up package descriptions and list of functions
 ?SMART</code></pre>
+<p><br></p>
+<p><strong>Technical considerations and recommendations:</strong></p>
+<ol style="list-style-type: decimal">
+<li>SMART and wholebrain should be installed on a computer with at least 16 GB of RAM. 8GB of RAM may be too low and crash R for some of the pipeline processes.</li>
+<li>The user-experience of this pipeline would be improved with a dual monitor setup, so that any graphics window popups may occur on one monitor, while the command-line interface is visible on the other.</li>
+</ol>
 
 
 

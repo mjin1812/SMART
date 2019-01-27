@@ -11,7 +11,7 @@
 
 
 
-<title>Development information</title>
+<title>Caveats and limitations</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -213,66 +213,28 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Development information</h1>
+<h1 class="title toc-ignore">Caveats and limitations</h1>
 
 </div>
 
 
-<p>This webpage was last updated on:</p>
-<pre><code>## [1] &quot;2019-01-26&quot;</code></pre>
-<p>The SMART package was built using windows. Below is my R session information and the package versions I worked with:</p>
-<pre class="r"><code>library(wholebrain)
-library(SMART)
-sessionInfo()</code></pre>
-<pre><code>## R version 3.5.1 (2018-07-02)
-## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows &gt;= 8 x64 (build 9200)
-## 
-## Matrix products: default
-## 
-## locale:
-## [1] LC_COLLATE=English_United States.1252 
-## [2] LC_CTYPE=English_United States.1252   
-## [3] LC_MONETARY=English_United States.1252
-## [4] LC_NUMERIC=C                          
-## [5] LC_TIME=English_United States.1252    
-## 
-## attached base packages:
-## [1] grid      stats     graphics  grDevices utils     datasets  methods  
-## [8] base     
-## 
-## other attached packages:
-##  [1] wholebrain_0.1.1 plyr_1.8.4       misc3d_0.8-4     rgl_0.99.16     
-##  [5] sp_1.3-1         grImport_0.9-1   XML_3.98-1.16    MASS_7.3-50     
-##  [9] png_0.1-7        Rcpp_1.0.0       SMART_0.1.0     
-## 
-## loaded via a namespace (and not attached):
-##  [1] xfun_0.4.11             remotes_2.0.2          
-##  [3] lattice_0.20-35         testthat_2.0.1         
-##  [5] miniUI_0.1.1.1          htmltools_0.3.6        
-##  [7] usethis_1.4.0           yaml_2.2.0             
-##  [9] rlang_0.3.1             pkgbuild_1.0.2         
-## [11] manipulateWidget_0.10.0 later_0.7.5            
-## [13] glue_1.3.0              withr_2.1.2            
-## [15] sessioninfo_1.1.1       stringr_1.3.1          
-## [17] devtools_2.0.1          htmlwidgets_1.3        
-## [19] evaluate_0.12           memoise_1.1.0          
-## [21] knitr_1.21              callr_3.1.1            
-## [23] httpuv_1.4.5.1          ps_1.3.0               
-## [25] crosstalk_1.0.0         curl_3.3               
-## [27] xtable_1.8-3            promises_1.0.1         
-## [29] backports_1.1.2         desc_1.2.0             
-## [31] pkgload_1.0.2           webshot_0.5.1          
-## [33] magick_2.0              jsonlite_1.6           
-## [35] fs_1.2.6                mime_0.6               
-## [37] digest_0.6.18           stringi_1.2.4          
-## [39] processx_3.2.1          shiny_1.2.0            
-## [41] rprojroot_1.3-2         cli_1.0.1              
-## [43] tools_3.5.1             magrittr_1.5           
-## [45] crayon_1.3.4            rsconnect_0.8.11       
-## [47] prettyunits_1.0.2       rmarkdown_1.10         
-## [49] assertthat_0.2.0        rstudioapi_0.8         
-## [51] R6_2.3.0                compiler_3.5.1</code></pre>
+<hr />
+<p><br></p>
+<div id="we-have-noted-some-parts-of-the-base-wholebrain-package-that-are-currently-works-in-progress" class="section level4">
+<h4>We have noted some parts of the base WholeBrain package that are currently works-in-progress:</h4>
+<ol style="list-style-type: decimal">
+<li>The plates anterior to + 5.04 and posterior to -4.77 are either not available or throw errors during registration. Users should set the first and last usable images to within this range for the pipeline to run correctly.</li>
+<li>We have experienced issues in processing images where the coronal tissue is cut off by the boundaries of the image. In such cases, we recommend creating a boundary of just black image background around all four edges of the imaged tissue.</li>
+<li>During the manual registration correction process, a manual edit of correspondence points may not seem to warp the atlas appropriately according to the new changes. We have found that adding, deleting, or changing the correspondence points can cause the warp to ‘snap-back’ to an appropriate position matching the correspondence points. This requires some trial and error.</li>
+</ol>
+<p><br></p>
+</div>
+<div id="caveats-to-the-smart-pipeline" class="section level4">
+<h4>Caveats to the SMART pipeline:</h4>
+<ol style="list-style-type: decimal">
+<li>When running the <code>forward_warp()</code> function or <code>regi_loop()</code> function on autoloop, do not exit out of the current graphics window manually. This will interfere with saving the graphics that are generated and the function will need to be rerun from the beginning.</li>
+</ol>
+</div>
 
 
 

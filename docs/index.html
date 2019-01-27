@@ -196,6 +196,9 @@ $(document).ready(function () {
   <a href="example_data.html">Example data</a>
 </li>
 <li>
+  <a href="Caveats.html">Caveats</a>
+</li>
+<li>
   <a href="development_info.html">Development info</a>
 </li>
       </ul>
@@ -218,7 +221,7 @@ $(document).ready(function () {
 <div id="smart-semi-manual-alignment-to-reference-templates" class="section level1">
 <h1>SMART: Semi-manual alignment to reference templates</h1>
 <p>Author(s):</p>
-<p>Maintainer: Michelle Jin - <a href="mailto:michelle.jin@nih.gov">michelle.jin@nih.gov</a> - <span style="color:#337ab7">@</span><a href="https://twitter.com/michelle_jin1">Michelle_Jin1</a></p>
+<p>Maintainer: Michelle Jin - <a href="mailto:smart.r.package@gmail.com">smart.r.package@gmail.com</a> - <span style="color:#337ab7">@</span><a href="https://twitter.com/michelle_jin1">Michelle_Jin1</a></p>
 <p>Contributor: Joseph Nguyen - <a href="mailto:jdnguyen@email.wm.edu">jdnguyen@email.wm.edu</a></p>
 <hr />
 <div id="introduction" class="section level3">
@@ -233,12 +236,14 @@ $(document).ready(function () {
 <li><p>Provides more ways to parse whole brain datasets and visualize data across ROIs.</p></li>
 </ol>
 <p><em>Disclaimer. This package is intended for coronal plane datasets. Preprocessing must be done to align the dataset coronally before it should be analyzed with the pipeline.</em></p>
-<p><strong>Below is an illustratratration of the pipeline schematic:</strong> <img src="schematics/pipeline_schematic.PNG" /></p>
+<p><br> <strong>Below is an illustratratration of the pipeline schematic:</strong> <img src="schematics/pipeline_schematic.PNG" /></p>
+<p><br> <br></p>
 </div>
 <div id="conventions" class="section level3">
 <h3>Conventions</h3>
 <p>If a return value is given by a function, the recommended variable name is indicated in italics in the return section of each function’s help page. If this return value is a required argument for another function in the pipeline, the recommended variable name will also be the same name as the argument.</p>
 <p>As illustrated in the schematic, not all parts of this pipeline will be used when analyzing a partial brain. In the tutorial page, functions exclusively meant to be used with whole brain datasets will be marked with <strong>(W)</strong>. Additionally, some package functions may be useful for analysis outside the pipeline we present here. Optional functions that extend the functionality of the base package and don’t need to interface with the pipeline will be marked with <strong>(O)</strong>. They will still be grouped into sections of the pipeline tutorial that contain related functions.</p>
+<p>An atlas plate from the Allen Mouse Brain Atlas can be referenced in two different ways: 1) by anterior-posterior coordinate (AP) or 2) plate number. When necessary, most functions will require only AP number to reference an atlas plate. However, there may be a few exceptions where user entry of plate numbers is necessary for convenience. These instances will be explicitly noted in the tutorial.</p>
 </div>
 </div>
 <div class="footnotes">
