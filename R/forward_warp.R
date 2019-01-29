@@ -41,7 +41,6 @@ forward_warp <- function(setup, segs, regis,
                             plane = "coronal", title = FALSE,
                             mm.grid = TRUE, dev.size = c(5.4, 4.465),
                             pch = 21, cex = 0.5, col = "black", scale.bar = FALSE, region.colors = TRUE){
-
   tictoc::tic()
   # Match filetype argument
   filetype <- match.arg(filetype)
@@ -51,7 +50,7 @@ forward_warp <- function(setup, segs, regis,
   if (length(setup) > 8 ){
     regi_ind <- vector(mode="numeric",length(segs$seg_z))
     for (n in 1:length(segs$seg_z) ) {
-       regi_ind[n] <- which.min(abs(setup$regi_z-segs$seg_z[n]))
+      regi_ind[n] <- which.min(abs(setup$regi_z-segs$seg_z[n]))
     }
   } else {
     regi_ind <- 1:length(segs$seg_z)

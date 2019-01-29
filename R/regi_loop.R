@@ -101,9 +101,9 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
       loop_z  <- c(setup$first_z, setup$internal_ref_z ,setup$last_z)
       loop_AP <- c(setup$first_AP, setup$internal_ref_AP ,setup$last_AP)
 
-    } else if (touchup == TRUE | is.numeric(touchup)) {
+    } else if (isTRUE(touchup) || is.numeric(touchup)) {
       # If modification of a previous registration is wanted
-        if (touchup == TRUE) {
+        if (isTRUE(touchup)) {
           # Ask for user input of plate numbers wanted for touchup
 
           cat("\nInstructions:\nBelow enter the plate numbers of the registrations you want to modify in ascending order.",
