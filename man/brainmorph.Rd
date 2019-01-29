@@ -4,20 +4,31 @@
 \alias{brainmorph}
 \title{Generate a brain morph plot \strong{(W)}}
 \usage{
-brainmorph(setup, lineplot = TRUE, saveplot = TRUE,
-  filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp",
-  "ps", "eps", "pdf"))
+brainmorph(setup, saveplot = TRUE, filetype = c("tif", "tiff", "wmf",
+  "emf", "png", "jpg", "jpeg", "bmp", "ps", "eps", "pdf"),
+  aspect.ratio = 0.9, title_size = 25, x_title_size = 20,
+  y_title_size = 20, pointsize = 4, linesize = 1.5)
 }
 \arguments{
 \item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
 
-\item{lineplot}{(optional, default = TRUE) Plot horizontal line at y = 1.0.}
-
 \item{saveplot}{(optional, default=TRUE) Save the plot.
 Note: saveplot will automatically save the device without leaving the device open}
 
-\item{filetype}{(optional, default = "tif) Image type to save as. See the \emph{type} argument in the function \emph{saveplot.}
+\item{filetype}{(optional, default = "tif") Image type to save as. See the \emph{type} argument in the function \emph{saveplot.}
 Options: "tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf"}
+
+\item{aspect.ratio}{(optional, default = 0.9) Aspect ratio of the graph.}
+
+\item{title_size}{(optional, default = 25)}
+
+\item{x_title_size}{(optional, default = 20)}
+
+\item{y_title_size}{(optional, default = 20)}
+
+\item{pointsize}{(optional, default = 4)}
+
+\item{linesize}{(optional, default = 1.5)}
 }
 \description{
 Generate a brain morph plot (normalized to 1). For use with mapping whole brain only.
