@@ -7,7 +7,8 @@
 brainmorph(setup, saveplot = TRUE, filetype = c("tif", "tiff", "wmf",
   "emf", "png", "jpg", "jpeg", "bmp", "ps", "eps", "pdf"),
   aspect.ratio = 0.9, title_size = 25, x_title_size = 20,
-  y_title_size = 20, pointsize = 4, linesize = 1.5)
+  y_title_size = 20, pointsize = 4, linesize = 1.5, y_lim = c(0,
+  1.6), y_by = 0.2)
 }
 \arguments{
 \item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
@@ -29,6 +30,10 @@ Options: "tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "
 \item{pointsize}{(optional, default = 4)}
 
 \item{linesize}{(optional, default = 1.5)}
+
+\item{y_lim}{(optional, default = c(0, 1.6)) Lower and upper limits of y-axis.}
+
+\item{y_by}{(optional, default = 0.2) Tick mark interval of y-axis.}
 }
 \description{
 Generate a brain morph plot (normalized to 1). For use with mapping whole brain only.

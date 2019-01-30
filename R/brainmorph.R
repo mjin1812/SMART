@@ -14,12 +14,15 @@
 #' @param y_title_size (optional, default = 20)
 #' @param pointsize (optional, default = 4)
 #' @param linesize (optional, default = 1.5)
+#' @param y_lim (optional, default = c(0, 1.6)) Lower and upper limits of y-axis.
+#' @param y_by (optional, default = 0.2) Tick mark interval of y-axis.
 #' @export
 #' @md
 
 brainmorph <- function(setup, saveplot = TRUE,
                           filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf"),
-                      aspect.ratio = .9, title_size = 25, x_title_size = 20, y_title_size = 20, pointsize = 4, linesize = 1.5) {
+                      aspect.ratio = .9, title_size = 25, x_title_size = 20, y_title_size = 20,
+                      pointsize = 4, linesize = 1.5, y_lim =  c(0, 1.6), y_by = 0.2) {
 
 
   AP_ref <- roundAP(c(setup$first_AP, setup$internal_ref_AP, setup$last_AP))
@@ -35,7 +38,7 @@ brainmorph <- function(setup, saveplot = TRUE,
   # reference points to normalize to 1 2) Uses these normalized expansion rates
   # at references points to create another spline function to interpolate
   # expansion rates across the brain
-  my_function2 <- splinefun(AP_ref, my_function(AP_ref, deriv=1)/lin_slope, method = "fmm" )
+  my_function2 <- splinefun(AP_ref, my_function(AP_ref, deriv=1)/lin_slope, method = "fmm")
 
 
   # plot brainmorph with ggplot2
@@ -49,12 +52,13 @@ brainmorph <- function(setup, saveplot = TRUE,
   ref_morph <- data.frame(AP_ref, ref_ratio)
 
   library(ggplot2)
+  options(warn=-1)
   g <- ggplot(data = morph_data,  aes(x = AP_coor, y = exp_ratio)) +
     theme_bw() +
     scale_x_continuous(breaks =  seq(from = -5.0, to = 3.0 , by = 1.0),
                        labels =  unlist(strsplit(toString(seq(from = -5.0, to = 3.0 , by = 1.0)), ",")),
                        trans = "reverse") +
-    scale_y_continuous(breaks = seq(from = 0.0, to = 1.6 , by = .2), limits = c(0, 1.6)) +
+    scale_y_continuous(breaks = seq(from = y_lim[1], to = y_lim[2], by = y_by), limits = y_lim) +
     theme(axis.line = element_line(colour = "black")) +
     labs(title = "Normalized expansion", x = "AP coordinate (mm)", y = "Expansion ratio") +
     theme(plot.title = element_text(hjust = 0.5, size = title_size, margin = margin(b = 20)),
@@ -78,4 +82,5 @@ brainmorph <- function(setup, saveplot = TRUE,
     dev.off()
   }
   detach(package:ggplot2)
+  options(warn=0)
 }
