@@ -47,7 +47,7 @@ forward_warp <- function(setup, segs, regis,
 
   # Match the indices in the registration vector with the appropriate index
   # of the registration vector
-  if (length(setup) > 8 ){
+  if (length(setup) > 9 ){
     regi_ind <- vector(mode="numeric",length(segs$seg_z))
     for (n in 1:length(segs$seg_z) ) {
       regi_ind[n] <- which.min(abs(setup$regi_z-segs$seg_z[n]))
