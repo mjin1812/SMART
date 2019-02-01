@@ -29,7 +29,7 @@ filter_loop <- function(setup, channel = c("regi", "seg"), filter = NULL, consol
   }
 
   # Setup loop for whole or partial brain
-  if (length(setup) > 7) {
+  if (length(setup) > 9) {
     # If a whole brain
     loop_z  <- c(setup$first_z, setup$internal_ref_z, setup$last_z)
   } else {
@@ -67,7 +67,7 @@ filter_loop <- function(setup, channel = c("regi", "seg"), filter = NULL, consol
                              blur = 7L,
                              downsample = 2))
     } else if (c == 2) {
-      fosfilter<-structure(list(alim = c(6, 100),
+      filter<-structure(list(alim = c(6, 100),
                                 threshold.range = c(1700, 10000L),
                                 eccentricity = 300L,
                                 Min = 700,

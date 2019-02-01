@@ -41,7 +41,7 @@ get_savepaths <- function (setup) {
     dir.create(out_segmentation_warps )
     dir.create(out_segmentation_schem)
 
-    if (length(setup)>7) {
+    if (length(setup)>9) {
       # Create folder for brain morph if whole brain project
       dir.create(out_RC_brain_morph)
       dir.create(out_reference_aligned)

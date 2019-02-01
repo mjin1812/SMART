@@ -24,7 +24,7 @@
 seg_loop <- function(setup, filter, numthresh = 8, downsample = 0.25, post = NULL,
                                  pre = NULL, get.contour = FALSE, channel = 0) {
   tictoc::tic()
-  if (length(setup) > 7) {
+  if (length(setup) > 9) {
     # If whole brain dataset, segment every N images, where N is equal to 'setup$seg_step.'
     # Store image numbers to segment in 'seg_z'
     seg_z <- seq(from = setup$first_z, to = setup$last_z, by = setup$seg_step)
