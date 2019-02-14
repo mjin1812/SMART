@@ -15,7 +15,7 @@
 #'   both image types. Options: common image formats like "tiff", "png", "jpeg",
 #'   "gif", "rgb" or "rgba". See [magick] package documentation for more info on
 #'   the [image_write()] function
-#' @param xpos (optional, default = c(0, 660, 1250)) A vector of x-positions in
+#' @param xpos (optional, default = c(200, 760, 1350)) A vector of x-positions in
 #'   pixels justified to the left of the main computer screen for the three
 #'   choice windows.
 #' @param brightness (optional, default = 70) Popup image brightness.
@@ -27,15 +27,17 @@
 #'   successive "zoom" of images picked on either side of the center image.
 #' @param atlas (optional, default = TRUE) Will automatically pull the atlas
 #'   image up during the choice game.
+#' @param at_pos (optional, default = 0) Atlas x-position in pixels justified to
+#'   the left of the main computer
 #' @return The argument assigned to *setup* is returned with aligned internal z
 #'   numbers matching internal AP coordinates.
 #' @md
 #' @export
 
 choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
-                   xpos = c(0, 660, 1250), brightness = 70,
+                   xpos = c(200, 760, 1350), brightness = 70,
                    font_col = "white", font_size = 80, font_location = "+100+30",
-                   gravity = "southwest", choice_step = c(200,100,30,10), atlas = TRUE) {
+                   gravity = "southwest", choice_step = c(200,100,30,10), atlas = TRUE, at_pos = 0) {
 
   # Interpolate z numbers base on first and last aligned images
   fl_AP       <- roundAP(c(setup$first_AP, setup$last_AP))
@@ -65,7 +67,7 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
     for (n in 1:length(midpnt_ref_z) ) {
 
       if (atlas){
-        pull_atlas(midpnt_ref_AP[n])
+        pull_atlas(midpnt_ref_AP[n], xpos = at_pos)
       }
 
       refpath <- setup$image_paths$regi_paths[midpnt_ref_z[n]]
@@ -121,7 +123,7 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
     AP       <-  loop_AP[n]
 
     if (atlas && !(AP == fl_AP[1]) && !(AP == fl_AP[2])){
-      pull_atlas(AP)
+      pull_atlas(AP, xpos = at_pos)
       at_dev <- dev.cur()
     }
 
@@ -217,6 +219,9 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
 
   setup$internal_ref_AP <- sort(c(setup$internal_ref_AP, new_AP), decreasing = TRUE)
   setup$internal_ref_z  <- sort(c(setup$internal_ref_z, new_z))
+
+  # Print end of choice game
+  cat("\nYou are done with the choice game!\n")
 
 # store new aligned imaged choices in setup list
   return(setup)

@@ -4,10 +4,13 @@
 \alias{pull_atlas}
 \title{Pull up atlas plate in graphics device.}
 \usage{
-pull_atlas(AP, font_size = 400, font_location = "+250+150")
+pull_atlas(AP, font_size = 400, font_location = "+250+150", xpos = 0)
 }
 \arguments{
 \item{AP}{Anterior-posterior mouse atlas coordinate.}
+
+\item{xpos}{x-position in pixels justified to the left of the main computer
+screen}
 }
 \description{
 Enter in an AP coordinate from the Allen Mouse Brain Atlas and

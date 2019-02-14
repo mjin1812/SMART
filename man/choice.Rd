@@ -5,9 +5,9 @@
 \title{Alignment choice game to align internal reference planes \strong{(W)}.}
 \usage{
 choice(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
-  xpos = c(0, 660, 1250), brightness = 70, font_col = "white",
+  xpos = c(200, 760, 1350), brightness = 70, font_col = "white",
   font_size = 80, font_location = "+100+30", gravity = "southwest",
-  choice_step = c(200, 100, 30, 10), atlas = TRUE)
+  choice_step = c(200, 100, 30, 10), atlas = TRUE, at_pos = 0)
 }
 \arguments{
 \item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
@@ -26,7 +26,7 @@ both image types. Options: common image formats like "tiff", "png", "jpeg",
 "gif", "rgb" or "rgba". See \link{magick} package documentation for more info on
 the \code{\link[=image_write]{image_write()}} function}
 
-\item{xpos}{(optional, default = c(0, 660, 1250)) A vector of x-positions in
+\item{xpos}{(optional, default = c(200, 760, 1350)) A vector of x-positions in
 pixels justified to the left of the main computer screen for the three
 choice windows.}
 
@@ -44,6 +44,9 @@ successive "zoom" of images picked on either side of the center image.}
 
 \item{atlas}{(optional, default = TRUE) Will automatically pull the atlas
 image up during the choice game.}
+
+\item{at_pos}{(optional, default = 0) Atlas x-position in pixels justified to
+the left of the main computer}
 }
 \value{
 The argument assigned to \emph{setup} is returned with aligned internal z
