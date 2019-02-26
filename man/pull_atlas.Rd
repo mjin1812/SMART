@@ -4,13 +4,22 @@
 \alias{pull_atlas}
 \title{Pull up atlas plate in graphics device.}
 \usage{
-pull_atlas(AP, font_size = 400, font_location = "+250+150", xpos = 0)
+pull_atlas(AP, xpos = 0, x = 0, adj = c(-1, 0), cex = 1.5)
 }
 \arguments{
 \item{AP}{Anterior-posterior mouse atlas coordinate.}
 
 \item{xpos}{x-position in pixels justified to the left of the main computer
 screen}
+
+\item{x}{Coordinates where the text should be written. Argument from [text()]
+function.}
+
+\item{adj}{one or two values in [0, 1] which specify the x (and optionally y)
+adjustment of the labels. On most devices values outside that interval will
+also work. Argument from [text()] function.}
+
+\item{cex}{Character expension factor. Argument from [text()] function.}
 }
 \description{
 Enter in an AP coordinate from the Allen Mouse Brain Atlas and

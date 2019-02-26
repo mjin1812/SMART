@@ -4,15 +4,17 @@
 #' @param AP Anterior-posterior mouse atlas coordinate.
 #' @param xpos x-position in pixels justified to the left of the main computer
 #'   screen
+#' @param x Coordinates where the text should be written. Argument from [text()]
+#'   function.
+#' @param adj one or two values in [0, 1] which specify the x (and optionally y)
+#'   adjustment of the labels. On most devices values outside that interval will
+#'   also work. Argument from [text()] function.
+#' @param cex Character expension factor. Argument from [text()] function.
 #' @export
-pull_atlas <- function(AP, font_size = 400, font_location = "+250+150", xpos = 0){
-  im_path <- file.path(path.package("SMART", quiet = TRUE), "extdata/atlas", paste0(AMBA_return(AP), "_3.svg"))
-  if (!file.exists(im_path)){
-    stop("This plate doesn't currently exist. You may be too far anterior or too far posterior. Try again!")
-  }
-  image <- magick::image_read(im_path)
-  image <- magick::image_annotate(image, paste0("Plate ", toString(platereturn(AP)),", AP ", toString(round(roundAP(AP), digits=2))),
-                                  gravity = "southwest", size= font_size, color = "black", location =  font_location)
-  quartz(title= paste0("Plate ", toString(platereturn(AP)),", AP ", toString(round(AP, digits=2))), xpos = xpos)
-  plot(image)
+pull_atlas <- function(AP, xpos = 0, x = 0, adj = c( -1, 0), cex = 1.5){
+  quartz(title = paste0("Plate ", toString(platereturn(AP)),", AP ", toString(round(roundAP(AP), digits=2))), xpos = xpos)
+  wholebrain::schematic.plot(dataset = NULL, mm.grid=F, coordinate = -3.86, region.colors =  TRUE, device = F)
+  text(x = x, paste0("Plate ", toString(platereturn(AP)),", AP ", toString(round(roundAP(AP), digits=2))), adj = adj, cex = cex)
 }
+
+

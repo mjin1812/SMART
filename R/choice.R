@@ -27,8 +27,6 @@
 #'   successive "zoom" of images picked on either side of the center image.
 #' @param atlas (optional, default = TRUE) Will automatically pull the atlas
 #'   image up during the choice game.
-#' @param at_pos (optional, default = 0) Atlas x-position in pixels justified to
-#'   the left of the main computer
 #' @return The argument assigned to *setup* is returned with aligned internal z
 #'   numbers matching internal AP coordinates.
 #' @md
@@ -37,7 +35,7 @@
 choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
                    xpos = c(200, 760, 1350), brightness = 70,
                    font_col = "white", font_size = 80, font_location = "+100+30",
-                   gravity = "southwest", choice_step = c(200,100,30,10), atlas = TRUE, at_pos = 0) {
+                   gravity = "southwest", choice_step = c(200,100,30,10), atlas = TRUE) {
 
   # Interpolate z numbers base on first and last aligned images
   fl_AP       <- roundAP(c(setup$first_AP, setup$last_AP))
@@ -79,7 +77,7 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
                                                        toString(round(midpnt_ref_AP[n], digits=2)), ", est. z ",
                                                        toString(midpnt_ref_z[n])), gravity = gravity, size= font_size,
                                         color = font_col, location = font_location)
-      quartz(canvas="black", title= paste("z-slice ", toString(midpnt_ref_z[n])), xpos = 660)
+      quartz(canvas="black", title= paste("z-slice ", toString(midpnt_ref_z[n])), xpos = xpos[2])
       plot(ref_im)
 
 
@@ -122,12 +120,14 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
     ref_num  <-  loop_z[n]
     AP       <-  loop_AP[n]
 
-    if (atlas && !(AP == fl_AP[1]) && !(AP == fl_AP[2])){
-      pull_atlas(AP, xpos = at_pos)
-      at_dev <- dev.cur()
-    }
-
     if (!(AP == fl_AP[1]) && !(AP == fl_AP[2])) {
+
+      if (atlas) {
+        pull_atlas(AP, xpos = at_pos)
+        at_dev <- dev.cur()
+      }
+
+
       # Index of the choice_step vector
       stpcnt    <- 1
       # Set to zero when closest image is picked
@@ -164,11 +164,16 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
           inp <- readline("Which image matches best?\nEnter 1, 2 or 3:")
         }
 
-        # closing all graphics windows except atlas graphics device
-        dev_close <- dev.list() [!(dev.list() %in% at_dev)]
-        for (g in 1:length(dev_close)){
-          dev.off(which = dev_close[g])
+        if (atlas) {
+          # closing all graphics windows except atlas graphics device
+          dev_close <- dev.list() [!(dev.list() %in% at_dev)]
+          for (g in 1:length(dev_close)){
+            dev.off(which = dev_close[g])
+          }
+        } else {
+          graphics.off()
         }
+
 
         if( inp =='1'){
           ref_num <- ref_num - choice_step[stpcnt]
