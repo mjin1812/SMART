@@ -13,7 +13,7 @@
 #' @export
 pull_atlas <- function(AP, xpos = 0, x = 0, adj = c( -1, 0), cex = 1.5){
   quartz(title = paste0("Plate ", toString(platereturn(AP)),", AP ", toString(round(roundAP(AP), digits=2))), xpos = xpos)
-  wholebrain::schematic.plot(dataset = NULL, mm.grid=F, coordinate = -3.86, region.colors =  TRUE, device = F)
+  wholebrain::schematic.plot(dataset = NULL, mm.grid=F, coordinate = roundAP(AP), region.colors =  TRUE, device = F)
   text(x = x, paste0("Plate ", toString(platereturn(AP)),", AP ", toString(round(roundAP(AP), digits=2))), adj = adj, cex = cex)
 }
 
