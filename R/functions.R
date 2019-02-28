@@ -84,5 +84,15 @@ convertpath <- function(path){
        fixed = FALSE, useBytes = FALSE))
 }
 
+# Get counts based on hemisphere
+get_hemi_cnts <- function(dataset, roi = c('MO', 'TH'), hemi= "Right"){
+  if (hemi == "Right") {
+    out <- unlist(lapply(roi, function(x)sum(dataset$acronym %in% wholebrain::get.sub.structure(x) * dataset$right.hemisphere)))
+  } else if (hemi == "Left") {
+    out <- unlist(lapply(roi, function(x)sum(dataset$acronym %in% wholebrain::get.sub.structure(x) * !dataset$right.hemisphere)))
+  }
+  roi.data <- data.frame(acronym = roi, cell.count = out)
+  return(roi.data)
+}
 
 
