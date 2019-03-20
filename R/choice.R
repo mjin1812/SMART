@@ -35,7 +35,7 @@
 choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
                    xpos = c(200, 760, 1350), brightness = 70,
                    font_col = "white", font_size = 80, font_location = "+100+30",
-                   gravity = "southwest", choice_step = c(200,100,30,10), atlas = TRUE) {
+                   gravity = "southwest", choice_step = c(200,100,30,10), atlas = TRUE, at_pos = 0) {
 
   # Interpolate z numbers base on first and last aligned images
   fl_AP       <- roundAP(c(setup$first_AP, setup$last_AP))
