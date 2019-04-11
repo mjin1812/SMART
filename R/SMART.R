@@ -55,6 +55,9 @@
 #' 3) [get_tree()] Create a dataframe of hierarchical region cell count data.
 #' 4) [glassbrain2()] Generate 3D plot of cells with option of plotting or
 #' removing glassbrain in the background.
+#' 5) [get_table()] Generates a dataframe showing region acronyms, their full
+#' name, hierachical paths, total cell counts, left and right counts, and cell
+#' count percentages.
 #' @md
 #' @docType package
 #' @name SMART
