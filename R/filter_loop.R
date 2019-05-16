@@ -154,7 +154,7 @@ filter_loop <- function(setup, channel = c("regi", "seg"), filter = NULL, consol
             if ( p == 1 | p == 2) {
               filter[[p]] <- readline(user_prompt[[p]])
               filter[[p]] <- sort(as.numeric(unlist(strsplit(filter[[p]], ","))))
-            } else if (p==7) {
+            } else if (p == 7 | p == 9 ) {
               filter[[p]] <- as.numeric(readline(user_prompt[[p]]))
             } else {
               filter[[p]] <- as.integer(readline(user_prompt[[p]]))

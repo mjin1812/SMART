@@ -74,6 +74,9 @@ interest.
 \item \code{\link[=get_tree]{get_tree()}} Create a dataframe of hierarchical region cell count data.
 \item \code{\link[=glassbrain2]{glassbrain2()}} Generate 3D plot of cells with option of plotting or
 removing glassbrain in the background.
+\item \code{\link[=get_table]{get_table()}} Generates a dataframe showing region acronyms, their full
+name, hierachical paths, total cell counts, left and right counts, and cell
+count percentages.
 }
 }
 
