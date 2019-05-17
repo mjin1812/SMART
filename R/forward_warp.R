@@ -56,9 +56,13 @@ forward_warp <- function(setup, segs, regis,
     regi_ind <- 1:length(segs$seg_z)
   }
 
-  # Interpolate all z images numbers to AP values
-  my_function <- approxfun(setup$regi_z, setup$regi_AP, method = "linear")
-  z_matched_AP <- my_function(segs$seg_z)
+  if (length(setup$regi_z) > 1) {
+    # Interpolate all z images numbers to AP values
+    my_function <- approxfun(setup$regi_z, setup$regi_AP, method = "linear")
+    z_matched_AP <- my_function(segs$seg_z)
+  } else {
+    z_matched_AP <- setup$regi_AP
+  }
 
   # Loop through every z-image and perform forward warp
   for (n in 1:length(segs$seg_z)) {
