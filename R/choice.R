@@ -188,7 +188,9 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
       }
       # Saving chosen image
       loop_z[n] <- ref_num
+      refpath  <-  setup$image_paths$regi_paths[ref_num]
       graphics.off()
+
     } else {
       refpath  <-  setup$image_paths$regi_paths[ref_num]
     }
