@@ -7,7 +7,7 @@
     quartz<-function(width, height, ...){windows(width, height, ...)}
     assign("quartz", quartz, envir = .GlobalEnv)
   } else if(get_os() == "linux") {
-    quartz<-function(width, height, ...){X11(width, height, ...)}
+    quartz<-function(width, height, ...){x11(width, height, ...)}
     assign("quartz", quartz, envir = .GlobalEnv)
   }
 }
