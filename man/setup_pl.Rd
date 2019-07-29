@@ -67,11 +67,11 @@ antHyp, startHip, posHyp, VTA, PAG, respectively.
 \item z image numbers matching AP coordinates (14). Will be NULL until
 \code{\link[=choice]{choice()}} is run.
 \item All AP coordinates ranging from the first to last AP.
-Will be NULL until \code{\link[=ez_interpolate]{ez_interpolate()}} is run.
-\item All z image numbers matching 16. Will be NULL until \code{\link[=ez_interpolate]{ez_interpolate()}} is
+Will be NULL until \code{\link[=interpolate]{interpolate()}} is run.
+\item All z image numbers matching 16. Will be NULL until \code{\link[=interpolate]{interpolate()}} is
 run.
 \item Savepaths list containing paths to the data directories. Will be
-NULL until \code{\link[=get_savepath]{get_savepath()}} is run.
+NULL until \code{\link[=get_savepaths]{get_savepaths()}} is run.
 \item List of sorted image paths. Will be NULL until \code{\link[=im_sort]{im_sort()}} is run.
 }
 }

@@ -50,11 +50,11 @@
 #' 14) z image numbers matching AP coordinates (14). Will be NULL until
 #' [choice()] is run.
 #' 15) All AP coordinates ranging from the first to last AP.
-#'     Will be NULL until [ez_interpolate()] is run.
-#' 16) All z image numbers matching 16. Will be NULL until [ez_interpolate()] is
+#'     Will be NULL until [interpolate()] is run.
+#' 16) All z image numbers matching 16. Will be NULL until [interpolate()] is
 #' run.
 #' 17) Savepaths list containing paths to the data directories. Will be
-#' NULL until [get_savepath()] is run.
+#' NULL until [get_savepaths()] is run.
 #' 18) List of sorted image paths. Will be NULL until [im_sort()] is run.
 #' @return *setup* is a list of length 7 or length 16 with parameters for the pipeline analysis.
 #' @export
