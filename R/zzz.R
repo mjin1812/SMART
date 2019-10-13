@@ -14,6 +14,10 @@
       }
       R.utils::doCall(quartz, args = list(title, width, height, xpos = NULL, ...))
     }
+
+    savePlot <- function(filename = NULL, ...){quartz.save(file = filename, ...)
+    }
+    assign("savePlot", savePlot, envir = .GlobalEnv)
   }
   assign("quartz", quartz, envir = .GlobalEnv)
 }
