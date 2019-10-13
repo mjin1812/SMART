@@ -6,7 +6,8 @@ Date: 2018-12-06
 Authors@R: c(person("Michelle", "Jin", email = "michelle.jin@nih.gov", role = c("cre", "aut")),
              person("Joseph", "Nguyen", email = "jdnguyen@email.wm.edu", role = "ctb"))
 Description: This package builds a pipeline interfacing with the wholebrain package by Daniel Furth to process
-    whole brain imaging datasets. 
+    whole brain imaging datasets.
+Depends: R (>= 3.5.0) 
 License: GPL-3
 Imports: 
   wholebrain (>= 0.1.0), 
