@@ -3,11 +3,17 @@
 
 .onAttach<-function(...){
   # Initiate quartz
-  if(get_os() == "windows") {
+  if(get_os() == "windows"){
     quartz<-function(width, height, ...){windows(width, height, ...)}
-    assign("quartz", quartz, envir = .GlobalEnv)
-  } else if(get_os() == "linux") {
-    quartz<-function(width, height, ...){x11(width, height, ...)}
-    assign("quartz", quartz, envir = .GlobalEnv)
+  } else if(get_os() == "linux"){
+    quartz<-function(...){x11(...)}
+  } else if(get_os() == "osx"){
+    quartz <-  function(title, width, height, xpos = NULL, ...){
+      if(!is.null(xpos)) {
+        warning("MacOS quartz does not accept `xpos`. Not using parameter")
+      }
+      R.utils::doCall(quartz, args = list(title, width, height, xpos = NULL, ...))
+    }
   }
+  assign("quartz", quartz, envir = .GlobalEnv)
 }
