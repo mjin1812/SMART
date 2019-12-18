@@ -1,6 +1,6 @@
 ---
 # title: "SMART:\nSemi-manual alignment to reference templates"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -717,8 +717,11 @@ SMART::get_sunburst(dataset)
 ```
 
 ```{r, echo = FALSE, cache = FALSE}
-load("C:/Users/mjin1/Documents/Test/packagetest_W/R_data/dataset.RData")
-SMART::get_sunburst(dataset)
+fname = "C:/Users/mjin1/Documents/Test/packagetest_W/R_data/dataset.RData"
+if (file.exists(fname)) {
+  load(fname)
+  SMART::get_sunburst(dataset)
+}
 ```
 
 > Note: By setting the `rois` argument, the sunburst will display only ROI data.
@@ -756,7 +759,13 @@ glassbrain <- glassbrain2(dataset, high.res = "OFF", jitter = FALSE)
 glassbrain
 ```
 ```{r, echo = FALSE,  cache = FALSE}
-htmltools::includeHTML(file.path(getwd(), "/schematics/glassbrain.html"))
+html_file = file.path(getwd(), "/schematics/glassbrain.html")
+if (!file.exists(html_file)) {
+  html_file = file.path("docs", "schematics/glassbrain.html")
+}
+if (file.exists(html_file)) {
+  htmltools::includeHTML(html_file)
+}
 ```
 
 

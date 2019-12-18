@@ -19,6 +19,8 @@ Imports:
   sunburstR (>= 2.1.0),
   rgl (>= 0.99.16),
   R.utils
+Remotes:
+  tractatus/wholebrain
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
