@@ -4,12 +4,24 @@
 \alias{forward_warp}
 \title{Forward warp back to atlas space}
 \usage{
-forward_warp(setup, segs, regis, filetype = c("tif", "tiff", "wmf",
-  "emf", "png", "jpg", "jpeg", "bmp", "ps", "eps", "pdf"),
-  savewarp = TRUE, saveschematic = TRUE, plane = "coronal",
-  title = FALSE, mm.grid = TRUE, dev.size = c(5.4, 4.465),
-  pch = 21, cex = 0.5, col = "black", scale.bar = FALSE,
-  region.colors = TRUE)
+forward_warp(
+  setup,
+  segs,
+  regis,
+  filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp", "ps", "eps",
+    "pdf"),
+  savewarp = TRUE,
+  saveschematic = TRUE,
+  plane = "coronal",
+  title = FALSE,
+  mm.grid = TRUE,
+  dev.size = c(5.4, 4.465),
+  pch = 21,
+  cex = 0.5,
+  col = "black",
+  scale.bar = FALSE,
+  region.colors = TRUE
+)
 }
 \arguments{
 \item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}

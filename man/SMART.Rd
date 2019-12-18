@@ -3,7 +3,6 @@
 \docType{package}
 \name{SMART}
 \alias{SMART}
-\alias{SMART-package}
 \title{SMART (Semi-manual alignment to reference template): a pipeline for whole brain mapping projects.}
 \description{
 This package interfaces with the \link{wholebrain} package by Daniel Furth to process

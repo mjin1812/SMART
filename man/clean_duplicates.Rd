@@ -4,8 +4,13 @@
 \alias{clean_duplicates}
 \title{Duplicate cell cleanup \strong{(W)}}
 \usage{
-clean_duplicates(setup, segs, xy_thresh = 1, z_thresh = 10,
-  compare_depth = 200)
+clean_duplicates(
+  setup,
+  segs,
+  xy_thresh = 1,
+  z_thresh = 10,
+  compare_depth = 200
+)
 }
 \arguments{
 \item{setup}{(required) Contains setup parameters.}

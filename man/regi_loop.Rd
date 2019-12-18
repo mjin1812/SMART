@@ -4,13 +4,26 @@
 \alias{regi_loop}
 \title{Automatically loops through the image registration process}
 \usage{
-regi_loop(setup, filter = NULL, regis = NULL, plane = "coronal",
-  closewindow = TRUE, filetype = c("tif", "tiff", "wmf", "emf", "png",
-  "jpg", "jpeg", "bmp", "ps", "eps", "pdf"), autoloop = FALSE,
-  touchup = FALSE, reference = FALSE, popup = TRUE,
-  brightness = 70, font_col = "white", font_size = 40,
-  font_location = "+100+100", gravity = "southwest", width = 18,
-  height = 10.2)
+regi_loop(
+  setup,
+  filter = NULL,
+  regis = NULL,
+  plane = "coronal",
+  closewindow = TRUE,
+  filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp", "ps", "eps",
+    "pdf"),
+  autoloop = FALSE,
+  touchup = FALSE,
+  reference = FALSE,
+  popup = TRUE,
+  brightness = 70,
+  font_col = "white",
+  font_size = 40,
+  font_location = "+100+100",
+  gravity = "southwest",
+  width = 18,
+  height = 10.2
+)
 }
 \arguments{
 \item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}

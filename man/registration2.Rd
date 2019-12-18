@@ -4,14 +4,31 @@
 \alias{registration2}
 \title{Console user interface built on top of \code{\link[=registration]{registration()}} function from the wholebrain package.}
 \usage{
-registration2(input, coordinate = NULL, plane = "coronal",
-  right.hemisphere = NULL, interpolation = "tps", intrp.param = NULL,
-  brain.threshold = 200, blurring = c(4, 15),
-  pixel.resolution = 0.64, resize = (1/8)/4, correspondance = NULL,
-  resolutionLevel = c(4, 2), num.nested.objects = 0,
-  plateimage = FALSE, forward.warp = FALSE, filter = NULL,
-  output.folder = "../", batch.mode = FALSE, channel = 0,
-  verbose = TRUE, closewindow = TRUE, width = 18, height = 10.2)
+registration2(
+  input,
+  coordinate = NULL,
+  plane = "coronal",
+  right.hemisphere = NULL,
+  interpolation = "tps",
+  intrp.param = NULL,
+  brain.threshold = 200,
+  blurring = c(4, 15),
+  pixel.resolution = 0.64,
+  resize = (1/8)/4,
+  correspondance = NULL,
+  resolutionLevel = c(4, 2),
+  num.nested.objects = 0,
+  plateimage = FALSE,
+  forward.warp = FALSE,
+  filter = NULL,
+  output.folder = "../",
+  batch.mode = FALSE,
+  channel = 0,
+  verbose = TRUE,
+  closewindow = TRUE,
+  width = 18,
+  height = 10.2
+)
 }
 \arguments{
 \item{input}{(required) A character vector consisting of the full path name to 16-bit raw tif image files.}

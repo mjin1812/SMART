@@ -4,8 +4,7 @@
 \alias{filter_loop}
 \title{Loop through reference slices}
 \usage{
-filter_loop(setup, channel = c("regi", "seg"), filter = NULL,
-  console = TRUE)
+filter_loop(setup, channel = c("regi", "seg"), filter = NULL, console = TRUE)
 }
 \arguments{
 \item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
