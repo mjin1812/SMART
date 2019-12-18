@@ -58,7 +58,30 @@ the pipeline.*
 
 
 **Below is an illustratratration of the pipeline schematic:**
-![](C:/Users/mjin1/Documents/GitHub/SMART/schematics/pipeline_schematic.PNG)
+```{r}
+run_path = function(base_path, ...) {
+  path = file.path(
+    "C:/Users/mjin1/Documents/GitHub/SMART/",
+    base_path)
+  if (!file.exists(path)) {
+    path = file.path("docs", base_path)
+  }
+  if (file.exists(path)) {
+    knitr::include_graphics(path, ...)
+  } else {
+    ""
+  }
+}
+run_path("schematics/pipeline_schematic.PNG")
+```
+
+if (!file.exists(path)) {
+  path = file.path("docs/schematics/pipeline_schematic.PNG")
+}
+if (file.exists(path)) {
+  knitr::include_graphics(path)
+}
+```
 
 ***
 
@@ -377,7 +400,11 @@ choice windows and enters the best qualitative match.
 
 <center>
 
-![**Internal reference atlas plates**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/Reference_atlas_schem.PNG){width=30%}
+<!-- ![**Internal reference atlas plates**](){width=30%} -->
+
+```{r, out.with="30%"}
+run_path("schematics/Reference_atlas_schem.PNG")
+```
 
 </center>
 
@@ -387,7 +414,10 @@ plates (represented above by solid vertical lines).
 
 <center>
 
-![**Display and prompt**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/choice_game_1.PNG){width=60%}
+```{r, out.with="60%"}
+run_path("schematics/choice_game_1.PNG")
+```
+<!-- ![**Display and prompt**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/){width=60%} -->
 
 </center>
 
@@ -411,7 +441,11 @@ choice option.
 
 <center>
 
-![**Midpoint quality check**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/midpoint_schem.PNG){width=30%}
+```{r, out.with="30%"}
+run_path("schematics/midpoint_schem.PNG")
+```
+
+<!-- ![**Midpoint quality check**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/midpoint_schem.PNG){width=30%} -->
 
 </center>
 
@@ -423,7 +457,12 @@ reference point. The choice game is replayed for those midpoints.
 
 <center>
 
-![**Midpoint quality check display**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/choice_game_2.PNG){width=35%}
+```{r, out.with="35%"}
+run_path("schematics/choice_game_2.PNG")
+```
+
+
+<!-- ![**Midpoint quality check display**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/choice_game_2.PNG){width=35%} -->
 
 </center>
 
@@ -457,7 +496,10 @@ brainmorph(setup, savepaths, saveplot = FALSE)
   
 <center>
   
-![**Brainmorph plot**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/brainmorph.PNG){width=40%}
+```{r, out.with="40%"}
+run_path("schematics/brainmorph.PNG")
+```
+<!-- ![**Brainmorph plot**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/brainmorph.PNG){width=40%} -->
 
 </center> 
 
@@ -511,7 +553,10 @@ analysis pipelines. Check out the function help page for more details.
 
 <center>
 
-![**Registration interface**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/registration_console.PNG){width=70%}
+```{r, out.with="70%"}
+run_path("schematics/registration_console.PNG")
+```
+<!-- ![**Registration interface**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/registration_console.PNG){width=70%} -->
 
 </center>
 The schematic above illustrates the user-friendly console interface that allows
@@ -591,9 +636,16 @@ Below is an example of a registration before and after manual improvement:
 
 <center>
 
-![**After auto-registration**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/before_registration.PNG){width=50%}
+```{r, out.with="50%"}
+run_path("schematics/before_registration.PNG")
+```
+```{r, out.with="50%"}
+run_path("schematics/after_registration.PNG")
+```
 
-![**After registration correction**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/after_registration.PNG){width=50%}
+<!-- ![**After auto-registration**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/before_registration.PNG){width=50%} -->
+
+<!-- ![**After registration correction**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/after_registration.PNG){width=50%} -->
 
 </center>
 
@@ -670,11 +722,18 @@ Below are representative forward warp and schematic images:
   
   **Forward warp image**
   
-  ![](C:/Users/mjin1/Documents/GitHub/SMART/schematics/forwardwarp.PNG){width=75%}
+```{r, out.with="75%"}
+run_path("schematics/forwardwarp.PNG")
+```
+  <!-- ![](C:/Users/mjin1/Documents/GitHub/SMART/schematics/forwardwarp.PNG){width=75%} -->
 
 **Schematic plot**
   
-  ![](C:/Users/mjin1/Documents/GitHub/SMART/schematics/schematic.PNG){width=40%}
+```{r, out.with="40%"}
+run_path("schematics/schematic.PNG")
+```
+
+  <!-- ![](C:/Users/mjin1/Documents/GitHub/SMART/schematics/schematic.PNG){width=40%} -->
 
 </center>
   
@@ -704,7 +763,11 @@ wholebrain::dot.plot(rois)
 ```
 <center>
 
-![**Region plot**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/dotplot.PNG){width=70%}
+```{r, out.with="70%"}
+run_path("schematics/dotplot.PNG")
+```
+
+<!-- ![**Region plot**](C:/Users/mjin1/Documents/GitHub/SMART/schematics/dotplot.PNG){width=70%} -->
 
 </center>
 
