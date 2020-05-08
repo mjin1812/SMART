@@ -4,8 +4,7 @@
 \alias{get_tree}
 \title{Create a dataframe of hierarchical region cell count data.}
 \usage{
-get_tree(dataset, rois = c("CH", "BS"), base = "grey",
-  subtract = TRUE)
+get_tree(dataset, rois = c("CH", "BS"), base = "grey", subtract = TRUE)
 }
 \arguments{
 \item{dataset}{(required) Whole brain dataset returned as an output of the

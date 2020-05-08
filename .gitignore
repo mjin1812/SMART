@@ -1,5 +1,6 @@
 *.Rbuildignore
 *.RDataTmp
+*.RData
 *.Rhistory
 *.Ruserdata 
 region_table.R

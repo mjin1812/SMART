@@ -4,11 +4,20 @@
 \alias{brainmorph}
 \title{Generate a brain morph plot \strong{(W)}}
 \usage{
-brainmorph(setup, saveplot = TRUE, filetype = c("tif", "tiff", "wmf",
-  "emf", "png", "jpg", "jpeg", "bmp", "ps", "eps", "pdf"),
-  aspect.ratio = 0.9, title_size = 25, x_title_size = 20,
-  y_title_size = 20, pointsize = 4, linesize = 1.5, y_lim = c(0,
-  1.6), y_by = 0.2)
+brainmorph(
+  setup,
+  saveplot = TRUE,
+  filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp", "ps", "eps",
+    "pdf"),
+  aspect.ratio = 0.9,
+  title_size = 25,
+  x_title_size = 20,
+  y_title_size = 20,
+  pointsize = 4,
+  linesize = 1.5,
+  y_lim = c(0, 1.6),
+  y_by = 0.2
+)
 }
 \arguments{
 \item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}

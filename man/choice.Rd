@@ -4,10 +4,21 @@
 \alias{choice}
 \title{Alignment choice game to align internal reference planes \strong{(W)}.}
 \usage{
-choice(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
-  xpos = c(200, 760, 1350), brightness = 70, font_col = "white",
-  font_size = 80, font_location = "+100+30", gravity = "southwest",
-  choice_step = c(200, 100, 30, 10), atlas = TRUE, at_pos = 0)
+choice(
+  setup,
+  touchup = NA,
+  midpoint = FALSE,
+  filetype = c("tif"),
+  xpos = c(200, 760, 1350),
+  brightness = 70,
+  font_col = "white",
+  font_size = 80,
+  font_location = "+100+30",
+  gravity = "southwest",
+  choice_step = c(200, 100, 30, 10),
+  atlas = TRUE,
+  at_pos = 0
+)
 }
 \arguments{
 \item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}

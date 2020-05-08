@@ -4,8 +4,16 @@
 \alias{seg_loop}
 \title{Loop through and segment images in the segmentation channel}
 \usage{
-seg_loop(setup, filter, numthresh = 8, downsample = 0.25,
-  post = NULL, pre = NULL, get.contour = FALSE, channel = 0)
+seg_loop(
+  setup,
+  filter,
+  numthresh = 8,
+  downsample = 0.25,
+  post = NULL,
+  pre = NULL,
+  get.contour = FALSE,
+  channel = 0
+)
 }
 \arguments{
 \item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
