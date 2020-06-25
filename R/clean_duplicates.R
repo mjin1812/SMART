@@ -20,8 +20,8 @@ clean_duplicates <- function(setup, segs, xy_thresh = 1, z_thresh = 10, compare_
 
  # Set up clean up parameters
   tictoc::tic()
-  sep_z   <- z_thresh/(1000*setup$z_space*setup$seg_step)
-  n_cols  <- compare_depth/(setup$z_space*1000*setup$seg_step)
+  sep_z   <- floor(z_thresh/(1000*setup$z_space*setup$seg_step))
+  n_cols  <- floor(compare_depth/(setup$z_space*1000*setup$seg_step))
     for (s in 1:(length(segs$seg_z)-1)){
 
     # For the end of the image stack
@@ -56,25 +56,26 @@ clean_duplicates <- function(setup, segs, xy_thresh = 1, z_thresh = 10, compare_
         if (!is.na(segs$segmentations[[s]]$soma$x[r])) {
           ind_x <- which.min(abs(segs$segmentations[[s+c]]$soma$x- segs$segmentations[[s]]$soma$x[r]))
           ind_y <- which.min(abs(segs$segmentations[[s+c]]$soma$y- segs$segmentations[[s]]$soma$y[r]))
-
-          if (ind_x==ind_y){
-            comp_matrix[r,c+1] <- ind_x
-            # exact_overlap_cnt <- exact_overlap_cnt + 1
-
-          } else {
-            # in cells isolated by x, threshold by difference in y
-            diff_y <- abs(segs$segmentations[[s+c]]$soma$y[ind_x] - segs$segmentations[[s]]$soma$y[r])
-
-            # in cells isolated by y, threshold by difference in x
-            diff_x <- abs(segs$segmentations[[s+c]]$soma$x[ind_y] - segs$segmentations[[s]]$soma$x[r])
-
-            if (diff_y < diff_x & diff_y < xy_thresh) {
+          if((length(ind_x) != 0) & (length(ind_y) != 0)){
+            if (ind_x==ind_y){
               comp_matrix[r,c+1] <- ind_x
-              # thresh_overlap_cnt <- thresh_overlap_cnt + 1
+              # exact_overlap_cnt <- exact_overlap_cnt + 1
 
-            } else if (diff_x < diff_y & diff_x < xy_thresh) {
-              comp_matrix[r,c+1] <- ind_y
-              # thresh_overlap_cnt <- thresh_overlap_cnt + 1
+            } else {
+              # in cells isolated by x, threshold by difference in y
+              diff_y <- abs(segs$segmentations[[s+c]]$soma$y[ind_x] - segs$segmentations[[s]]$soma$y[r])
+
+              # in cells isolated by y, threshold by difference in x
+              diff_x <- abs(segs$segmentations[[s+c]]$soma$x[ind_y] - segs$segmentations[[s]]$soma$x[r])
+
+              if (diff_y < diff_x & diff_y < xy_thresh) {
+                comp_matrix[r,c+1] <- ind_x
+                # thresh_overlap_cnt <- thresh_overlap_cnt + 1
+
+              } else if (diff_x < diff_y & diff_x < xy_thresh) {
+                comp_matrix[r,c+1] <- ind_y
+                # thresh_overlap_cnt <- thresh_overlap_cnt + 1
+              }
             }
           }
         }
